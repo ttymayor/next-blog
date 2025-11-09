@@ -1,0 +1,190 @@
+export const metadata = {
+  title: 'Next.js 入門指南',
+  author: '市長/tantuyu',
+  date: '2024-11-10',
+  description: '學習如何使用 Next.js 建立現代化的 Web 應用程式',
+}
+
+# Next.js 入門指南
+
+Next.js 是一個強大的 React 框架，讓建立 Web 應用程式變得更加簡單和高效。
+
+## 為什麼選擇 Next.js？
+
+Next.js 提供了許多開箱即用的功能：
+
+1. **伺服器端渲染 (SSR)** - 提升 SEO 和首次載入速度
+2. **靜態網站生成 (SSG)** - 預先生成靜態頁面
+3. **檔案系統路由** - 基於檔案結構的路由系統
+4. **API 路由** - 輕鬆建立 API 端點
+5. **圖片優化** - 自動優化圖片
+6. **TypeScript 支援** - 完整的 TypeScript 支援
+
+## 安裝 Next.js
+
+要開始使用 Next.js，只需執行以下命令：
+
+```bash
+npx create-next-app@latest my-app
+cd my-app
+npm run dev
+```
+
+這將創建一個新的 Next.js 專案並啟動開發伺服器。
+
+## 建立第一個頁面
+
+在 Next.js 中，建立頁面非常簡單。只需在 `app` 目錄中創建一個新檔案：
+
+```tsx
+// app/about/page.tsx
+export default function About() {
+  return (
+    <div>
+      <h1>關於我們</h1>
+      <p>這是關於頁面</p>
+    </div>
+  );
+}
+```
+
+### 動態路由
+
+Next.js 也支援動態路由。使用方括號來創建動態路由段：
+
+```tsx
+// app/posts/[id]/page.tsx
+export default function Post({ params }: { params: { id: string } }) {
+  return <div>文章 ID: {params.id}</div>;
+}
+```
+
+## 資料獲取
+
+Next.js 提供了多種資料獲取方式：
+
+### Server Components（預設）
+
+```tsx
+async function getData() {
+  const res = await fetch('https://api.example.com/data');
+  return res.json();
+}
+
+export default async function Page() {
+  const data = await getData();
+  return <div>{data.title}</div>;
+}
+```
+
+### Client Components
+
+```tsx
+'use client';
+
+import { useState, useEffect } from 'react';
+
+export default function ClientComponent() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/data')
+      .then(res => res.json())
+      .then(setData);
+  }, []);
+
+  return <div>{data?.title}</div>;
+}
+```
+
+## 樣式處理
+
+Next.js 支援多種樣式方案：
+
+- **CSS Modules** - 作用域限定的 CSS
+- **Tailwind CSS** - 實用優先的 CSS 框架
+- **CSS-in-JS** - styled-components、emotion 等
+
+### 使用 Tailwind CSS
+
+```tsx
+export default function Button() {
+  return (
+    <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+      點擊我
+    </button>
+  );
+}
+```
+
+## 部署
+
+Next.js 應用程式可以輕鬆部署到多個平台：
+
+- **Vercel** - Next.js 的創建者，提供最佳整合
+- **Netlify** - 簡單的部署流程
+- **AWS** - 使用 Amplify 或 EC2
+- **Docker** - 容器化部署
+
+### 部署到 Vercel
+
+```bash
+# 安裝 Vercel CLI
+npm i -g vercel
+
+# 部署
+vercel
+```
+
+## 效能優化
+
+Next.js 內建了許多效能優化功能：
+
+1. **自動程式碼分割** - 只載入需要的程式碼
+2. **圖片優化** - 使用 `next/image` 組件
+3. **字型優化** - 自動優化 Google Fonts
+4. **預取** - 自動預取連結頁面
+
+### 圖片優化範例
+
+```tsx
+import Image from 'next/image';
+
+export default function Avatar() {
+  return (
+    <Image
+      src="/avatar.jpg"
+      alt="使用者頭像"
+      width={200}
+      height={200}
+      priority
+    />
+  );
+}
+```
+
+## 最佳實踐
+
+以下是一些 Next.js 開發的最佳實踐：
+
+- ✅ 使用 Server Components 作為預設
+- ✅ 只在需要時使用 Client Components
+- ✅ 利用靜態生成提升效能
+- ✅ 使用 `next/image` 優化圖片
+- ✅ 實作適當的錯誤處理
+- ✅ 使用 TypeScript 提升程式碼品質
+
+## 結論
+
+Next.js 是一個功能強大且易於使用的框架，適合建立各種規模的 Web 應用程式。
+無論你是建立個人部落格還是大型企業應用，Next.js 都能提供你需要的工具和功能。
+
+> 開始你的 Next.js 之旅，探索現代 Web 開發的無限可能！
+
+## 相關資源
+
+- [Next.js 官方文檔](https://nextjs.org/docs)
+- [Next.js GitHub](https://github.com/vercel/next.js)
+- [Next.js 範例](https://github.com/vercel/next.js/tree/canary/examples)
+- [Vercel 部署指南](https://vercel.com/docs)
+

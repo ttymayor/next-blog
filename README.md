@@ -1,36 +1,187 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 市長/tantuyu 的部落格
 
-## Getting Started
+這是一個使用 Next.js 16 和 MDX 建立的現代化部落格。
 
-First, run the development server:
+## ✨ 功能特色
+
+- 🚀 **Next.js 16** - 使用最新的 React 框架
+- 📝 **MDX 支援** - 在 Markdown 中使用 React 組件
+- 🎨 **Tailwind CSS** - 現代化的樣式設計
+- 🌓 **深色模式** - 自動適應系統主題
+- 📱 **響應式設計** - 完美支援各種設備
+- ⚡ **靜態生成** - 快速的頁面載入速度
+- 🔍 **SEO 優化** - 完整的元數據支援
+- 💻 **TypeScript** - 型別安全的程式碼
+
+## 🛠️ 技術堆疊
+
+- **框架**: Next.js 16
+- **UI 庫**: React 19
+- **樣式**: Tailwind CSS 4
+- **內容**: MDX
+- **主題**: next-themes
+- **語言**: TypeScript
+- **圖示**: Lucide React
+
+## 📦 安裝
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# 安裝依賴
+pnpm install
+
+# 啟動開發伺服器
 pnpm dev
-# or
-bun dev
+
+# 建置生產版本
+pnpm build
+
+# 啟動生產伺服器
+pnpm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📝 如何新增文章
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 方式 1：使用 `.mdx` 格式（推薦）
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. 在 `src/content/` 目錄中創建新的 `.mdx` 檔案
+2. 在檔案開頭添加元數據：
 
-## Learn More
+```mdx
+export const metadata = {
+  title: '文章標題',
+  author: '作者名稱',
+  date: '2024-11-10',
+  description: '文章描述',
+}
 
-To learn more about Next.js, take a look at the following resources:
+# 文章標題
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+這裡是文章內容...
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 方式 2：使用 `.md` 格式（傳統 Markdown）
 
-## Deploy on Vercel
+1. 在 `src/content/` 目錄中創建新的 `.md` 檔案
+2. 使用 YAML frontmatter 添加元數據：
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```markdown
+---
+title: "文章標題"
+author: "作者名稱"
+date: "2024-11-10"
+description: "文章描述"
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# 文章標題
+
+這裡是文章內容...
+```
+
+### 就這樣！文章會自動出現 🎉
+
+系統會**遞歸掃描** `src/content/` 目錄及所有子目錄，您不需要手動註冊！
+
+**支援的目錄結構：**
+
+```
+src/content/
+├── article.mdx              # 扁平結構
+├── 2024/
+│   └── 11/
+│       └── my-post.mdx      # 按年份/月份組織
+└── tutorials/
+    └── guide.mdx            # 按類別組織
+```
+
+文章會自動出現在：
+- ✅ 首頁（最新的 3 篇）
+- ✅ `/posts` 文章列表頁面
+- ✅ `/posts/your-article-name` 文章詳情頁面
+
+> **注意：** 
+> - 文件名會成為 URL slug（例如：`2024/11/my-article.mdx` → `/posts/my-article`）
+> - 支援任意嵌套目錄結構
+> - 文章會自動按日期排序
+> - 查看 `NESTED_STRUCTURE.md` 了解嵌套目錄的詳細說明
+> - 查看 `AUTO_SCAN.md` 了解自動掃描的詳細說明
+> - 查看 `MARKDOWN_SUPPORT.md` 了解 `.md` 和 `.mdx` 的差異
+
+## 📂 專案結構
+
+```
+next-blog/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── layout.tsx         # 根佈局
+│   │   ├── page.tsx           # 首頁
+│   │   └── posts/             # 文章頁面
+│   │       ├── page.tsx       # 文章列表
+│   │       └── [slug]/        # 動態文章頁面
+│   │           ├── layout.tsx
+│   │           └── page.tsx
+│   ├── components/            # React 組件
+│   │   ├── Header.tsx         # 頁首
+│   │   ├── Footer.tsx         # 頁尾
+│   │   ├── ThemeProvider.tsx  # 主題提供者
+│   │   └── ThemeToggle.tsx    # 主題切換按鈕
+│   ├── content/               # MDX 文章內容
+│   │   ├── welcome.mdx
+│   │   ├── about.mdx
+│   │   └── getting-started-with-nextjs.mdx
+│   ├── lib/                   # 工具函數
+│   └── mdx-components.tsx     # MDX 組件配置
+├── posts/                     # Markdown 文章（舊格式）
+├── public/                    # 靜態資源
+└── package.json
+```
+
+## 🎨 自定義 MDX 組件
+
+在 `src/mdx-components.tsx` 中，您可以自定義 MDX 中使用的 HTML 元素樣式：
+
+```tsx
+const components: MDXComponents = {
+  h1: ({ children }) => (
+    <h1 className="text-4xl font-bold">{children}</h1>
+  ),
+  // 更多自定義組件...
+};
+```
+
+## 🚀 部署
+
+### Vercel（推薦）
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+
+1. 將專案推送到 GitHub
+2. 在 Vercel 中導入專案
+3. Vercel 會自動檢測 Next.js 並進行部署
+
+### 其他平台
+
+```bash
+# 建置專案
+pnpm build
+
+# 輸出目錄在 .next/
+```
+
+## 📖 學習資源
+
+- [Next.js 文檔](https://nextjs.org/docs)
+- [MDX 文檔](https://mdxjs.com/)
+- [Tailwind CSS 文檔](https://tailwindcss.com/docs)
+- [React 文檔](https://react.dev/)
+
+## 📄 授權
+
+MIT License
+
+## 👤 作者
+
+**市長/tantuyu**
+
+---
+
+使用 ❤️ 和 Next.js 建立
