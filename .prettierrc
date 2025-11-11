@@ -1,0 +1,28 @@
+{
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "overrides": [
+    {
+      "files": ["*.mdx", "*.md"],
+      "options": {
+        "tabWidth": 2,
+        "singleQuote": false,
+        "trailingComma": "es5"
+      }
+    },
+    {
+      "files": ["*.tsx", "*.ts", "*.jsx", "*.js"],
+      "options": {
+        "tabWidth": 2,
+        "singleQuote": false
+      }
+    },
+    {
+      "files": ["*.json", "*.config.mjs"],
+      "options": {
+        "tabWidth": 2,
+        "singleQuote": false,
+        "trailingComma": "es5"
+      }
+    }
+  ]
+}

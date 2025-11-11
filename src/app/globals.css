@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../styles/prism.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -118,5 +119,15 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+    @apply mb-4;
   }
 }

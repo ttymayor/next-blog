@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/markdown";
+import TechStacks from "@/components/TechStacks";
 
 // 獲取最新文章
 async function getLatestPosts() {
@@ -12,51 +13,35 @@ export default async function Home() {
   const latestPosts = await getLatestPosts();
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-6xl">
+    <div className="mx-auto max-w-6xl px-4 py-12">
       <main>
+        <TechStacks />
+
         {/* Hero Section */}
-        <section className="text-center mb-16">
-          <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            歡迎來到我的部落格
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            分享技術知識、記錄學習過程、探索 Web 開發的無限可能
-          </p>
-          <div className="flex gap-4 justify-center">
+        <section className="mb-16 text-center">
+          <div className="flex justify-center gap-4">
             <Link
               href="/posts"
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700"
             >
               瀏覽所有文章
             </Link>
             <Link
               href="#latest"
-              className="px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-accent transition-colors font-medium"
+              className="hover:bg-accent rounded-lg border border-gray-300 px-6 py-3 font-medium transition-colors dark:border-gray-700"
             >
               查看最新文章
             </Link>
           </div>
         </section>
 
-        {/* About Section */}
-        <section className="mb-16 bg-accent/30 rounded-xl p-8">
-          <h2 className="text-3xl font-bold mb-4">關於我</h2>
-          <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-            我是 <strong>市長/tantuyu</strong>，一位熱愛 Web 開發的工程師。
-            這個部落格使用 Next.js 16 和 MDX 建立，旨在分享我的學習心得和技術經驗。
-          </p>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            在這裡，你可以找到關於 React、Next.js、TypeScript 等現代 Web 技術的文章。
-          </p>
-        </section>
-
         {/* Latest Posts Section */}
         <section id="latest">
-          <div className="flex items-center justify-between mb-8">
+          <div className="mb-8 flex items-center justify-between">
             <h2 className="text-4xl font-bold">最新文章</h2>
             <Link
               href="/posts"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
+              className="text-blue-600 hover:underline dark:text-blue-400"
             >
               查看全部 →
             </Link>
@@ -66,48 +51,25 @@ export default async function Home() {
             {latestPosts.map(({ slug, metadata }) => (
               <article
                 key={slug}
-                className="border rounded-lg p-6 hover:shadow-lg transition-shadow bg-card"
+                className="bg-card rounded-lg border p-6 transition-shadow hover:shadow-lg"
               >
                 <Link href={`/posts/${slug}`} className="group">
-                  <h3 className="text-2xl font-bold mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <h3 className="mb-3 text-2xl font-bold transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
                     {metadata.title}
                   </h3>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                  <div className="text-muted-foreground mb-3 flex items-center gap-2 text-sm">
                     <time dateTime={metadata.date}>{metadata.date}</time>
                   </div>
                   {metadata.description && (
-                    <p className="text-muted-foreground line-clamp-3 mb-4">
+                    <p className="text-muted-foreground mb-4 line-clamp-3">
                       {metadata.description}
                     </p>
                   )}
-                  <span className="text-blue-600 dark:text-blue-400 group-hover:underline">
+                  <span className="text-blue-600 group-hover:underline dark:text-blue-400">
                     閱讀更多 →
                   </span>
                 </Link>
               </article>
-            ))}
-          </div>
-        </section>
-
-        {/* Tech Stack Section */}
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold mb-6 text-center">技術堆疊</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { name: "Next.js 16", icon: "⚡" },
-              { name: "React 19", icon: "⚛️" },
-              { name: "TypeScript", icon: "📘" },
-              { name: "Tailwind CSS", icon: "🎨" },
-              { name: "MDX", icon: "📝" },
-              { name: "next-themes", icon: "🌓" },
-            ].map((tech) => (
-              <div
-                key={tech.name}
-                className="flex items-center gap-3 p-4 border rounded-lg bg-card hover:bg-accent transition-colors"
-              >
-                <span className="text-3xl">{tech.icon}</span>
-                <span className="font-medium">{tech.name}</span>
-              </div>
             ))}
           </div>
         </section>

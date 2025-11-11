@@ -5,31 +5,53 @@ export default async function PostsPage() {
   const posts = await getAllPosts();
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="container mx-auto max-w-4xl px-4 py-8">
       <main>
-        <h1 className="text-5xl font-bold mb-8">部落格文章</h1>
+        <h1 className="mb-8 text-3xl font-bold">文章</h1>
 
-        <div className="space-y-8">
+        <div className="flex flex-col gap-4">
           {posts.map(({ slug, metadata }) => (
             <article
               key={slug}
-              className="border-b pb-8 last:border-b-0 hover:bg-accent/50 transition-colors rounded-lg p-4 -mx-4"
+              className="hover:bg-accent/50 rounded-lg p-4 transition-colors"
             >
               <Link href={`/posts/${slug}`} className="group">
-                <h2 className="text-3xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h2 className="mb-2 text-2xl font-bold transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
                   {metadata.title}
                 </h2>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                  <span>{metadata.author}</span>
-                  <span>•</span>
-                  <time dateTime={metadata.date}>{metadata.date}</time>
+                <div className="text-muted-foreground mb-3 flex items-center gap-4 text-sm">
+                  <time dateTime={metadata.pubDate}>
+                    {new Date(metadata.pubDate).toLocaleDateString("zh-TW", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </time>
+                  {metadata.categories && (
+                    <>
+                      <span className="select-none">•</span>
+                      <span>{metadata.categories}</span>
+                    </>
+                  )}
                 </div>
+                {metadata.tags && metadata.tags.length > 0 && (
+                  <div className="mb-3 flex flex-wrap gap-2">
+                    {metadata.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-xs font-medium"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 {metadata.description && (
                   <p className="text-muted-foreground leading-relaxed">
                     {metadata.description}
                   </p>
                 )}
-                <span className="inline-block mt-4 text-blue-600 dark:text-blue-400 group-hover:underline">
+                <span className="mt-4 inline-block text-blue-600 group-hover:underline dark:text-blue-400">
                   閱讀更多 →
                 </span>
               </Link>

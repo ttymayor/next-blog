@@ -1,14 +1,15 @@
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
 
 const contentDirectory = path.join(process.cwd(), "src/content");
 
 export type PostMetadata = {
   title: string;
-  author: string;
-  date: string;
-  description: string;
+  description?: string;
+  pubDate: string;
+  tags?: string[];
+  categories?: string;
+  draft?: boolean;
 };
 
 export type Post = {
@@ -18,7 +19,7 @@ export type Post = {
   filePath: string; // 完整的文件路徑
 };
 
-// 遞歸掃描目錄，支援 content/[year]/[month]/[*.md/*.mdx] 結構
+// 遞歸掃描目錄，支援 content/[year]/[month]/[*.mdx] 結構
 function scanDirectory(dir: string, baseDir: string = dir): string[] {
   const results: string[] = [];
 
@@ -31,10 +32,7 @@ function scanDirectory(dir: string, baseDir: string = dir): string[] {
       if (item.isDirectory()) {
         // 遞歸掃描子目錄
         results.push(...scanDirectory(fullPath, baseDir));
-      } else if (
-        item.isFile() &&
-        (item.name.endsWith(".md") || item.name.endsWith(".mdx"))
-      ) {
+      } else if (item.isFile() && item.name.endsWith(".mdx")) {
         // 獲取相對於 content 目錄的路徑
         const relativePath = path.relative(baseDir, fullPath);
         results.push(relativePath);
@@ -47,7 +45,7 @@ function scanDirectory(dir: string, baseDir: string = dir): string[] {
   return results;
 }
 
-// 獲取所有 .md 和 .mdx 文件的相對路徑
+// 獲取所有 .mdx 文件的相對路徑
 export function getAllPostPaths(): string[] {
   try {
     return scanDirectory(contentDirectory);
@@ -73,42 +71,19 @@ export function getStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-// 根據 slug 查找文件（支援遞歸搜索）
+// 根據 slug 查找 .mdx 文件（支援遞歸搜索）
 function findPostFile(slug: string): string | null {
   const allPaths = getAllPostPaths();
 
-  // 查找匹配的文件
+  // 查找匹配的 .mdx 文件
   for (const relativePath of allPaths) {
-    const fileName = path.basename(relativePath, path.extname(relativePath));
+    const fileName = path.basename(relativePath, ".mdx");
     if (fileName === slug) {
       return path.join(contentDirectory, relativePath);
     }
   }
 
   return null;
-}
-
-// 獲取單個 .md 文件的數據
-export function getMarkdownPost(slug: string): Post | null {
-  const filePath = findPostFile(slug);
-
-  if (!filePath || !filePath.endsWith(".md")) {
-    return null;
-  }
-
-  if (!fs.existsSync(filePath)) {
-    return null;
-  }
-
-  const fileContents = fs.readFileSync(filePath, "utf8");
-  const { data, content } = matter(fileContents);
-
-  return {
-    slug,
-    metadata: data as PostMetadata,
-    content,
-    filePath,
-  };
 }
 
 // 獲取 MDX 文件的數據
@@ -137,23 +112,16 @@ export async function getMDXPost(slug: string) {
   }
 }
 
-// 獲取所有文章（包括 .md 和 .mdx）
+// 獲取所有文章（只包括 .mdx）
 export async function getAllPosts() {
   const slugs = getAllPostSlugs();
   const posts = [];
 
   for (const slug of slugs) {
     try {
-      // 嘗試作為 .md 文件讀取
-      const mdPost = getMarkdownPost(slug);
-      if (mdPost) {
-        posts.push({ slug, metadata: mdPost.metadata });
-        continue;
-      }
-
-      // 否則作為 .mdx 文件讀取
+      // 讀取 .mdx 文件
       const mdxPost = await getMDXPost(slug);
-      if (mdxPost) {
+      if (mdxPost && mdxPost.metadata) {
         posts.push({ slug, metadata: mdxPost.metadata });
       }
     } catch (error) {
@@ -161,10 +129,13 @@ export async function getAllPosts() {
     }
   }
 
-  // 按日期排序
-  return posts.sort((a, b) => {
-    return (
-      new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime()
-    );
-  });
+  // 過濾掉草稿，並按日期排序
+  return posts
+    .filter((post) => post.metadata.draft !== true)
+    .sort((a, b) => {
+      return (
+        new Date(b.metadata.pubDate).getTime() -
+        new Date(a.metadata.pubDate).getTime()
+      );
+    });
 }

@@ -1,9 +1,11 @@
 export const metadata = {
-  title: 'Next.js 入門指南',
-  author: '市長/tantuyu',
-  date: '2024-11-10',
-  description: '學習如何使用 Next.js 建立現代化的 Web 應用程式',
-}
+  title: "Next.js 入門指南",
+  description: "學習如何使用 Next.js 建立現代化的 Web 應用程式",
+  pubDate: "2024-11-10T00:00:00+08:00",
+  tags: ["Next.js", "React", "Web 開發"],
+  categories: "Web 開發",
+  draft: false,
+};
 
 # Next.js 入門指南
 
@@ -65,7 +67,7 @@ Next.js 提供了多種資料獲取方式：
 
 ### Server Components（預設）
 
-```tsx
+```tsx:server.tsx
 async function getData() {
   const res = await fetch('https://api.example.com/data');
   return res.json();
@@ -80,16 +82,16 @@ export default async function Page() {
 ### Client Components
 
 ```tsx
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export default function ClientComponent() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch('/api/data')
-      .then(res => res.json())
+    fetch("/api/data")
+      .then((res) => res.json())
       .then(setData);
   }, []);
 
@@ -110,7 +112,7 @@ Next.js 支援多種樣式方案：
 ```tsx
 export default function Button() {
   return (
-    <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+    <button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
       點擊我
     </button>
   );
@@ -148,7 +150,7 @@ Next.js 內建了許多效能優化功能：
 ### 圖片優化範例
 
 ```tsx
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function Avatar() {
   return (
@@ -187,4 +189,3 @@ Next.js 是一個功能強大且易於使用的框架，適合建立各種規模
 - [Next.js GitHub](https://github.com/vercel/next.js)
 - [Next.js 範例](https://github.com/vercel/next.js/tree/canary/examples)
 - [Vercel 部署指南](https://vercel.com/docs)
-
