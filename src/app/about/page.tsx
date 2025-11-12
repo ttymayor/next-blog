@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-12">
+    <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
       <main>
         <section className="mb-16">
           <h1 className="mb-4 text-2xl font-bold">關於我</h1>

@@ -16,7 +16,7 @@ export default async function Home() {
   const latestPosts = await getLatestPosts();
 
   return (
-    <div className="mx-[3%] p-4 px-4 py-12 md:mx-[10%] lg:mx-[15%]">
+    <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
       <main>
         <TechStacks />
         <Slides />

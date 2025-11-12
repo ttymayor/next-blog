@@ -6,7 +6,7 @@ export default async function PostsPage() {
   const posts = await getAllPosts();
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <main>
         <div className="flex flex-col gap-4">
           {posts.map(({ slug, metadata }) => (

@@ -50,7 +50,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <div className="mx-auto flex-1">{children}</div>
+          <div className="flex-1">{children}</div>
           <Footer />
         </ThemeProvider>
       </body>
