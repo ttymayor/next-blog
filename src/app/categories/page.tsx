@@ -10,7 +10,10 @@ export default async function CategoriesPage() {
         <h2 className="mb-4 text-2xl font-bold">分類</h2>
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
-            <Link href={`/categories/${category}`} key={category}>
+            <Link
+              href={`/categories/${encodeURIComponent(category)}`}
+              key={category}
+            >
               <Badge
                 variant="secondary"
                 className="text-md text-tty-pink-foreground bg-tty-pink hover:bg-tty-pink/80 rounded-sm transition-all"

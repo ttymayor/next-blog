@@ -1,12 +1,8 @@
 import { getAllPosts, getAllTags } from "@/lib/markdown";
 import PostList from "@/components/PostList";
+import { Suspense } from "react";
 
-export default async function TagPage({
-  params,
-}: {
-  params: Promise<{ tag: string }>;
-}) {
-  const { tag } = await params;
+async function TagPosts({ tag }: { tag: string }) {
   // 解碼 URL 編碼的標籤名稱
   const decodedTag = decodeURIComponent(tag);
   const filteredPosts = (await getAllPosts())
@@ -17,12 +13,26 @@ export default async function TagPage({
       filePath: "",
     }));
 
+  return <PostList posts={filteredPosts} />;
+}
+
+export default async function TagPage({
+  params,
+}: {
+  params: Promise<{ tag: string }>;
+}) {
+  const { tag } = await params;
+  // 解碼 URL 編碼的標籤名稱
+  const decodedTag = decodeURIComponent(tag);
+
   return (
     <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <main>
         <h2 className="mb-4 text-2xl font-bold">標籤「{decodedTag}」</h2>
         <div className="flex flex-col gap-4">
-          <PostList posts={filteredPosts} />
+          <Suspense fallback={<div>載入中...</div>}>
+            <TagPosts tag={tag} />
+          </Suspense>
         </div>
       </main>
     </div>
