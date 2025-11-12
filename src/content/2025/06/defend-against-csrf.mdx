@@ -3,7 +3,7 @@ export const metadata = {
   description:
     "CSRF（跨站請求偽造）是一種常見的網路攻擊手法，本文將介紹如何有效防範 CSRF 攻擊。",
   pubDate: "2025-06-13T15:37:54+08:00",
-  tags: ["資訊安全", "CSRF", "Cyber Security"],
+  tags: ["資訊安全", "CSRF"],
   categories: "資訊安全",
   draft: false,
 };
@@ -65,9 +65,8 @@ CSRF（Cross Site Request Forgery），翻成中文叫做**跨站請求偽造**�
 
 ## 身為工程師你可以...
 
-1. CSRF Token
-   在請求任何敏感訊息時，加以驗證。如：添加隨機 Token 在表單上。  
-   駭客就無法僅憑無 Token 的表單進行請求。
+1. CSRF Token  
+   在請求任何敏感訊息時，加以驗證。如：添加隨機 Token 在表單上。駭客就無法僅憑無 Token 的表單進行請求。
 
    ```html
    <form action="/transfer" method="POST">

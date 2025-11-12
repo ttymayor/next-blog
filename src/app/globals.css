@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "../styles/prism.css";
+@import "../styles/custom.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -80,13 +81,13 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --background: oklch(0.2903 0.0537 273.74);
+  --foreground: oklch(0.9997 0.0013 106.42);
+  --card: oklch(0.3265 0.0395 273.74);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
+  --primary: oklch(0.8184 0.0614 275.71);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
@@ -114,6 +115,10 @@
 }
 
 @layer base {
+  ::selection {
+    @apply bg-tty-pink text-tty-pink-foreground;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
@@ -129,5 +134,25 @@
   h6 {
     @apply font-bold;
     @apply mb-4;
+  }
+
+  p {
+    @apply text-foreground/90 mb-4 leading-7;
+  }
+
+  a {
+    @apply dark:text-primary text-primary hover:underline;
+  }
+
+  ul {
+    @apply mb-4 list-outside list-disc space-y-2 pl-4;
+  }
+
+  ol {
+    @apply mb-4 list-outside list-decimal space-y-2 pl-4;
+  }
+
+  li {
+    @apply text-foreground/90;
   }
 }

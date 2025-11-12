@@ -1,0 +1,14 @@
+@theme {
+  --color-tty-pink: var(--color-tty-pink);
+  --color-tty-pink-foreground: var(--color-tty-pink-foreground);
+}
+
+:root {
+  --color-tty-pink: oklch(0.8398 0.0596 7.91);
+  --color-tty-pink-foreground: oklch(0.2903 0.0537 273.74);
+}
+
+.dark {
+  --color-tty-pink: oklch(0.8398 0.0596 7.91);
+  --color-tty-pink-foreground: oklch(0.2903 0.0537 273.74);
+}

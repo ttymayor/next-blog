@@ -3,7 +3,7 @@ export const metadata = {
   description:
     "探討為什麼現代軟體專案會選擇使用多種程式語言，以及這樣做的優缺點。",
   pubDate: "2025-07-30T15:11:59+08:00",
-  tags: ["計算機科學", "Computer Science"],
+  tags: ["計算機科學"],
   categories: "計算機科學",
   draft: false,
 };
@@ -20,7 +20,7 @@ export const metadata = {
 
 ### 範例
 
-```c
+```c:main.c
 #include <stdio.h>
 
 int main() {
@@ -40,7 +40,7 @@ gcc main.c -o main
 
 講人話就是從
 
-```c
+```c:main.c
 #define ABCD 2
 #include <stdio.h>
 
@@ -69,7 +69,7 @@ int main(void)
 
 變為
 
-```c
+```c:main.c
 // 把 stdio.h 引入進來
 
 int main(void)
@@ -92,7 +92,7 @@ int main(void)
 
 比如剛剛寫的 Code
 
-```c
+```c:main.c
 // 把 stdio.h 引入進來
 
 int main(void)
@@ -155,7 +155,7 @@ gcc main.c -o main -save-temps
 
 這樣會產出中間檔案（以 `[]` 表示編譯過程產生的檔案）
 
-```
+```bash
    Preprocessor   Compiler    Assembler     linker
 main.c  ->  [main.i  ->  main.s  ->  main.o]  ->  main.exe
 ```
@@ -168,7 +168,7 @@ main.c  ->  [main.i  ->  main.s  ->  main.o]  ->  main.exe
 gcc main.c -S -o main.s
 ```
 
-```s {title="main.s"}
+```s:main.s
 	.file	"main.c"
 	.def	___main;	.scl	2;	.type	32;	.endef
 	.section .rdata,"dr"
@@ -207,7 +207,7 @@ gcc main.s -o main
 
 假設我們不信任編譯器的最佳化過程，我們可以先把程式碼切成 function 的寫法，然後再將我們寫得 function 進行編譯像是 `say_hi() -> say_hi.s` 然後再將 `main.c` 一起完成編譯仍然可被包成執行檔。
 
-```c {title=say_hi.c}
+```c:say_hi.c
 #include <stdio.h>
 
 void say_hi(void) {
@@ -219,7 +219,7 @@ void say_hi(void) {
 gcc say_hi.c -S -o say_hi.s
 ```
 
-```c {title=main.c}
+```c:main.c
 extern void say_hi(void);
 
 int main() {

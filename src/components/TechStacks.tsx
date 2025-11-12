@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/marquee";
 import "@/styles/marquee.css";
 import "devicon/devicon.min.css";
-import { ChevronRight } from "lucide-react";
 
 export const techStacks = [
   {
@@ -118,11 +117,11 @@ export default function TechStacks() {
   const secondHalf = techStacks.slice(midPoint);
 
   return (
-    <section className="group my-6 w-full transition-all duration-300">
-      <h2 className="flex w-full items-center text-left text-2xl font-bold">
-        <ChevronRight className="text-tty-primary mr-2 hidden size-6" />
-        工具 & 技能
-      </h2>
+    <section
+      id="tech-stacks"
+      className="group mb-8 w-full transition-all duration-300"
+    >
+      <h2 className="mb-8 text-2xl font-bold">工具 & 技能</h2>
       <div className="flex size-full flex-col items-center justify-center gap-4">
         {/* 向左滾動的 Marquee */}
         <Marquee className="py-4">
@@ -133,7 +132,9 @@ export default function TechStacks() {
               <MarqueeItem className="mx-4" key={`left-${index}`}>
                 <div className="flex items-center justify-center gap-3">
                   <i className={`${techStack.icon} text-4xl`} />
-                  <span className="text-xl font-bold">{techStack.name}</span>
+                  <span className="text-primary text-xl font-bold">
+                    {techStack.name}
+                  </span>
                 </div>
               </MarqueeItem>
             ))}
@@ -150,7 +151,9 @@ export default function TechStacks() {
               <MarqueeItem className="mx-4" key={`right-${index}`}>
                 <div className="flex items-center justify-center gap-3">
                   <i className={`${techStack.icon} text-4xl`} />
-                  <span className="text-xl font-bold">{techStack.name}</span>
+                  <span className="text-primary text-xl font-bold">
+                    {techStack.name}
+                  </span>
                 </div>
               </MarqueeItem>
             ))}

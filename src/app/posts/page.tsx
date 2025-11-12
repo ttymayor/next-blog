@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/markdown";
+import { Badge } from "@/components/ui/badge";
 
 export default async function PostsPage() {
   const posts = await getAllPosts();
@@ -7,55 +8,60 @@ export default async function PostsPage() {
   return (
     <div className="container mx-auto max-w-4xl px-4 py-8">
       <main>
-        <h1 className="mb-8 text-3xl font-bold">文章</h1>
-
         <div className="flex flex-col gap-4">
           {posts.map(({ slug, metadata }) => (
-            <article
+            <div
               key={slug}
-              className="hover:bg-accent/50 rounded-lg p-4 transition-colors"
+              className="bg-card rounded-sm border p-6 transition-shadow hover:shadow-lg"
             >
-              <Link href={`/posts/${slug}`} className="group">
-                <h2 className="mb-2 text-2xl font-bold transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                  {metadata.title}
-                </h2>
-                <div className="text-muted-foreground mb-3 flex items-center gap-4 text-sm">
-                  <time dateTime={metadata.pubDate}>
+              <Link href={`/posts/${slug}`} className="group no-underline">
+                <div className="mb-3 flex items-center gap-4 text-sm">
+                  {/* 文章日期 */}
+                  <time
+                    dateTime={metadata.pubDate}
+                    className="text-muted-foreground"
+                  >
                     {new Date(metadata.pubDate).toLocaleDateString("zh-TW", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
                   </time>
+                  {/* 文章分類 */}
                   {metadata.categories && (
-                    <>
-                      <span className="select-none">•</span>
-                      <span>{metadata.categories}</span>
-                    </>
+                    <Badge variant="secondary" className="rounded-none">
+                      {metadata.categories}
+                    </Badge>
                   )}
                 </div>
+
+                {/* 文章標題 */}
+                <h2 className="mb-2 text-2xl font-bold">{metadata.title}</h2>
+
+                {/* 文章標籤 */}
                 {metadata.tags && metadata.tags.length > 0 && (
                   <div className="mb-3 flex flex-wrap gap-2">
-                    {metadata.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-xs font-medium"
-                      >
+                    {metadata.tags.map((tag: string) => (
+                      <Badge key={tag} variant="outline">
                         {tag}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
                 )}
+
+                {/* 文章描述 */}
                 {metadata.description && (
                   <p className="text-muted-foreground leading-relaxed">
                     {metadata.description}
                   </p>
                 )}
-                <span className="mt-4 inline-block text-blue-600 group-hover:underline dark:text-blue-400">
+
+                {/* 閱讀更多 */}
+                <span className="text-primary mt-4 inline-block group-hover:underline">
                   閱讀更多 →
                 </span>
               </Link>
-            </article>
+            </div>
           ))}
         </div>
       </main>

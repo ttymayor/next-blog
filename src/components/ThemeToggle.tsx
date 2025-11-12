@@ -21,17 +21,17 @@ export default function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      className="p-2 rounded-md cursor-pointer"
+      className="cursor-pointer"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       {mounted ? (
         theme === "dark" ? (
-          <Moon className="w-4 h-4" />
+          <Moon className="h-4 w-4" />
         ) : (
-          <Sun className="w-4 h-4" />
+          <Sun className="h-4 w-4" />
         )
       ) : (
-        <Skeleton className="w-4 h-4" />
+        <Skeleton className="h-4 w-4" />
       )}
     </Button>
   );
