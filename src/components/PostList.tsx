@@ -3,6 +3,7 @@
 import { PostListItem } from "@/lib/markdown";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 
 type PostListProps = {
   posts: PostListItem[];
@@ -10,13 +11,17 @@ type PostListProps = {
 
 export default function PostList({ posts }: PostListProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       {posts.map(({ slug, metadata }) => (
-        <div
+        <Card
           key={slug}
-          className="bg-card rounded-lg border p-6 transition-shadow hover:shadow-lg"
+          className="group p-6 transition-shadow hover:shadow-lg"
         >
-          <Link href={`/posts/${slug}`} className="group no-underline">
+          <Link
+            href={`/posts/${slug}`}
+            className="no-underline group-hover:underline"
+            prefetch={false}
+          >
             <div className="mb-3 flex items-center gap-4 text-sm">
               {/* 文章日期 */}
               <time
@@ -67,7 +72,7 @@ export default function PostList({ posts }: PostListProps) {
               閱讀更多 →
             </span>
           </Link>
-        </div>
+        </Card>
       ))}
     </div>
   );

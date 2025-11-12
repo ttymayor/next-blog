@@ -7,7 +7,7 @@ export default async function CategoriesPage() {
   return (
     <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <main>
-        <h2 className="mb-4 text-2xl font-bold">分類</h2>
+        <h2 className="mb-8 text-2xl font-bold">分類</h2>
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
             <Link

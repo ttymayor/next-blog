@@ -23,12 +23,10 @@ export default async function TagPage({
   return (
     <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <main>
-        <h2 className="mb-4 text-2xl font-bold">標籤「{decodedTag}」</h2>
-        <div className="flex flex-col gap-4">
-          <Suspense fallback={<div>載入中...</div>}>
-            <TagPosts tag={tag} />
-          </Suspense>
-        </div>
+        <h2 className="mb-8 text-2xl font-bold">標籤「{decodedTag}」</h2>
+        <Suspense fallback={<div>載入中...</div>}>
+          <TagPosts tag={tag} />
+        </Suspense>
       </main>
     </div>
   );

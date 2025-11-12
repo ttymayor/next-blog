@@ -21,12 +21,10 @@ export default async function CategoryPage({
   return (
     <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <main>
-        <h2 className="mb-4 text-2xl font-bold">分類「{decodedCategory}」</h2>
-        <div className="flex flex-col gap-4">
-          <Suspense fallback={<div>載入中...</div>}>
-            <CategoryPosts category={category} />
-          </Suspense>
-        </div>
+        <h2 className="mb-8 text-2xl font-bold">分類「{decodedCategory}」</h2>
+        <Suspense fallback={<div>載入中...</div>}>
+          <CategoryPosts category={category} />
+        </Suspense>
       </main>
     </div>
   );
