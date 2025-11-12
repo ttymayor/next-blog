@@ -13,6 +13,7 @@ export default async function CategoriesPage() {
             <Link
               href={`/categories/${encodeURIComponent(category)}`}
               key={category}
+              prefetch={false}
             >
               <Badge
                 variant="secondary"

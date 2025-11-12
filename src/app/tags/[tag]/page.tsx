@@ -5,14 +5,9 @@ import { Suspense } from "react";
 async function TagPosts({ tag }: { tag: string }) {
   // 解碼 URL 編碼的標籤名稱
   const decodedTag = decodeURIComponent(tag);
-  const filteredPosts = (await getAllPosts())
-    .filter(({ metadata }) => metadata.tags?.includes(decodedTag))
-    .map(({ slug, metadata }) => ({
-      slug,
-      metadata,
-      filePath: "",
-    }));
-
+  const filteredPosts = (await getAllPosts()).filter(({ metadata }) =>
+    metadata.tags?.includes(decodedTag),
+  );
   return <PostList posts={filteredPosts} />;
 }
 
