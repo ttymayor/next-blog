@@ -3,6 +3,7 @@ import { getAllPosts } from "@/lib/markdown";
 import TechStacks from "@/components/TechStacks";
 import Slides from "@/components/Slides";
 import Experience from "@/components/Experience";
+import Projects from "@/components/Projects";
 
 // 獲取最新文章
 async function getLatestPosts() {
@@ -20,6 +21,7 @@ export default async function Home() {
         <TechStacks />
         <Slides />
         <Experience />
+        <Projects />
 
         {/* Latest Posts Section */}
         <section id="latest" className="mb-8">

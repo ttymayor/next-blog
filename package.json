@@ -10,9 +10,11 @@
     "new": "node scripts/new-post.mjs"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^13.8.0",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.0.1",
+    "@radix-ui/react-aspect-ratio": "^1.1.8",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
