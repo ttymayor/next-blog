@@ -12,7 +12,7 @@ export default async function PostsPage() {
           {posts.map(({ slug, metadata }) => (
             <div
               key={slug}
-              className="bg-card rounded-sm border p-6 transition-shadow hover:shadow-lg"
+              className="bg-card rounded-lg border p-6 transition-shadow hover:shadow-lg"
             >
               <Link href={`/posts/${slug}`} className="group no-underline">
                 <div className="mb-3 flex items-center gap-4 text-sm">

@@ -47,7 +47,7 @@ export default async function Page({
     const Post = mdxPost.component;
 
     return (
-      <article className="container mx-auto max-w-4xl px-4 py-8">
+      <article className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
         {/* 文章標題和元數據 */}
         <header className="mb-8 border-b pb-6">
           <h1 className="mb-4 text-5xl font-bold">{mdxPost.metadata.title}</h1>
@@ -73,7 +73,7 @@ export default async function Page({
           )}
           {mdxPost.metadata.tags && mdxPost.metadata.tags.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
-              {mdxPost.metadata.tags.map((tag) => (
+              {mdxPost.metadata.tags.map((tag: string) => (
                 <span
                   key={tag}
                   className="bg-primary/10 text-primary rounded-full px-3 py-1 text-xs font-medium"
@@ -95,7 +95,7 @@ export default async function Page({
 
   // 如果找不到，顯示 404
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <h1 className="mb-4 text-4xl font-bold">文章未找到</h1>
       <p className="text-muted-foreground">抱歉，找不到您要查找的文章。</p>
     </div>
