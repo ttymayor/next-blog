@@ -5,7 +5,7 @@ import { Suspense } from "react";
 async function CategoryPosts({ category }: { category: string }) {
   const decodedCategory = decodeURIComponent(category);
   const filteredPosts = (await getAllPosts())
-    .filter(({ metadata }) => metadata.categories?.includes(decodedCategory))
+    .filter(({ metadata }) => metadata.categories === decodedCategory)
     .map(({ slug, metadata }) => ({
       slug,
       metadata,

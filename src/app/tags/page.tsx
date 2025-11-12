@@ -13,7 +13,7 @@ export default async function TagsPage() {
           <h2 className="mb-4 text-2xl font-bold">標籤</h2>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <Link href={`/tags/${tag}`} key={tag}>
+              <Link href={`/tags/${encodeURIComponent(tag)}`} key={tag}>
                 <Badge
                   variant="outline"
                   className="text-foreground/90 hover:bg-foreground/10"
