@@ -43,7 +43,13 @@ export default async function Home() {
                     {metadata.title}
                   </h3>
                   <div className="text-muted-foreground mb-3 flex items-center gap-2 text-sm">
-                    <time dateTime={metadata.date}>{metadata.date}</time>
+                    <time dateTime={metadata.pubDate}>
+                      {new Date(metadata.pubDate).toLocaleDateString("zh-TW", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </time>
                   </div>
                   {metadata.description && (
                     <p className="text-muted-foreground mb-4 line-clamp-3">

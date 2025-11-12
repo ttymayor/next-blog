@@ -26,6 +26,16 @@ export default function Header() {
               文章
             </Link>
           </Button>
+          <Button variant="ghost" asChild>
+            <Link href="/categories" className="text-foreground no-underline">
+              分類
+            </Link>
+          </Button>
+          <Button variant="ghost" asChild>
+            <Link href="/tags" className="text-foreground no-underline">
+              標籤
+            </Link>
+          </Button>
 
           {/* ThemeToggle */}
           <ThemeToggle />

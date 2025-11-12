@@ -74,6 +74,19 @@ export default function MobileMenu() {
               文章
             </Link>
           </Button>
+          <Button variant="ghost" size="lg" onClick={toggleMenu} asChild>
+            <Link
+              href="/categories"
+              className="text-foreground text-lg no-underline"
+            >
+              分類
+            </Link>
+          </Button>
+          <Button variant="ghost" size="lg" onClick={toggleMenu} asChild>
+            <Link href="/tags" className="text-foreground text-lg no-underline">
+              標籤
+            </Link>
+          </Button>
         </nav>
       </div>
     </>

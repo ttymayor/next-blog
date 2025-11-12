@@ -6,12 +6,12 @@ import { Badge } from "@/components/ui/badge";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ post: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { post } = await params;
 
   // 讀取 .mdx 文件
-  const mdxPost = await getMDXPost(slug);
+  const mdxPost = await getMDXPost(post);
   if (mdxPost) {
     return {
       title: mdxPost.metadata.title,
@@ -38,12 +38,12 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ post: string }>;
 }) {
-  const { slug } = await params;
+  const { post } = await params;
 
   // 讀取 .mdx 文件
-  const mdxPost = await getMDXPost(slug);
+  const mdxPost = await getMDXPost(post);
   if (mdxPost) {
     const Post = mdxPost.component;
 

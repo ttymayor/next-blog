@@ -19,6 +19,13 @@ export type Post = {
   filePath: string; // 完整的文件路徑
 };
 
+// 用於列表頁面的 Post 類型，不包含 content（MDX 組件）
+export type PostListItem = {
+  slug: string;
+  metadata: PostMetadata;
+  filePath: string;
+};
+
 // 遞歸掃描目錄，支援 content/[year]/[month]/[*.mdx] 結構
 function scanDirectory(dir: string, baseDir: string = dir): string[] {
   const results: string[] = [];
@@ -112,17 +119,21 @@ export async function getMDXPost(slug: string) {
   }
 }
 
-// 獲取所有文章（只包括 .mdx）
-export async function getAllPosts() {
+// 獲取所有文章（只包括 .mdx），用於列表頁面，不包含 MDX 組件內容
+export async function getAllPosts(): Promise<PostListItem[]> {
   const slugs = getAllPostSlugs();
-  const posts = [];
+  const posts: PostListItem[] = [];
 
   for (const slug of slugs) {
     try {
       // 讀取 .mdx 文件
       const mdxPost = await getMDXPost(slug);
       if (mdxPost && mdxPost.metadata) {
-        posts.push({ slug, metadata: mdxPost.metadata });
+        posts.push({
+          slug,
+          metadata: mdxPost.metadata,
+          filePath: mdxPost.filePath,
+        });
       }
     } catch (error) {
       console.error(`Error loading post ${slug}:`, error);
@@ -138,4 +149,22 @@ export async function getAllPosts() {
         new Date(a.metadata.pubDate).getTime()
       );
     });
+}
+
+export async function getAllTags() {
+  const posts = await getAllPosts();
+  const tags = posts
+    .map((post) => post.metadata.tags)
+    .flat()
+    .filter((tag): tag is string => tag !== undefined);
+  return Array.from(new Set(tags)).sort();
+}
+
+export async function getAllCategories() {
+  const posts = await getAllPosts();
+  const categories = posts
+    .map((post) => post.metadata.categories)
+    .flat()
+    .filter((category): category is string => category !== undefined);
+  return Array.from(new Set(categories)).sort();
 }
