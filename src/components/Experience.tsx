@@ -105,11 +105,7 @@ function ExperienceContent({ item }: ExperienceContentProps) {
       {item.tags && (
         <div className="flex items-center gap-2">
           {item.tags?.map((tag) => (
-            <Badge
-              key={tag.name}
-              variant="secondary"
-              className="text-tty-primary-foreground text-sm"
-            >
+            <Badge key={tag.name} variant="secondary" className="text-sm">
               {tag.icon ? (
                 <Image
                   alt={tag.name}

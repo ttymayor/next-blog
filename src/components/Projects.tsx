@@ -145,7 +145,7 @@ export default function Projects() {
                   <Link href={project.github} target="_blank">
                     <Button
                       variant="ghost"
-                      className="bg-background/50 cursor-pointer"
+                      className="bg-background/50 text-foreground hover:text-primary cursor-pointer"
                     >
                       <SiGithub className="size-4" />
                       GitHub
@@ -156,7 +156,7 @@ export default function Projects() {
                   <Link href={project.url} target="_blank">
                     <Button
                       variant="ghost"
-                      className="bg-background/50 cursor-pointer"
+                      className="bg-background/50 text-foreground hover:text-primary cursor-pointer"
                     >
                       <ExternalLinkIcon className="size-4" />
                       Site
