@@ -101,7 +101,7 @@ function SlideFooter({ slide }: SlideFooterProps) {
   return (
     <div className="flex gap-2">
       {slide.slideLink && (
-        <Link href={slide.slideLink} target="_blank">
+        <Link href={slide.slideLink} target="_blank" prefetch={false}>
           <Button
             variant="secondary"
             className="cursor-pointer bg-blue-500/10 text-blue-500"
@@ -112,7 +112,7 @@ function SlideFooter({ slide }: SlideFooterProps) {
         </Link>
       )}
       {slide.pdfLink && (
-        <Link href={slide.pdfLink} target="_blank">
+        <Link href={slide.pdfLink} target="_blank" prefetch={false}>
           <Button
             variant="secondary"
             className="cursor-pointer bg-red-500/10 text-red-500"

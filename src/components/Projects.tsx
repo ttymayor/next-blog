@@ -142,7 +142,7 @@ export default function Projects() {
               {/* Link */}
               <div className="flex items-center gap-2">
                 {project.github && (
-                  <Link href={project.github} target="_blank">
+                  <Link href={project.github} target="_blank" prefetch={false}>
                     <Button
                       variant="ghost"
                       className="bg-background/50 text-foreground hover:text-primary cursor-pointer"
@@ -153,7 +153,7 @@ export default function Projects() {
                   </Link>
                 )}
                 {project.url && (
-                  <Link href={project.url} target="_blank">
+                  <Link href={project.url} target="_blank" prefetch={false}>
                     <Button
                       variant="ghost"
                       className="bg-background/50 text-foreground hover:text-primary cursor-pointer"

@@ -27,7 +27,11 @@ export default async function Home() {
         <section id="latest" className="mb-8">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="mb-0 text-2xl font-bold">最新文章</h2>
-            <Link href="/posts" className="text-primary hover:underline">
+            <Link
+              href="/posts"
+              className="text-primary hover:underline"
+              prefetch={false}
+            >
               查看全部 →
             </Link>
           </div>
@@ -38,7 +42,11 @@ export default async function Home() {
                 key={slug}
                 className="bg-card rounded-lg border p-6 transition-shadow hover:shadow-lg"
               >
-                <Link href={`/posts/${slug}`} className="group">
+                <Link
+                  href={`/posts/${slug}`}
+                  className="group"
+                  prefetch={false}
+                >
                   <h3 className="mb-3 text-2xl font-bold transition-colors">
                     {metadata.title}
                   </h3>
