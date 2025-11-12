@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getMDXPost, getStaticParams } from "@/lib/markdown";
+import { Badge } from "@/components/ui/badge";
 
 // 生成動態元數據
 export async function generateMetadata({
@@ -74,12 +75,13 @@ export default async function Page({
           {mdxPost.metadata.tags && mdxPost.metadata.tags.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
               {mdxPost.metadata.tags.map((tag: string) => (
-                <span
+                <Badge
                   key={tag}
-                  className="bg-primary/10 text-primary rounded-full px-3 py-1 text-xs font-medium"
+                  variant="secondary"
+                  className="bg-tty-pink text-tty-pink-foreground hover:bg-tty-pink/80"
                 >
                   {tag}
-                </span>
+                </Badge>
               ))}
             </div>
           )}

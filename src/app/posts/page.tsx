@@ -57,7 +57,7 @@ export default async function PostsPage() {
                 )}
 
                 {/* 閱讀更多 */}
-                <span className="text-primary mt-4 inline-block group-hover:underline">
+                <span className="text-tty-pink inline-block group-hover:underline">
                   閱讀更多 →
                 </span>
               </Link>
