@@ -42,7 +42,11 @@ export default async function PostsPage() {
                 {metadata.tags && metadata.tags.length > 0 && (
                   <div className="mb-3 flex flex-wrap gap-2">
                     {metadata.tags.map((tag: string) => (
-                      <Badge key={tag} variant="outline">
+                      <Badge
+                        key={tag}
+                        variant="secondary"
+                        className="bg-tty-pink text-tty-pink-foreground hover:bg-tty-pink/80"
+                      >
                         {tag}
                       </Badge>
                     ))}
