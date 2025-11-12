@@ -1,12 +1,13 @@
 import { Separator } from "@/components/ui/separator";
+import MyTools from "@/components/MyTools";
 import Link from "next/link";
 
 export default function AboutPage() {
   return (
     <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
       <main>
-        <section className="mb-16">
-          <h1 className="mb-4 text-2xl font-bold">關於我</h1>
+        <section id="about" className="mb-8">
+          <h2 className="mb-4 text-2xl font-bold">關於我</h2>
 
           <p>Hi 👋</p>
 
@@ -14,12 +15,14 @@ export default function AboutPage() {
             你可以叫我彈塗魚可能比較親切一點，我很喜歡探索很多資訊圈子的新工具，同時我很擅長在短時間學習新的工具並實際應用。
           </p>
 
-          <p>該站使用 Astro、Tailwind CSS、React 等技術構建。</p>
+          <p>該站使用 Next.js、Tailwind CSS 技術構建。</p>
 
           <p>
-            寫 Astro 只是覺得寫部落格很方便自己刻，我還是比較喜歡寫 React 和
-            Next.js。
+            這個網站寫過 Astro 版本，但後來因為個人偏好還有使用需求就改寫到
+            Next.js，還好原本 Components 就是 React 寫的，所以遷移還算順利。
           </p>
+
+          <p>目前亮色主題還沒有撰寫，因為你不應該使用亮色主題ˋ_ˊ</p>
 
           <p>
             後端可能以後有專案會用 FastAPI 或是 Golang 來寫，Laravel 也不錯 ( •̀
@@ -71,6 +74,8 @@ export default function AboutPage() {
             <li>SITCON 和 COSCUP 全字母大寫（或是 s1t(0n 和 (0s(vp www</li>
           </ul>
         </section>
+
+        <MyTools />
       </main>
     </div>
   );
