@@ -1,6 +1,7 @@
 import { getAllCategories } from "@/lib/markdown";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import LinkStatus from "@/components/LinkStatus";
 
 export default async function CategoriesPage() {
   const categories = await getAllCategories();
@@ -20,6 +21,7 @@ export default async function CategoriesPage() {
                 className="text-md text-tty-pink-foreground bg-tty-pink hover:bg-tty-pink/80 rounded-sm transition-all"
               >
                 {category}
+                <LinkStatus />
               </Badge>
             </Link>
           ))}

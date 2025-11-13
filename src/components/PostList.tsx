@@ -4,6 +4,7 @@ import { PostListItem } from "@/lib/markdown";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import LinkStatus from "@/components/LinkStatus";
 
 type PostListProps = {
   posts: PostListItem[];
@@ -43,38 +44,45 @@ export default function PostList({ posts }: PostListProps) {
               )}
             </div>
 
-            {/* 文章標題 */}
-            <Link href={`/posts/${slug}`} prefetch={false}>
-              <h2 className="mb-3 text-2xl font-bold group-hover:underline">
-                {metadata.title}
-                {process.env.NODE_ENV === "development" &&
-                  metadata.draft &&
-                  "（草稿）"}
-              </h2>
-            </Link>
+            <div className="flex flex-col gap-2">
+              {/* 文章標題 */}
+              <Link
+                href={`/posts/${slug}`}
+                prefetch={false}
+                className="flex items-center gap-2"
+              >
+                <h2 className="mb-0 text-2xl font-bold group-hover:underline">
+                  {metadata.title}
+                  {process.env.NODE_ENV === "development" &&
+                    metadata.draft &&
+                    "（草稿）"}
+                </h2>
+                <LinkStatus />
+              </Link>
 
-            {/* 文章標籤 */}
-            {metadata.tags && metadata.tags.length > 0 && (
-              <div className="mb-3 flex flex-wrap gap-2">
-                {metadata.tags.map((tag: string) => (
-                  <Link href={`/tags/${tag}`} prefetch={false} key={tag}>
-                    <Badge
-                      variant="secondary"
-                      className="bg-tty-pink text-tty-pink-foreground hover:bg-tty-pink/80 transition-colors"
-                    >
-                      {tag}
-                    </Badge>
-                  </Link>
-                ))}
-              </div>
-            )}
+              {/* 文章標籤 */}
+              {metadata.tags && metadata.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {metadata.tags.map((tag: string) => (
+                    <Link href={`/tags/${tag}`} prefetch={false} key={tag}>
+                      <Badge
+                        variant="secondary"
+                        className="bg-tty-pink text-tty-pink-foreground hover:bg-tty-pink/80 transition-colors"
+                      >
+                        {tag}
+                      </Badge>
+                    </Link>
+                  ))}
+                </div>
+              )}
 
-            {/* 文章描述 */}
-            {metadata.description && (
-              <p className="text-muted-foreground leading-relaxed">
-                {metadata.description}
-              </p>
-            )}
+              {/* 文章描述 */}
+              {metadata.description && (
+                <p className="text-muted-foreground leading-relaxed">
+                  {metadata.description}
+                </p>
+              )}
+            </div>
 
             <Link href={`/posts/${slug}`} prefetch={false}>
               {/* 閱讀更多 */}

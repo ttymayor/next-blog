@@ -1,5 +1,6 @@
 import { getAllTags } from "@/lib/markdown";
 import { Badge } from "@/components/ui/badge";
+import LinkStatus from "@/components/LinkStatus";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -11,6 +12,7 @@ export default async function TagsPage() {
       <main>
         <Suspense fallback={<div>Loading...</div>}>
           <h2 className="mb-8 text-2xl font-bold">標籤</h2>
+
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <Link
@@ -23,6 +25,7 @@ export default async function TagsPage() {
                   className="text-foreground/90 hover:bg-foreground/10"
                 >
                   {tag}
+                  <LinkStatus />
                 </Badge>
               </Link>
             ))}
