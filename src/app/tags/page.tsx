@@ -1,8 +1,6 @@
 import { getAllTags } from "@/lib/markdown";
-import { Badge } from "@/components/ui/badge";
-import LinkStatus from "@/components/LinkStatus";
-import Link from "next/link";
 import { Suspense } from "react";
+import TagLink from "@/components/TagLink";
 
 export default async function TagsPage() {
   const tags = await getAllTags();
@@ -15,19 +13,7 @@ export default async function TagsPage() {
 
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <Link
-                href={`/tags/${encodeURIComponent(tag)}`}
-                key={tag}
-                prefetch={false}
-              >
-                <Badge
-                  variant="outline"
-                  className="text-foreground/90 hover:bg-foreground/10"
-                >
-                  {tag}
-                  <LinkStatus />
-                </Badge>
-              </Link>
+              <TagLink key={tag} tag={tag} />
             ))}
           </div>
         </Suspense>

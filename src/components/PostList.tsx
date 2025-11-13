@@ -2,9 +2,10 @@
 
 import { PostListItem } from "@/lib/markdown";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import LinkStatus from "@/components/LinkStatus";
+import TagLink from "@/components/TagLink";
+import CategoryLink from "@/components/CategoryLink";
 
 type PostListProps = {
   posts: PostListItem[];
@@ -33,14 +34,10 @@ export default function PostList({ posts }: PostListProps) {
               </time>
               {/* 文章分類 */}
               {metadata.categories && (
-                <Link
-                  href={`/categories/${metadata.categories.toLowerCase()}`}
-                  prefetch={false}
-                >
-                  <Badge variant="secondary" className="rounded-none">
-                    {metadata.categories}
-                  </Badge>
-                </Link>
+                <CategoryLink
+                  key={metadata.categories}
+                  category={metadata.categories}
+                />
               )}
             </div>
 
@@ -64,14 +61,7 @@ export default function PostList({ posts }: PostListProps) {
               {metadata.tags && metadata.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {metadata.tags.map((tag: string) => (
-                    <Link href={`/tags/${tag}`} prefetch={false} key={tag}>
-                      <Badge
-                        variant="secondary"
-                        className="bg-tty-pink text-tty-pink-foreground hover:bg-tty-pink/80 transition-colors"
-                      >
-                        {tag}
-                      </Badge>
-                    </Link>
+                    <TagLink key={tag} tag={tag} />
                   ))}
                 </div>
               )}

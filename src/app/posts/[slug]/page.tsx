@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { getMDXPost, getStaticParams } from "@/lib/markdown";
-import { Badge } from "@/components/ui/badge";
 import Overtime from "@/components/post/Overtime";
 import { Suspense } from "react";
-import Link from "next/link";
+import TagLink from "@/components/TagLink";
+import CategoryLink from "@/components/CategoryLink";
 
 // 生成動態元數據
 export async function generateMetadata({
@@ -67,14 +67,10 @@ export default async function Page({
               })}
             </time>
             {mdxPost.metadata.categories && (
-              <Link
-                href={`/categories/${mdxPost.metadata.categories.toLowerCase()}`}
-                prefetch={false}
-              >
-                <Badge variant="secondary" className="rounded-none">
-                  {mdxPost.metadata.categories}
-                </Badge>
-              </Link>
+              <CategoryLink
+                key={mdxPost.metadata.categories}
+                category={mdxPost.metadata.categories}
+              />
             )}
           </div>
 
@@ -89,15 +85,7 @@ export default async function Page({
           {mdxPost.metadata.tags && mdxPost.metadata.tags.length > 0 && (
             <div className="mb-4 flex flex-wrap gap-2">
               {mdxPost.metadata.tags.map((tag: string) => (
-                <Link href={`/tags/${tag}`} prefetch={false} key={tag}>
-                  <Badge
-                    key={tag}
-                    variant="secondary"
-                    className="bg-tty-pink text-tty-pink-foreground hover:bg-tty-pink/80 transition-colors"
-                  >
-                    {tag}
-                  </Badge>
-                </Link>
+                <TagLink key={tag} tag={tag} />
               ))}
             </div>
           )}
