@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { getMDXPost, getStaticParams } from "@/lib/markdown";
 import { Badge } from "@/components/ui/badge";
+import Overtime from "@/components/post/Overtime";
+import { Suspense } from "react";
+import Link from "next/link";
 
 // 生成動態元數據
 export async function generateMetadata({
@@ -51,7 +54,10 @@ export default async function Page({
       <article className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
         {/* 文章標題和元數據 */}
         <header className="mb-8 border-b pb-6">
+          {/* 文章標題 */}
           <h1 className="mb-4 text-5xl font-bold">{mdxPost.metadata.title}</h1>
+
+          {/* 文章日期和分類 */}
           <div className="text-muted-foreground flex items-center gap-4 text-sm">
             <time dateTime={mdxPost.metadata.pubDate}>
               {new Date(mdxPost.metadata.pubDate).toLocaleDateString("zh-TW", {
@@ -61,34 +67,48 @@ export default async function Page({
               })}
             </time>
             {mdxPost.metadata.categories && (
-              <>
-                <span className="select-none">•</span>
-                <span>{mdxPost.metadata.categories}</span>
-              </>
+              <Link
+                href={`/categories/${mdxPost.metadata.categories.toLowerCase()}`}
+                prefetch={false}
+              >
+                <Badge variant="secondary" className="rounded-none">
+                  {mdxPost.metadata.categories}
+                </Badge>
+              </Link>
             )}
           </div>
+
+          {/* 文章描述 */}
           {mdxPost.metadata.description && (
             <p className="text-muted-foreground mt-4 text-lg">
               {mdxPost.metadata.description}
             </p>
           )}
+
+          {/* 文章標籤 */}
           {mdxPost.metadata.tags && mdxPost.metadata.tags.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mb-4 flex flex-wrap gap-2">
               {mdxPost.metadata.tags.map((tag: string) => (
-                <Badge
-                  key={tag}
-                  variant="secondary"
-                  className="bg-tty-pink text-tty-pink-foreground hover:bg-tty-pink/80"
-                >
-                  {tag}
-                </Badge>
+                <Link href={`/tags/${tag}`} prefetch={false} key={tag}>
+                  <Badge
+                    key={tag}
+                    variant="secondary"
+                    className="bg-tty-pink text-tty-pink-foreground hover:bg-tty-pink/80 transition-colors"
+                  >
+                    {tag}
+                  </Badge>
+                </Link>
               ))}
             </div>
           )}
+          {/* 判斷是否超過半年 */}
+          <Suspense fallback={null}>
+            <Overtime pubDate={mdxPost.metadata.pubDate} />
+          </Suspense>
         </header>
 
         {/* MDX 內容 */}
-        <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div>
           <Post />
         </div>
       </article>

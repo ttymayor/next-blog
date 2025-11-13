@@ -11,6 +11,7 @@ interface ExperienceItem {
   description: string;
   tags: { name: string; icon: string }[];
 }
+
 const experience: ExperienceItem[] = [
   {
     title: "Full Stack",

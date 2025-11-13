@@ -142,7 +142,10 @@ export async function getAllPosts(): Promise<PostListItem[]> {
 
   // 過濾掉草稿，並按日期排序
   return posts
-    .filter((post) => post.metadata.draft !== true)
+    .filter(
+      (post) =>
+        post.metadata.draft !== true || process.env.NODE_ENV === "development",
+    )
     .sort((a, b) => {
       return (
         new Date(b.metadata.pubDate).getTime() -
