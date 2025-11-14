@@ -67,9 +67,13 @@ export default function PostList({ posts }: PostListProps) {
               )}
 
               {/* 文章描述 */}
-              {metadata.description && (
+              {metadata.description ? (
                 <p className="text-muted-foreground leading-relaxed">
                   {metadata.description}
+                </p>
+              ) : (
+                <p className="text-muted-foreground leading-relaxed">
+                  作者很懶，沒有寫描述
                 </p>
               )}
             </div>
