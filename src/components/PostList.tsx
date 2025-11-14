@@ -6,15 +6,52 @@ import { Card, CardContent } from "@/components/ui/card";
 import LinkStatus from "@/components/LinkStatus";
 import TagLink from "@/components/TagLink";
 import CategoryLink from "@/components/CategoryLink";
+import { useState } from "react";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Search } from "lucide-react";
 
 type PostListProps = {
   posts: PostListItem[];
 };
 
 export default function PostList({ posts }: PostListProps) {
+  const [search, setSearch] = useState("");
+
+  const filteredPosts = () => {
+    return posts.filter((post) => {
+      return (
+        post.metadata.title.toLowerCase().includes(search.toLowerCase()) ||
+        post.metadata.description
+          ?.toLowerCase()
+          .includes(search.toLowerCase()) ||
+        post.metadata.tags?.some((tag) =>
+          tag.toLowerCase().includes(search.toLowerCase()),
+        ) ||
+        post.metadata.categories?.toLowerCase().includes(search.toLowerCase())
+      );
+    });
+  };
+
   return (
     <div className="flex flex-col gap-6">
-      {posts.map(({ slug, metadata }) => (
+      <InputGroup className="rounded-xl border-none">
+        <InputGroupInput
+          placeholder="搜尋文章"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <InputGroupAddon>
+          <Search />
+        </InputGroupAddon>
+        <InputGroupAddon align="inline-end">
+          {filteredPosts().length} 篇文章
+        </InputGroupAddon>
+      </InputGroup>
+      {filteredPosts().map(({ slug, metadata }) => (
         <Card
           key={slug}
           className="group p-6 transition-shadow hover:shadow-lg"
