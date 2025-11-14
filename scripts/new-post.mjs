@@ -141,17 +141,13 @@ async function main() {
   // 生成完整文件內容
   const fileContent = `${metadataContent}
 
-# ${answers.title}
-
-在這裡開始撰寫您的文章內容...
-
 ## 小節標題
 
 您可以使用 Markdown 語法來撰寫文章。
 
 ### 程式碼範例
 
-\`\`\`javascript:title=example.js
+\`\`\`javascript:example.js
 function hello() {
   console.log('Hello, World!');
 }
