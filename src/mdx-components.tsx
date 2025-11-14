@@ -73,6 +73,52 @@ const components: MDXComponents = {
       {...(props as ImageProps)}
     />
   ),
+  table: ({ children }) => (
+    <div className="my-6 overflow-x-auto rounded-lg border border-gray-300 dark:border-gray-700">
+      <table className="w-full overflow-hidden rounded-lg border border-gray-300 dark:border-gray-700">
+        {children}
+      </table>
+    </div>
+  ),
+  thead: ({ children }) => (
+    <thead className="bg-gray-100 dark:bg-gray-800">{children}</thead>
+  ),
+  tbody: ({ children }) => <tbody>{children}</tbody>,
+  tr: ({ children }) => (
+    <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/50">{children}</tr>
+  ),
+  th: ({ children, align, ...props }) => {
+    const alignClass =
+      align === "center"
+        ? "text-center"
+        : align === "right"
+          ? "text-right"
+          : "text-left";
+    return (
+      <th
+        className={`text-foreground border-r border-b border-gray-300 px-4 py-2 font-semibold first:border-l last:border-r dark:border-gray-700 ${alignClass}`}
+        {...props}
+      >
+        {children}
+      </th>
+    );
+  },
+  td: ({ children, align, ...props }) => {
+    const alignClass =
+      align === "center"
+        ? "text-center"
+        : align === "right"
+          ? "text-right"
+          : "text-left";
+    return (
+      <td
+        className={`text-foreground/90 border-r border-b border-gray-300 px-4 py-2 first:border-l last:border-r dark:border-gray-700 ${alignClass}`}
+        {...props}
+      >
+        {children}
+      </td>
+    );
+  },
 };
 
 export function useMDXComponents(): MDXComponents {

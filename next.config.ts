@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
 const withMDX = createMDX({
   extension: /\.mdx$/,
   options: {
+    remarkPlugins: [
+      "remark-gfm", // 支援 GitHub Flavored Markdown，包括表格
+    ],
     rehypePlugins: [
       "rehype-code-titles", // 必須在 rehype-prism-plus 之前
       [
