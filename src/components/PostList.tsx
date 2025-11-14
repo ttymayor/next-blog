@@ -13,6 +13,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Search } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type PostListProps = {
   posts: PostListItem[];
@@ -124,6 +125,41 @@ export default function PostList({ posts }: PostListProps) {
           </CardContent>
         </Card>
       ))}
+    </div>
+  );
+}
+
+export function PostListSkeleton() {
+  return (
+    <div className="flex flex-col gap-6">
+      <InputGroup className="rounded-xl border-none" data-disabled>
+        <InputGroupInput placeholder="搜尋文章" value="" disabled />
+        <InputGroupAddon>
+          <Search />
+        </InputGroupAddon>
+        <InputGroupAddon align="inline-end"> 0 篇文章</InputGroupAddon>
+      </InputGroup>
+
+      <Card className="p-6">
+        <CardContent className="px-0">
+          <div className="mb-3 flex items-center gap-4 text-sm">
+            <Skeleton className="h-5 w-28 rounded-full" />
+            <Skeleton className="h-5 w-10 rounded-full" />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Skeleton className="h-8 w-2/3 rounded-full" />
+
+            <div className="flex flex-wrap gap-2">
+              <Skeleton className="h-[22px] w-12 rounded-full" />
+              <Skeleton className="h-[22px] w-16 rounded-full" />
+            </div>
+
+            <Skeleton className="mb-4 h-[26px] w-4/5 rounded-full" />
+          </div>
+
+          <Skeleton className="h-6 w-[84px] rounded-full" />
+        </CardContent>
+      </Card>
     </div>
   );
 }
