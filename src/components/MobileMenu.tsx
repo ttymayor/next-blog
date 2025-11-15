@@ -33,8 +33,8 @@ export default function MobileMenu() {
       ></div>
       <div
         className={cn(
-          "bg-background fixed top-0 right-0 z-50 h-full w-3/4 max-w-sm transform p-4 shadow-lg transition-transform duration-300 ease-in-out",
-          isOpen ? "translate-x-0" : "translate-x-full",
+          "bg-background fixed top-0 right-0 z-50 h-full w-3/4 max-w-sm transform p-4 shadow-2xl transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "translate-x-[150%]",
         )}
       >
         <div className="flex items-center justify-between">
@@ -56,7 +56,7 @@ export default function MobileMenu() {
           <Button variant="ghost" size="lg" onClick={toggleMenu} asChild>
             <Link
               href="/"
-              className="text-foreground text-lg no-underline"
+              className="text-primary text-2xl no-underline"
               prefetch={false}
             >
               首頁
@@ -65,7 +65,7 @@ export default function MobileMenu() {
           <Button variant="ghost" size="lg" onClick={toggleMenu} asChild>
             <Link
               href="/about"
-              className="text-foreground text-lg no-underline"
+              className="text-primary text-2xl no-underline"
               prefetch={false}
             >
               關於
@@ -74,7 +74,7 @@ export default function MobileMenu() {
           <Button variant="ghost" size="lg" onClick={toggleMenu} asChild>
             <Link
               href="/posts"
-              className="text-foreground text-lg no-underline"
+              className="text-primary text-2xl no-underline"
               prefetch={false}
             >
               文章
@@ -83,7 +83,7 @@ export default function MobileMenu() {
           <Button variant="ghost" size="lg" onClick={toggleMenu} asChild>
             <Link
               href="/categories"
-              className="text-foreground text-lg no-underline"
+              className="text-primary text-2xl no-underline"
               prefetch={false}
             >
               分類
@@ -92,7 +92,7 @@ export default function MobileMenu() {
           <Button variant="ghost" size="lg" onClick={toggleMenu} asChild>
             <Link
               href="/tags"
-              className="text-foreground text-lg no-underline"
+              className="text-primary text-lg no-underline"
               prefetch={false}
             >
               標籤
