@@ -34,7 +34,7 @@ const components: MDXComponents = {
   a: ({ children, href }) => (
     <a
       href={href}
-      className="text-blue-600 hover:underline dark:text-blue-400"
+      className="text-tty-primary hover:text-tty-secondary transition-colors"
       target={href?.startsWith("http") ? "_blank" : undefined}
       rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
     >
