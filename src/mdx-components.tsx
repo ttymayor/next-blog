@@ -12,17 +12,17 @@ const components: MDXComponents = {
     <h1 className="text-foreground mt-8 mb-4 text-4xl font-bold">{children}</h1>
   ),
   h2: ({ children }) => (
-    <h2 className="text-foreground mt-6 mb-3 text-3xl font-semibold">
+    <h2 className="text-foreground mt-8 mb-4 text-3xl font-semibold">
       {children}
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="text-foreground mt-4 mb-2 text-2xl font-semibold">
+    <h3 className="text-foreground mt-6 mb-3 text-2xl font-semibold">
       {children}
     </h3>
   ),
   p: ({ children }) => (
-    <p className="text-foreground/90 mb-4 leading-7">{children}</p>
+    <p className="text-foreground/90 my-4 leading-7">{children}</p>
   ),
   ul: ({ children }) => (
     <ul className="mb-4 list-inside list-disc space-y-2">{children}</ul>
@@ -80,9 +80,7 @@ const components: MDXComponents = {
       </table>
     </div>
   ),
-  thead: ({ children }) => (
-    <thead className="bg-gray-100 dark:bg-gray-800">{children}</thead>
-  ),
+  thead: ({ children }) => <thead className="bg-muted">{children}</thead>,
   tbody: ({ children }) => <tbody>{children}</tbody>,
   tr: ({ children }) => (
     <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/50">{children}</tr>

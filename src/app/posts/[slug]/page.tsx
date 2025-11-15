@@ -4,6 +4,7 @@ import Overtime from "@/components/post/Overtime";
 import { Suspense } from "react";
 import TagLink from "@/components/TagLink";
 import CategoryLink from "@/components/CategoryLink";
+import { Separator } from "@/components/ui/separator";
 
 // 生成動態元數據
 export async function generateMetadata({
@@ -53,7 +54,7 @@ export default async function Page({
     return (
       <article className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
         {/* 文章標題和元數據 */}
-        <header className="mb-8 border-b pb-6">
+        <header>
           {/* 文章標題 */}
           <h1 className="mb-4 text-5xl font-bold">{mdxPost.metadata.title}</h1>
 
@@ -94,6 +95,8 @@ export default async function Page({
             <Overtime pubDate={mdxPost.metadata.pubDate} />
           </Suspense>
         </header>
+
+        <Separator className="my-8" />
 
         {/* MDX 內容 */}
         <div>

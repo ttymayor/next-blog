@@ -11,11 +11,26 @@
   font-size: 0.875rem;
   font-weight: 600;
   color: #abb2bf;
+  /* 支援深色/淺色模式 */
   background: #21252b;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
   border: 1px solid #3e4451;
   border-bottom: none;
+}
+
+/* 淺色模式下的程式碼標題 */
+:root:not(.dark) .rehype-code-title {
+  background: #dfe1e3;
+  color: #24292f;
+  border-color: #d0d7de;
+}
+
+/* 深色模式下的程式碼標題 */
+.dark .rehype-code-title {
+  background: #21252b;
+  color: #abb2bf;
+  border-color: #3e4451;
 }
 
 /* 有標題的程式碼區塊需要移除上圓角 */
