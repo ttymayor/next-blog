@@ -39,11 +39,14 @@ export default function PostList({ posts }: PostListProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <InputGroup className="rounded-xl border-none">
+      <InputGroup className="rounded-xl">
         <InputGroupInput
           placeholder="搜尋文章"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          id="search"
+          name="search"
+          autoComplete="off"
         />
         <InputGroupAddon>
           <Search />
