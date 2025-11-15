@@ -12,3 +12,24 @@
   --color-tty-pink: oklch(0.8398 0.0596 7.91);
   --color-tty-pink-foreground: oklch(0.2903 0.0537 273.74);
 }
+
+/* KaTeX 數學公式樣式 */
+.katex {
+  font-size: 1.1em;
+}
+
+/* 行內數學公式 */
+.katex-display {
+  margin: 1em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* 深色模式下的數學公式顏色調整 */
+.dark .katex {
+  color: oklch(0.9997 0.0013 106.42);
+}
+
+.dark .katex .mord {
+  color: oklch(0.9997 0.0013 106.42);
+}

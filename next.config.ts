@@ -16,6 +16,7 @@ const withMDX = createMDX({
   options: {
     remarkPlugins: [
       "remark-gfm", // 支援 GitHub Flavored Markdown，包括表格
+      "remark-math", // 支援 LaTeX 數學公式
     ],
     rehypePlugins: [
       "rehype-code-titles", // 必須在 rehype-prism-plus 之前
@@ -26,6 +27,7 @@ const withMDX = createMDX({
           showLineNumbers: true,
         },
       ],
+      "rehype-katex", // 渲染 LaTeX 數學公式
     ],
   },
 });
