@@ -160,7 +160,7 @@ export type Tag = {
   count: number;
 };
 
-export async function getAllTags(): Promise<Tag[] | undefined> {
+export async function getAllTags(sorted: boolean = false): Promise<Tag[]> {
   const posts = await getAllPosts();
   const tags: Tag[] = [];
   for (const post of posts) {
@@ -175,7 +175,7 @@ export async function getAllTags(): Promise<Tag[] | undefined> {
       }
     }
   }
-  return tags.sort((a, b) => b.count - a.count) ?? undefined;
+  return sorted ? tags.sort((a, b) => b.count - a.count) : tags;
 }
 
 export async function getAllCategories() {
