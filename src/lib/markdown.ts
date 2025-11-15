@@ -140,7 +140,7 @@ export async function getAllPosts(): Promise<PostListItem[]> {
     }
   }
 
-  // 過濾掉草稿，並按日期排序
+  // 過濾掉草稿，並按日期排序，如果是在開發環境，則不過濾草稿
   return posts
     .filter(
       (post) =>
@@ -154,13 +154,28 @@ export async function getAllPosts(): Promise<PostListItem[]> {
     });
 }
 
-export async function getAllTags() {
+// 獲取所有標籤，回傳值為 Tag name, Tag Count
+export type Tag = {
+  name: string;
+  count: number;
+};
+
+export async function getAllTags(): Promise<Tag[] | undefined> {
   const posts = await getAllPosts();
-  const tags = posts
-    .map((post) => post.metadata.tags)
-    .flat()
-    .filter((tag): tag is string => tag !== undefined);
-  return Array.from(new Set(tags)).sort();
+  const tags: Tag[] = [];
+  for (const post of posts) {
+    if (post.metadata.tags) {
+      for (const tag of post.metadata.tags) {
+        const existingTag = tags.find((t) => t.name === tag);
+        if (existingTag) {
+          existingTag.count++;
+        } else {
+          tags.push({ name: tag, count: 1 });
+        }
+      }
+    }
+  }
+  return tags.sort((a, b) => b.count - a.count) ?? undefined;
 }
 
 export async function getAllCategories() {

@@ -1,5 +1,6 @@
 import { getAllPosts, getAllTags } from "@/lib/markdown";
 import PostList from "@/components/PostList";
+import TagLink from "@/components/TagLink";
 
 async function TagPosts({ tag }: { tag: string }) {
   // 解碼 URL 編碼的標籤名稱
@@ -22,7 +23,9 @@ export default async function TagPage({
   return (
     <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <main>
-        <h2 className="mb-8 text-2xl font-bold">標籤「{decodedTag}」</h2>
+        <h2 className="mb-8 flex items-center gap-2 text-2xl font-bold">
+          標籤 <TagLink link={false} tag={decodedTag} />
+        </h2>
         <TagPosts tag={tag} />
       </main>
     </div>
@@ -31,5 +34,7 @@ export default async function TagPage({
 
 export async function generateStaticParams() {
   const tags = await getAllTags();
-  return tags.map((tag) => ({ tag: encodeURIComponent(tag) }));
+  return (
+    tags?.map((tag) => ({ tag: encodeURIComponent(tag.name) })) ?? undefined
+  );
 }

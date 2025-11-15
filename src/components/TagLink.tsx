@@ -5,19 +5,30 @@ import { Badge } from "@/components/ui/badge";
 import LinkStatus from "@/components/LinkStatus";
 
 interface TagLinkProps {
+  link?: boolean;
   tag: string;
+  count?: number;
 }
 
-export default function TagLink({ tag }: TagLinkProps) {
-  return (
+export default function TagLink({ link = true, tag, count }: TagLinkProps) {
+  return link ? (
     <Link href={`/tags/${encodeURIComponent(tag)}`} key={tag} prefetch={false}>
       <Badge
         variant="outline"
         className="text-foreground/90 hover:bg-foreground/10"
       >
         {tag}
+        {count && <span className="text-foreground/90">({count})</span>}
         <LinkStatus />
       </Badge>
     </Link>
+  ) : (
+    <Badge
+      variant="outline"
+      className="text-foreground/90 hover:bg-foreground/10"
+    >
+      {tag}
+      {count && <span className="text-foreground/90">({count})</span>}
+    </Badge>
   );
 }

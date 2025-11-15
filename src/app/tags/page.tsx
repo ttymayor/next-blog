@@ -9,12 +9,12 @@ export default async function TagsPage() {
     <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <main>
         <h2 className="mb-8 flex items-center gap-2 text-2xl font-bold">
-          標籤 <Badge>{tags.length}</Badge>
+          標籤 <Badge>{tags?.length ?? 0}</Badge>
         </h2>
 
         <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <TagLink key={tag} tag={tag} />
+          {tags?.map((tag) => (
+            <TagLink key={tag.name} tag={tag.name} count={tag.count} />
           ))}
         </div>
       </main>
