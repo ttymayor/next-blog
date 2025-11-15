@@ -1,5 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import Image, { ImageProps } from "next/image";
+import BetterSpoiler from "@/components/post/Spoiler";
+import CodeTab from "@/components/post/CodeTab";
 
 // 這個文件允許您提供自定義的 React 組件
 // 用於 MDX 文件中。您可以導入和使用任何
@@ -117,6 +119,8 @@ const components: MDXComponents = {
       </td>
     );
   },
+  Spoiler: ({ children }) => <BetterSpoiler>{children}</BetterSpoiler>,
+  CodeTab: ({ codes }) => <CodeTab codes={codes} />,
 };
 
 export function useMDXComponents(): MDXComponents {
