@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { TriangleAlert } from "lucide-react";
 
 interface OvertimeProps {
   pubDate: string;
@@ -17,7 +18,8 @@ export default function Overtime({ pubDate }: OvertimeProps) {
   if (diff <= HALF_YEAR_MS) return null;
 
   return (
-    <div className="border-tty-pink w-full rounded-md border p-4">
+    <div className="border-tty-pink bg-tty-pink/20 flex w-full items-center gap-2 rounded-md border p-4">
+      <TriangleAlert className="text-tty-pink h-4 w-4" />
       <p className="text-tty-pink mb-0">
         該文章已超過半年，可能已經過時。請注意文章內容的正確性。
       </p>

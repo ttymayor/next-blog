@@ -4,7 +4,7 @@
 }
 
 :root {
-  --color-tty-pink: oklch(0.7324 0.1003 7.91);
+  --color-tty-pink: oklch(0.6412 0.185 0.58);
   --color-tty-pink-foreground: oklch(0.2903 0.0537 273.74);
 }
 
