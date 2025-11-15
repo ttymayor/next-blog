@@ -6,10 +6,14 @@ import LinkStatus from "@/components/LinkStatus";
 
 interface CategoryLinkProps {
   category: string;
+  link?: boolean;
 }
 
-export default function CategoryLink({ category }: CategoryLinkProps) {
-  return (
+export default function CategoryLink({
+  category,
+  link = true,
+}: CategoryLinkProps) {
+  return link ? (
     <Link
       href={`/categories/${encodeURIComponent(category)}`}
       key={category}
@@ -20,5 +24,9 @@ export default function CategoryLink({ category }: CategoryLinkProps) {
         <LinkStatus />
       </Badge>
     </Link>
+  ) : (
+    <Badge variant="secondary" className="rounded-none">
+      {category}
+    </Badge>
   );
 }

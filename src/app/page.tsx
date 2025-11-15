@@ -4,6 +4,9 @@ import TechStacks from "@/components/TechStacks";
 import Slides from "@/components/Slides";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
+import CategoryLink from "@/components/CategoryLink";
+import TagLink from "@/components/TagLink";
+import LinkStatus from "@/components/LinkStatus";
 
 // 獲取最新文章
 async function getLatestPosts() {
@@ -47,10 +50,7 @@ export default async function Home() {
                   className="group"
                   prefetch={false}
                 >
-                  <h3 className="mb-3 text-2xl font-bold transition-colors">
-                    {metadata.title}
-                  </h3>
-                  <div className="text-muted-foreground mb-3 flex items-center gap-2 text-sm">
+                  <div className="text-muted-foreground mb-3 flex flex-wrap items-center gap-2 text-sm">
                     <time dateTime={metadata.pubDate}>
                       {new Date(metadata.pubDate).toLocaleDateString("zh-TW", {
                         year: "numeric",
@@ -58,12 +58,40 @@ export default async function Home() {
                         day: "numeric",
                       })}
                     </time>
+                    {/* 分類 */}
+                    {metadata.categories && (
+                      <CategoryLink
+                        link={false}
+                        category={metadata.categories}
+                      />
+                    )}
                   </div>
-                  {metadata.description && (
-                    <p className="text-muted-foreground mb-4 line-clamp-3">
-                      {metadata.description}
-                    </p>
-                  )}
+
+                  <div className="flex flex-col gap-2">
+                    {/* 文章標題 */}
+                    <h3 className="mb-0 flex items-center gap-2 text-2xl font-bold transition-colors">
+                      {metadata.title}
+                      <LinkStatus />
+                    </h3>
+
+                    {/* 文章標籤 */}
+                    {metadata.tags && metadata.tags.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-2">
+                        {metadata.tags.map((tag) => (
+                          <TagLink link={false} key={tag} tag={tag} />
+                        ))}
+                      </div>
+                    )}
+
+                    {/* 文章描述 */}
+                    {metadata.description && (
+                      <p className="text-muted-foreground mb-4 line-clamp-3">
+                        {metadata.description}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* 閱讀更多 */}
                   <span className="text-tty-pink group-hover:underline">
                     閱讀更多 →
                   </span>
