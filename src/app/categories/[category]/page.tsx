@@ -1,7 +1,5 @@
 import PostList from "@/components/PostList";
 import { getAllPosts, getAllCategories } from "@/lib/markdown";
-import { Suspense } from "react";
-import { PostListSkeleton } from "@/components/PostList";
 
 async function CategoryPosts({ category }: { category: string }) {
   const decodedCategory = decodeURIComponent(category);
@@ -23,9 +21,7 @@ export default async function CategoryPage({
     <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <main>
         <h2 className="mb-8 text-2xl font-bold">分類「{decodedCategory}」</h2>
-        <Suspense fallback={<PostListSkeleton />}>
-          <CategoryPosts category={category} />
-        </Suspense>
+        <CategoryPosts category={category} />
       </main>
     </div>
   );

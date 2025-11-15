@@ -1,7 +1,5 @@
 import { getAllPosts, getAllTags } from "@/lib/markdown";
 import PostList from "@/components/PostList";
-import { Suspense } from "react";
-import { PostListSkeleton } from "@/components/PostList";
 
 async function TagPosts({ tag }: { tag: string }) {
   // 解碼 URL 編碼的標籤名稱
@@ -25,9 +23,7 @@ export default async function TagPage({
     <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
       <main>
         <h2 className="mb-8 text-2xl font-bold">標籤「{decodedTag}」</h2>
-        <Suspense fallback={<PostListSkeleton />}>
-          <TagPosts tag={tag} />
-        </Suspense>
+        <TagPosts tag={tag} />
       </main>
     </div>
   );
