@@ -1,0 +1,127 @@
+export const metadata = {
+  title: '前綴和（Prefix Sum）',
+  description: '前綴和可記錄 0~n 的總和，在求區間和或者要使用差分轉原數列時會用到。特別是在需要重複計算區間和時，使用前綴和可以大大提高效率。',
+  pubDate: '2024-05-22T01:22:20+08:00',
+  categories: '演算法',
+  tags: ['演算法', '前綴和', '計算機科學'],
+  draft: false,
+}
+
+## 簡介
+
+前綴和可記錄 0~n 的總和，在求區間和或者要使用差分轉原數列時會用到。特別是在需要重複計算區間和時，使用前綴和可以大大提高效率。
+
+對於數組 A = [a0, a1, a2, ..., an]，前綴和數組 P 定義為：
+
+$$
+P[i] = \sum_{j=0}^{i-1} A[j] = P[i-1] + A[i-1]
+$$
+
+其中 P[0] = 0。
+
+| 索引 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+| ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 數值 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+| 前綴和 | 0 | 1 | 3 | 6 | 10 | 15 | 21 | 28 | 36 | 45 | 55 | 66 |
+
+## 例子
+
+### 建立前綴和 $O(n)$
+
+```cpp
+vector<int> prefixSum(vector<int>& nums) {
+  vector<int> prefix(nums.size() + 1);
+  for (int i = 0; i < nums.size(); i++) {
+    prefix[i + 1] = prefix[i] + nums[i];
+  }
+  return prefix;
+}
+```
+
+### 查詢區間和 $O(1)$
+
+使用前綴和查詢區間 $[l, r]$ 的和，時間複雜度為 $O(1)$：
+
+$$
+\text{sum}(l, r) = P[r+1] - P[l] = \sum_{i=l}^{r} A[i]
+$$
+
+```cpp
+int query(vector<int>& prefix, int l, int r) {
+  return prefix[r + 1] - prefix[l];
+}
+```
+
+### 差分陣列轉原數列 $O(n)$
+
+```cpp
+vector<int> diffArrayToOriginal(vector<int>& diff) {
+  vector<int> original(diff.size());
+  original[0] = diff[0];
+  for (int i = 1; i < diff.size(); i++) {
+    original[i] = original[i - 1] + diff[i];
+  }
+  return original;
+}
+```
+
+## 題目練習
+
+### [CSES 1646. Static Range Sum Queries（易）](https://cses.fi/problemset/task/1646)
+
+<Spoiler>
+```cpp
+#include <bits/stdc++.h>
+#define ouo ios_base::sync_with_stdio(false), cin.tie(0)
+#define ll long long
+#define db double
+using namespace std;
+ 
+int main() {
+    ouo;
+    int n, q;
+    cin >> n >> q;
+    ll arr[n];
+    ll sum[n + 1] = {0};
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+        (i == 0) ? (sum[i + 1] = arr[i]) : (sum[i + 1] = arr[i] + sum[i]);
+    }
+ 
+    while (q--) {
+        int a, b;
+        cin >> a >> b;
+        ll ans = sum[b] - sum[a - 1];
+
+        cout << ans << "\n";
+    }
+}
+```
+</Spoiler>
+
+### [LeetCode 1109. Corporate Flight Bookings（中）](https://leetcode.com/problems/corporate-flight-bookings/)
+
+<Spoiler>
+```cpp
+class Solution {
+public:
+    vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
+        vector<int> result(n);
+
+        for (auto &b : bookings) {
+            result[b[0] - 1] += b[2];
+            if (b[1] < n) result[b[1]] -= b[2];
+        }
+        for (int i = 1; i < n; i++) {
+            result[i] += result[i - 1];
+        }
+        return result;
+    }
+};
+```
+
+**解題思路：**
+1. 使用差分陣列記錄每個區間的變化
+2. 對於區間 $[l, r]$，在 $l$ 位置加上值，在 $r+1$ 位置減去值
+3. 最後將差分陣列轉換為原數列（使用前綴和）
+</Spoiler>

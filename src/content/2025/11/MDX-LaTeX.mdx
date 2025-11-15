@@ -1,0 +1,82 @@
+export const metadata = {
+  title: '如何在 Next.js 中 MDX 渲染 LaTaX',
+  description: '如何在 Next.js 中使用 MDX 渲染 LaTeX 數學公式。',
+  pubDate: '2025-11-16T02:39:01+08:00',
+  tags: ['Next.js', 'MDX', 'LaTeX'],
+  categories: 'Next.js',
+  draft: false,
+}
+
+## 安裝套件
+
+- `rehype-katex`：用於渲染 LaTeX 數學公式
+- `remark-math`：用於解析 LaTeX 數學公式
+- `katex`：用於渲染 LaTeX 數學公式
+
+<CodeTab language="bash" codes={{
+  npm: "npm install rehype-katex remark-math katex",
+  pnpm: "pnpm add rehype-katex remark-math katex",
+  yarn: "yarn add rehype-katex remark-math katex",
+  bun: "bun add rehype-katex remark-math katex",
+}} />
+
+## 配置
+
+在 `next.config.ts` 中配置：
+
+<CodeTab language="ts" codes={{
+  "next.config.ts": `import type { NextConfig } from "next";
+  import createMDX from "@next/mdx";
+
+  const nextConfig: NextConfig = {
+    pageExtensions: ["tsx", "jsx", "mdx", "ts", "js"],
+    reactCompiler: true,
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
+  };
+  `
+}} />
+
+可額外寫 LaTeX 的樣式，在 `custom.css` 中，預設樣式可使用 `@import "katex/dist/katex.min.css";`：
+
+<CodeTab language="css" codes={{
+  "custom.css": `/* KaTeX 數學公式樣式 */
+  .katex {
+    font-size: 1.1em;
+  }
+
+  /* 行內數學公式 */
+  .katex-display {
+    margin: 1em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  /* 深色模式下的數學公式顏色調整 */
+  .dark .katex {
+    color: oklch(0.9997 0.0013 106.42);
+  }
+
+  .dark .katex .mord {
+    color: oklch(0.9997 0.0013 106.42);
+  }
+  `
+}} />
+
+## 使用方式
+
+```mdx
+$ \int_{-\infty}^\infty g(x) \, dx $
+```
+
+$ \int_{-\infty}^\infty g(x) \, dx $
+
+```mdx
+$$
+\int_{-\infty}^\infty g(x) \, dx
+$$
+```
+
+$$
+\int_{-\infty}^\infty g(x) \, dx
+$$
