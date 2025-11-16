@@ -1,4 +1,4 @@
-import PostList from "@/components/PostList";
+import PostList from "@/components/post/PostList";
 import { getAllPosts, getAllCategories } from "@/lib/markdown";
 
 async function CategoryPosts({ category }: { category: string }) {

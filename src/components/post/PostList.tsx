@@ -13,7 +13,13 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Search } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Noto_Serif_TC } from "next/font/google";
+
+const notoSerifTC = Noto_Serif_TC({
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-noto-serif-tc",
+});
 
 type PostListProps = {
   posts: PostListItem[];
@@ -89,7 +95,9 @@ export default function PostList({ posts }: PostListProps) {
                 prefetch={false}
                 className="flex items-center gap-2"
               >
-                <h2 className="mb-0 text-2xl font-bold group-hover:underline">
+                <h2
+                  className={`${notoSerifTC.className} mb-0 text-2xl font-bold group-hover:underline`}
+                >
                   {metadata.title}
                   {process.env.NODE_ENV === "development" &&
                     metadata.draft &&
@@ -108,61 +116,26 @@ export default function PostList({ posts }: PostListProps) {
               )}
 
               {/* 文章描述 */}
-              {metadata.description ? (
-                <p className="text-muted-foreground leading-relaxed">
-                  {metadata.description}
-                </p>
-              ) : (
-                <p className="text-muted-foreground leading-relaxed">
-                  作者很懶，沒有寫描述
-                </p>
-              )}
+              <p
+                className={`${notoSerifTC.className} text-muted-foreground leading-relaxed`}
+              >
+                {metadata.description
+                  ? metadata.description
+                  : "作者很懶，沒有寫描述"}
+              </p>
             </div>
 
             <Link href={`/posts/${slug}`} prefetch={false}>
               {/* 閱讀更多 */}
-              <span className="text-tty-pink inline-block group-hover:underline">
+              <span
+                className={`${notoSerifTC.className} text-tty-pink inline-block group-hover:underline`}
+              >
                 閱讀更多 →
               </span>
             </Link>
           </CardContent>
         </Card>
       ))}
-    </div>
-  );
-}
-
-export function PostListSkeleton() {
-  return (
-    <div className="flex flex-col gap-6">
-      <InputGroup className="rounded-xl border-none" data-disabled>
-        <InputGroupInput placeholder="搜尋文章" value="" disabled />
-        <InputGroupAddon>
-          <Search />
-        </InputGroupAddon>
-        <InputGroupAddon align="inline-end"> 0 篇文章</InputGroupAddon>
-      </InputGroup>
-
-      <Card className="p-6">
-        <CardContent className="px-0">
-          <div className="mb-3 flex items-center gap-4 text-sm">
-            <Skeleton className="h-5 w-28 rounded-full" />
-            <Skeleton className="h-5 w-10 rounded-full" />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Skeleton className="h-8 w-2/3 rounded-full" />
-
-            <div className="flex flex-wrap gap-2">
-              <Skeleton className="h-[22px] w-12 rounded-full" />
-              <Skeleton className="h-[22px] w-16 rounded-full" />
-            </div>
-
-            <Skeleton className="mb-4 h-[26px] w-4/5 rounded-full" />
-          </div>
-
-          <Skeleton className="h-6 w-[84px] rounded-full" />
-        </CardContent>
-      </Card>
     </div>
   );
 }

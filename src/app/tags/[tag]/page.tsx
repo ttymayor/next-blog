@@ -1,5 +1,5 @@
 import { getAllPosts, getAllTags } from "@/lib/markdown";
-import PostList from "@/components/PostList";
+import PostList from "@/components/post/PostList";
 import TagLink from "@/components/TagLink";
 
 async function TagPosts({ tag }: { tag: string }) {

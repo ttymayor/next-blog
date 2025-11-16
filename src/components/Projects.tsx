@@ -79,7 +79,7 @@ const projects: Project[] = [
 
 export default function Projects() {
   return (
-    <section className="mb-8">
+    <section id="projects" className="mb-8">
       <h2 className="mb-8 text-2xl font-bold">專案</h2>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

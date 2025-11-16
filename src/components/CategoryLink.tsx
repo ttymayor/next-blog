@@ -19,13 +19,13 @@ export default function CategoryLink({
       key={category}
       prefetch={false}
     >
-      <Badge variant="secondary" className="rounded-none">
+      <Badge variant="secondary" className="hover:text-primary rounded-none">
         {category}
         <LinkStatus />
       </Badge>
     </Link>
   ) : (
-    <Badge variant="secondary" className="rounded-none">
+    <Badge variant="secondary" className="rounded-none no-underline">
       {category}
     </Badge>
   );

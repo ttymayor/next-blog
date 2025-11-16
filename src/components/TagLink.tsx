@@ -23,10 +23,7 @@ export default function TagLink({ link = true, tag, count }: TagLinkProps) {
       </Badge>
     </Link>
   ) : (
-    <Badge
-      variant="outline"
-      className="text-foreground/90 hover:bg-foreground/10"
-    >
+    <Badge variant="outline" className="text-foreground/90 no-underline">
       {tag}
       {count && <span className="text-foreground/90">({count})</span>}
     </Badge>

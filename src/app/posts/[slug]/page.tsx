@@ -1,3 +1,4 @@
+import { Noto_Serif_TC } from "next/font/google";
 import type { Metadata } from "next";
 import { getMDXPost, getStaticParams } from "@/lib/markdown";
 import Overtime from "@/components/post/Overtime";
@@ -5,6 +6,12 @@ import { Suspense } from "react";
 import TagLink from "@/components/TagLink";
 import CategoryLink from "@/components/CategoryLink";
 import { Separator } from "@/components/ui/separator";
+
+const notoSerifTC = Noto_Serif_TC({
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-noto-serif-tc",
+});
 
 // 生成動態元數據
 export async function generateMetadata({
@@ -56,7 +63,9 @@ export default async function Page({
         {/* 文章標題和元數據 */}
         <header>
           {/* 文章標題 */}
-          <h1 className="mb-4 text-5xl font-bold">{mdxPost.metadata.title}</h1>
+          <h1 className={`${notoSerifTC.className} mb-4 text-5xl font-bold`}>
+            {mdxPost.metadata.title}
+          </h1>
 
           {/* 文章日期和分類 */}
           <div className="text-muted-foreground flex items-center gap-4 text-sm">
@@ -76,11 +85,11 @@ export default async function Page({
           </div>
 
           {/* 文章描述 */}
-          {mdxPost.metadata.description && (
-            <p className="text-muted-foreground mt-4 text-lg">
-              {mdxPost.metadata.description}
-            </p>
-          )}
+          <p
+            className={`${notoSerifTC.className} text-muted-foreground mt-4 text-lg`}
+          >
+            {mdxPost.metadata.description || "作者很懶，沒有寫描述"}
+          </p>
 
           {/* 文章標籤 */}
           {mdxPost.metadata.tags && mdxPost.metadata.tags.length > 0 && (

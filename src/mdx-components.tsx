@@ -2,6 +2,14 @@ import type { MDXComponents } from "mdx/types";
 import Image, { ImageProps } from "next/image";
 import BetterSpoiler from "@/components/post/Spoiler";
 import CodeTab from "@/components/post/CodeTab";
+import { Noto_Serif_TC } from "next/font/google";
+import { Highlighter } from "@/components/ui/highlighter";
+
+const notoSerifTC = Noto_Serif_TC({
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-noto-serif-tc",
+});
 
 // 這個文件允許您提供自定義的 React 組件
 // 用於 MDX 文件中。您可以導入和使用任何
@@ -11,20 +19,61 @@ import CodeTab from "@/components/post/CodeTab";
 const components: MDXComponents = {
   // 允許自定義內建組件，例如添加樣式
   h1: ({ children }) => (
-    <h1 className="text-foreground mt-8 mb-4 text-4xl font-bold">{children}</h1>
+    <h1
+      className={`${notoSerifTC.className} text-foreground group mt-8 mb-4 text-4xl font-bold`}
+    >
+      {children}
+      <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
+        {" "}
+        h1
+      </span>
+    </h1>
   ),
   h2: ({ children }) => (
-    <h2 className="text-foreground mt-8 mb-4 text-3xl font-semibold">
+    <h2
+      className={`${notoSerifTC.className} text-foreground group mt-8 mb-4 text-3xl font-semibold`}
+    >
       {children}
+      <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
+        {" "}
+        h2
+      </span>
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="text-foreground mt-6 mb-3 text-2xl font-semibold">
+    <h3
+      className={`${notoSerifTC.className} text-foreground group mt-6 mb-3 text-2xl font-semibold`}
+    >
       {children}
+      <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
+        {" "}
+        h3
+      </span>
     </h3>
   ),
+  h4: ({ children }) => (
+    <h4
+      className={`${notoSerifTC.className} text-foreground mt-6 mb-3 text-xl font-semibold`}
+    >
+      {children}
+    </h4>
+  ),
+  h5: ({ children }) => (
+    <h5
+      className={`${notoSerifTC.className} text-foreground mt-6 mb-3 text-lg font-semibold`}
+    >
+      {children}
+    </h5>
+  ),
+  h6: ({ children }) => (
+    <h6
+      className={`${notoSerifTC.className} text-foreground mt-6 mb-3 text-base font-semibold`}
+    >
+      {children}
+    </h6>
+  ),
   p: ({ children }) => (
-    <p className="text-foreground/90 my-4 leading-7">{children}</p>
+    <p className="text-foreground/90 mt-4 leading-7">{children}</p>
   ),
   ul: ({ children }) => (
     <ul className="mb-4 list-inside list-disc space-y-2">{children}</ul>
@@ -121,6 +170,11 @@ const components: MDXComponents = {
   },
   Spoiler: ({ children }) => <BetterSpoiler>{children}</BetterSpoiler>,
   CodeTab: ({ codes }) => <CodeTab codes={codes} />,
+  Highlighter: ({ children, action = "underline", color = "#FF9800" }) => (
+    <Highlighter action={action} color={color}>
+      {children}
+    </Highlighter>
+  ),
 };
 
 export function useMDXComponents(): MDXComponents {
