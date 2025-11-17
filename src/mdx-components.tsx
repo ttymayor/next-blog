@@ -4,12 +4,74 @@ import BetterSpoiler from "@/components/post/Spoiler";
 import CodeTab from "@/components/post/CodeTab";
 import { Noto_Serif_TC } from "next/font/google";
 import { Highlighter } from "@/components/ui/highlighter";
+import type { ReactNode } from "react";
 
 const notoSerifTC = Noto_Serif_TC({
   weight: ["400", "700", "900"],
   subsets: ["latin"],
   variable: "--font-noto-serif-tc",
 });
+
+// 簡單的哈希函數，用於生成唯一 ID
+function simpleHash(text: string): number {
+  let hash = 0;
+  for (let i = 0; i < text.length; i++) {
+    const char = text.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // 轉換為 32 位整數
+  }
+  return Math.abs(hash);
+}
+
+// 從文本生成錨點 ID（與 markdown.ts 中的函數保持一致）
+function generateId(children: ReactNode): string {
+  let text = "";
+
+  if (typeof children === "string") {
+    text = children;
+  } else if (Array.isArray(children)) {
+    text = children
+      .map((child: ReactNode) => {
+        if (typeof child === "string") return child;
+        if (typeof child === "object" && child !== null && "props" in child) {
+          const props = child.props as { children?: ReactNode };
+          return props.children ? generateId(props.children) : "";
+        }
+        return "";
+      })
+      .join("");
+  } else if (
+    typeof children === "object" &&
+    children !== null &&
+    "props" in children
+  ) {
+    const props = children.props as { children?: ReactNode };
+    return props.children ? generateId(props.children) : "";
+  }
+
+  // 檢查是否包含中文字符
+  const hasChinese = /[\u4e00-\u9fff]/.test(text);
+
+  // 如果包含中文，直接使用哈希值生成 ID
+  if (hasChinese) {
+    return `heading-${simpleHash(text)}`;
+  }
+
+  // 先嘗試生成可讀的 ID（英文和數字）
+  let id = text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "") // 移除特殊字符
+    .replace(/\s+/g, "-") // 空格替換為連字符
+    .replace(/-+/g, "-") // 多個連字符合併為一個
+    .trim();
+
+  // 如果 ID 為空或只包含連字符，使用文本的哈希值
+  if (!id || id === "-") {
+    id = `heading-${simpleHash(text)}`;
+  }
+
+  return id;
+}
 
 // 這個文件允許您提供自定義的 React 組件
 // 用於 MDX 文件中。您可以導入和使用任何
@@ -29,49 +91,69 @@ const components: MDXComponents = {
       </span>
     </h1>
   ),
-  h2: ({ children }) => (
-    <h2
-      className={`${notoSerifTC.className} text-foreground group mt-8 mb-4 text-3xl font-semibold`}
-    >
-      {children}
-      <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
-        {" "}
-        h2
-      </span>
-    </h2>
-  ),
-  h3: ({ children }) => (
-    <h3
-      className={`${notoSerifTC.className} text-foreground group mt-6 mb-3 text-2xl font-semibold`}
-    >
-      {children}
-      <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
-        {" "}
-        h3
-      </span>
-    </h3>
-  ),
-  h4: ({ children }) => (
-    <h4
-      className={`${notoSerifTC.className} text-foreground mt-6 mb-3 text-xl font-semibold`}
-    >
-      {children}
-    </h4>
-  ),
-  h5: ({ children }) => (
-    <h5
-      className={`${notoSerifTC.className} text-foreground mt-6 mb-3 text-lg font-semibold`}
-    >
-      {children}
-    </h5>
-  ),
-  h6: ({ children }) => (
-    <h6
-      className={`${notoSerifTC.className} text-foreground mt-6 mb-3 text-base font-semibold`}
-    >
-      {children}
-    </h6>
-  ),
+  h2: ({ children }) => {
+    const id = generateId(children);
+    return (
+      <h2
+        id={id}
+        className={`${notoSerifTC.className} text-foreground group mt-8 mb-4 scroll-mt-24 text-3xl font-semibold`}
+      >
+        {children}
+        <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
+          {" "}
+          h2
+        </span>
+      </h2>
+    );
+  },
+  h3: ({ children }) => {
+    const id = generateId(children);
+    return (
+      <h3
+        id={id}
+        className={`${notoSerifTC.className} text-foreground group mt-6 mb-3 scroll-mt-24 text-2xl font-semibold`}
+      >
+        {children}
+        <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
+          {" "}
+          h3
+        </span>
+      </h3>
+    );
+  },
+  h4: ({ children }) => {
+    const id = generateId(children);
+    return (
+      <h4
+        id={id}
+        className={`${notoSerifTC.className} text-foreground mt-6 mb-3 scroll-mt-24 text-xl font-semibold`}
+      >
+        {children}
+      </h4>
+    );
+  },
+  h5: ({ children }) => {
+    const id = generateId(children);
+    return (
+      <h5
+        id={id}
+        className={`${notoSerifTC.className} text-foreground mt-6 mb-3 scroll-mt-24 text-lg font-semibold`}
+      >
+        {children}
+      </h5>
+    );
+  },
+  h6: ({ children }) => {
+    const id = generateId(children);
+    return (
+      <h6
+        id={id}
+        className={`${notoSerifTC.className} text-foreground mt-6 mb-3 scroll-mt-24 text-base font-semibold`}
+      >
+        {children}
+      </h6>
+    );
+  },
   p: ({ children }) => (
     <p className="text-foreground/90 mt-4 leading-7">{children}</p>
   ),
@@ -117,13 +199,17 @@ const components: MDXComponents = {
       {children}
     </blockquote>
   ),
-  img: (props) => (
-    <Image
-      sizes="100vw"
-      style={{ width: "100%", height: "auto" }}
-      {...(props as ImageProps)}
-    />
-  ),
+  img: (props) => {
+    const imageProps = props as ImageProps;
+    return (
+      <Image
+        {...imageProps}
+        sizes="100vw"
+        style={{ width: "100%", height: "auto" }}
+        alt={imageProps.alt ?? ""}
+      />
+    );
+  },
   table: ({ children }) => (
     <div className="my-6 overflow-x-auto rounded-lg border border-gray-300 dark:border-gray-700">
       <table className="w-full overflow-hidden rounded-lg border border-gray-300 dark:border-gray-700">

@@ -93,6 +93,77 @@ function findPostFile(slug: string): string | null {
   return null;
 }
 
+// 標題結構類型
+export type Heading = {
+  level: number;
+  text: string;
+  id: string;
+};
+
+// 簡單的哈希函數，用於生成唯一 ID
+function simpleHash(text: string): number {
+  let hash = 0;
+  for (let i = 0; i < text.length; i++) {
+    const char = text.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // 轉換為 32 位整數
+  }
+  return Math.abs(hash);
+}
+
+// 從文本生成錨點 ID
+function generateId(text: string): string {
+  // 檢查是否包含中文字符
+  const hasChinese = /[\u4e00-\u9fff]/.test(text);
+
+  // 如果包含中文，直接使用哈希值生成 ID
+  if (hasChinese) {
+    return `heading-${simpleHash(text)}`;
+  }
+
+  // 先嘗試生成可讀的 ID（英文和數字）
+  let id = text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "") // 移除特殊字符
+    .replace(/\s+/g, "-") // 空格替換為連字符
+    .replace(/-+/g, "-") // 多個連字符合併為一個
+    .trim();
+
+  // 如果 ID 為空或只包含連字符，使用文本的哈希值
+  if (!id || id === "-") {
+    id = `heading-${simpleHash(text)}`;
+  }
+
+  return id;
+}
+
+// 從 MDX 原始內容提取標題
+export function extractHeadings(content: string): Heading[] {
+  const headings: Heading[] = [];
+  const idCounts: Record<string, number> = {}; // 追蹤每個 ID 的使用次數
+  // 匹配 h2-h6 標題（跳過 h1，因為那是文章標題）
+  const headingRegex = /^(#{2,6})\s+(.+)$/gm;
+  let match;
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    let id = generateId(text);
+
+    // 處理重複的 ID：如果 ID 已存在，添加數字後綴
+    if (idCounts[id] !== undefined) {
+      idCounts[id]++;
+      id = `${id}-${idCounts[id]}`;
+    } else {
+      idCounts[id] = 0;
+    }
+
+    headings.push({ level, text, id });
+  }
+
+  return headings;
+}
+
 // 獲取 MDX 文件的數據
 export async function getMDXPost(slug: string) {
   const filePath = findPostFile(slug);
@@ -102,6 +173,10 @@ export async function getMDXPost(slug: string) {
   }
 
   try {
+    // 讀取原始文件內容以提取標題
+    const rawContent = fs.readFileSync(filePath, "utf-8");
+    const headings = extractHeadings(rawContent);
+
     // 獲取相對於 content 目錄的路徑（用於動態導入）
     const relativePath = path.relative(contentDirectory, filePath);
     const importPath = `@/content/${relativePath.replace(/\\/g, "/")}`;
@@ -112,6 +187,7 @@ export async function getMDXPost(slug: string) {
       metadata: mdxModule.metadata,
       component: mdxModule.default,
       filePath,
+      headings,
     };
   } catch (error) {
     console.error(`Error loading MDX file for slug ${slug}:`, error);

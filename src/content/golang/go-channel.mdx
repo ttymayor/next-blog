@@ -1,0 +1,98 @@
+export const metadata = {
+  title: 'Golang Channel 筆記',
+  pubDate: '2025-11-18T00:27:40+08:00',
+  tags: ['Note'],
+  categories: 'Note',
+  draft: true,
+}
+
+## Golang Channel 簡介
+
+Channel 是 Golang 中用於在 goroutine 之間傳遞資料的機制。Golang 作為一個高併發的程式語言，Channel 是實現併發程式設計的重要機制。
+
+```go:main.go
+func main() {
+    ch := make(chan int)
+    go func() {
+        ch <- 1
+    }()
+    value := <-ch
+    fmt.Println(value)
+}
+```
+
+## Channel 的宣告
+
+```go
+var MyChannel chan int
+```
+
+```go
+MyChannel := make(chan int)
+```
+
+```go
+// 緩衝區為 10 的 Channel（緩衝區可以理解為 Channel 的容量，當 Channel 的容量滿了，再送入資料會阻塞，也就是死鎖 deadlock）
+MyChannel := make(chan int, 10)
+```
+
+## Channel 的傳遞
+
+```go
+// 將 1 傳遞到 MyChannel
+MyChannel <- 1
+```
+
+```go
+// 從 MyChannel 接收資料，並賦值給 value，所以 value 會是 1
+value := <-MyChannel
+```
+
+我們可以透過 `if` 和 Golang 特性來判斷 Channel 是否已經關閉
+
+```go
+value, ok := <-MyChannel
+if !ok {
+  fmt.Println("MyChannel is closed")
+}
+```
+
+## Channel 的關閉
+
+關閉 channel 代表「之後不會再有資料被送入」
+
+```go
+close(MyChannel)
+```
+
+## Channel 的方向
+
+1. 雙向 Channel（Bidirectional Channels）
+2. 單向 Channel（Unidirectional Channels）
+    - 單向發送 Channel（Send-Only Channel）
+    - 單向接收 Channel（Receive-Only Channel）
+
+```go
+func send(ch chan<- int) {
+  ch <- 1
+}
+```
+
+```go
+func receive(ch <-chan int) {
+  value := <-ch
+}
+```
+
+## 名詞解釋：Deadlock
+
+Deadlock 是指兩個或多個 goroutine 之間互相等待對方釋放資源，導致所有 goroutine 都無法繼續執行。
+
+```go:main.go
+func main() {
+	ch := make(chan int)
+	ch <- 1       // 這裡就卡死，因為沒有 goroutine 來接收資料
+	value := <-ch
+	fmt.Println(value)
+}
+```

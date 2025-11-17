@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import TagLink from "@/components/TagLink";
 import CategoryLink from "@/components/CategoryLink";
 import { Separator } from "@/components/ui/separator";
+import TableOfContents from "@/components/post/TableOfContents";
 
 const notoSerifTC = Noto_Serif_TC({
   weight: ["400", "700", "900"],
@@ -57,61 +58,74 @@ export default async function Page({
   const mdxPost = await getMDXPost(slug);
   if (mdxPost) {
     const Post = mdxPost.component;
+    const headings = mdxPost.headings || [];
 
     return (
-      <article className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
-        {/* 文章標題和元數據 */}
-        <header>
-          {/* 文章標題 */}
-          <h1 className={`${notoSerifTC.className} mb-4 text-5xl font-bold`}>
-            {mdxPost.metadata.title}
-          </h1>
+      <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
+        <div className="lg:flex lg:gap-8">
+          <article className="w-full">
+            {/* 文章標題和元數據 */}
+            <header>
+              {/* 文章標題 */}
+              <h1
+                className={`${notoSerifTC.className} mb-4 text-5xl font-bold`}
+              >
+                {mdxPost.metadata.title}
+              </h1>
 
-          {/* 文章日期和分類 */}
-          <div className="text-muted-foreground flex items-center gap-4 text-sm">
-            <time dateTime={mdxPost.metadata.pubDate}>
-              {new Date(mdxPost.metadata.pubDate).toLocaleDateString("zh-TW", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
-            {mdxPost.metadata.categories && (
-              <CategoryLink
-                key={mdxPost.metadata.categories}
-                category={mdxPost.metadata.categories}
-              />
-            )}
-          </div>
+              {/* 文章日期和分類 */}
+              <div className="text-muted-foreground flex items-center gap-4 text-sm">
+                <time dateTime={mdxPost.metadata.pubDate}>
+                  {new Date(mdxPost.metadata.pubDate).toLocaleDateString(
+                    "zh-TW",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    },
+                  )}
+                </time>
+                {mdxPost.metadata.categories && (
+                  <CategoryLink
+                    key={mdxPost.metadata.categories}
+                    category={mdxPost.metadata.categories}
+                  />
+                )}
+              </div>
 
-          {/* 文章描述 */}
-          <p
-            className={`${notoSerifTC.className} text-muted-foreground mt-4 text-lg`}
-          >
-            {mdxPost.metadata.description || "作者很懶，沒有寫描述"}
-          </p>
+              {/* 文章描述 */}
+              <p
+                className={`${notoSerifTC.className} text-muted-foreground mt-4 text-lg`}
+              >
+                {mdxPost.metadata.description || "作者很懶，沒有寫描述"}
+              </p>
 
-          {/* 文章標籤 */}
-          {mdxPost.metadata.tags && mdxPost.metadata.tags.length > 0 && (
-            <div className="mb-4 flex flex-wrap gap-2">
-              {mdxPost.metadata.tags.map((tag: string) => (
-                <TagLink key={tag} tag={tag} />
-              ))}
+              {/* 文章標籤 */}
+              {mdxPost.metadata.tags && mdxPost.metadata.tags.length > 0 && (
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {mdxPost.metadata.tags.map((tag: string) => (
+                    <TagLink key={tag} tag={tag} />
+                  ))}
+                </div>
+              )}
+              {/* 判斷是否超過半年 */}
+              <Suspense fallback={null}>
+                <Overtime pubDate={mdxPost.metadata.pubDate} />
+              </Suspense>
+            </header>
+
+            <Separator className="my-8" />
+
+            {/* MDX 內容 */}
+            <div>
+              <Post />
             </div>
-          )}
-          {/* 判斷是否超過半年 */}
-          <Suspense fallback={null}>
-            <Overtime pubDate={mdxPost.metadata.pubDate} />
-          </Suspense>
-        </header>
-
-        <Separator className="my-8" />
-
-        {/* MDX 內容 */}
-        <div>
-          <Post />
+          </article>
+          <aside className="hidden lg:block">
+            <TableOfContents headings={headings} />
+          </aside>
         </div>
-      </article>
+      </div>
     );
   }
 
