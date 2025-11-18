@@ -2,6 +2,9 @@ import { Separator } from "@/components/ui/separator";
 import MyTools from "@/components/MyTools";
 import Link from "next/link";
 
+import MySubs from "@/components/MySubs";
+import { Suspense } from "react";
+
 export default function AboutPage() {
   return (
     <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
@@ -76,6 +79,10 @@ export default function AboutPage() {
         </section>
 
         <MyTools />
+
+        <Suspense fallback={<div>Loading...</div>}>
+          <MySubs />
+        </Suspense>
       </main>
     </div>
   );
