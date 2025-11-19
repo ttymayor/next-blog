@@ -158,10 +158,10 @@ const components: MDXComponents = {
     <p className="text-foreground/90 mt-4 leading-7">{children}</p>
   ),
   ul: ({ children }) => (
-    <ul className="mb-4 list-inside list-disc space-y-2">{children}</ul>
+    <ul className="my-2 list-inside list-disc space-y-2">{children}</ul>
   ),
   ol: ({ children }) => (
-    <ol className="mb-4 list-inside list-decimal space-y-2">{children}</ol>
+    <ol className="my-2 list-inside list-decimal space-y-2">{children}</ol>
   ),
   li: ({ children }) => <li className="text-foreground/90">{children}</li>,
   a: ({ children, href }) => (
