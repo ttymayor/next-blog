@@ -1,13 +1,15 @@
 export const metadata = {
-  title: 'Golang Channel 筆記',
-  pubDate: '2025-11-18T00:27:40+08:00',
-  tags: ['Note', 'Golang', 'Channel'],
-  categories: 'Golang',
+    title: 'Golang Channel 筆記',
+    pubDate: '2025-11-18T00:27:40+08:00',
+    tags: ['Note', 'Golang', 'Channel'],
+    categories: 'Golang',
 }
 
 ## Golang Channel 簡介
 
 Channel 是 Golang 中用於在 goroutine 之間傳遞資料的機制。Golang 作為一個高併發的程式語言，Channel 是實現併發程式設計的重要機制。
+
+個人理解 Channel「通道」還蠻形象的，或是可以想成吸管，並且可以選擇單向或雙向，或是有緩衝區的吸管，就像珍珠奶茶吸管中可以有閒置的珍珠（？
 
 ```go:main.go
 func main() {
@@ -52,7 +54,7 @@ value := <-MyChannel
 ```go
 value, ok := <-MyChannel
 if !ok {
-  fmt.Println("MyChannel is closed")
+    fmt.Println("MyChannel is closed")
 }
 ```
 
@@ -73,13 +75,13 @@ close(MyChannel)
 
 ```go
 func send(ch chan<- int) {
-  ch <- 1
+    ch <- 1
 }
 ```
 
 ```go
 func receive(ch <-chan int) {
-  value := <-ch
+    value := <-ch
 }
 ```
 
@@ -95,3 +97,61 @@ func main() {
 	fmt.Println(value)
 }
 ```
+
+## 名詞解釋：Block
+
+Block 是指 Goroutine 在等待 Channel 的資料時，會被阻塞，直到有資料被送入 Channel。
+
+```go:main.go
+func main() {
+    // 建立一個容量為 3 的 Channel
+    ch := make(chan int, 3)
+
+    // 等待接收
+    go func() {
+        for {
+            i := <-ch
+            fmt.Println("Received:", i)
+            time.Sleep(time.Millisecond * 100)
+        }
+    }()
+
+    // 發送
+    for i := range 10 {
+        ch <- i
+        fmt.Println("Sent:", i)
+    }
+
+    // 等待所有 Goroutine 執行完畢
+    time.Sleep(time.Second)
+}
+```
+
+```bash
+go run main.go
+```
+
+```text
+Sent: 0
+Sent: 1
+Sent: 2
+Sent: 3
+Received: 0
+Received: 1
+Sent: 4
+Received: 2
+Sent: 5
+Received: 3
+Sent: 6
+Received: 4
+Sent: 7
+Received: 5
+Sent: 8
+Received: 6
+Sent: 9
+Received: 7
+Received: 8
+Received: 9
+```
+
+> 這裡原本設定 Channel 的容量為 3，但因為執行速度幾乎同時導致可能 `Sent: 3` 和 `Received: 0` 同時發生。

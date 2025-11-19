@@ -1,0 +1,97 @@
+export const metadata = {
+    title: 'Golang Goroutine 筆記',
+    pubDate: '2025-11-20T00:33:57+08:00',
+    tags: ['Note', 'Golang', 'Goroutine'],
+    categories: 'Golang',
+}
+
+## Go Goroutine 簡介
+
+Goroutine 在其他語言中通常被稱作 Thread，在 Golang 中被稱作 Goroutine。而在 Go 語言中，Goroutine 是輕量級的執行緒，可以更高效地利用 CPU 資源。
+
+```go:main.go
+func main() {
+    // 啟動一個新的 Goroutine
+    go func() {
+        fmt.Println("Hello, World!")
+    }()
+}
+```
+
+```bash
+go run main.go
+```
+
+```text
+Hello, World!
+```
+
+1. main 函數其實也是一個 Goroutine
+2. 啟動一個新的 Goroutine 後，main 函數會繼續執行，而不會等待新的 Goroutine 執行完畢
+
+## Goroutine 互相溝通（Channel）
+
+[Golang Channel 筆記](/posts/go-channel)
+
+Goroutine 之間可以通過 Channel 來互相溝通。Channel 是 Golang 中用於在 goroutine 之間傳遞資料的機制。
+
+```go:main.go
+func main() {
+    ch := make(chan int)
+    go func() {
+        fmt.Println("Sending value:", 1)
+        ch <- 1
+    }()
+    fmt.Println("Received value:", <-ch)
+}
+```
+
+```bash
+go run main.go
+```
+
+```text
+Sending value: 1
+Received value: 1
+```
+
+## Goroutine 等待（sync.WaitGroup）
+
+既然有多執行緒，那就有可能某些時候我們希望等待所有 Goroutine 執行完畢後再執行主程式。
+
+```go:main.go
+func main() {
+	var wg sync.WaitGroup
+	for i := range 10 {
+		wg.Add(1)
+		go printHello(i, &wg)
+	}
+	wg.Wait()
+	fmt.Println("All Goroutine finished")
+}
+
+func printHello(i int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	fmt.Println("Hello, World!", i)
+}
+```
+
+```bash
+go run main.go
+```
+
+```text
+Hello, World! 0
+Hello, World! 1
+Hello, World! 2
+Hello, World! 6
+Hello, World! 4
+Hello, World! 5
+Hello, World! 7
+Hello, World! 8
+Hello, World! 9
+Hello, World! 3
+All Goroutine finished
+```
+
+可以看到 Goroutine 的執行順序是不確定的，因為 Goroutine 是並行執行的，而不是順序執行的。
