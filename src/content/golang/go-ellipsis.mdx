@@ -1,0 +1,62 @@
+export const metadata = {
+    title: 'Golang 點點點... 筆記',
+    pubDate: '2025-11-20T02:17:35+08:00',
+    tags: ['Note', 'Golang', 'Ellipsis'],
+    categories: 'Golang',
+    draft: false,
+}
+
+## 1. Variadic Parameter（可變參數）
+
+在 Go 語言中，`...` 通常用於表示可變參數（Variadic Parameter）。可變參數允許函數接受不定數量的參數。
+
+```go
+func sum(numbers ...int) int {
+    total := 0
+    for _, number := range numbers {
+        total += number
+    }
+    return total
+}
+
+func main() {
+    fmt.Println(sum(1, 2, 3, 4, 5))
+}
+```
+
+```bash
+go run main.go
+```
+
+```text
+15
+```
+
+## 2. 傳入 Slice 當成 Variadic Argument
+
+將 Slice 展開
+
+```go
+nums := []int{1, 2, 3}
+sum(nums...) // 等同 sum(1, 2, 3)
+```
+
+## 3. 陣列長度自動推斷
+
+陣列長度可以省略，編譯器會自動推斷。
+
+```go
+nums := [...]int{1, 2, 3}
+```
+
+等同於
+
+```go
+nums := [3]int{1, 2, 3}
+```
+
+## 總結
+
+1. `func f(x ...int)` 函式定義：`...` 可以接受不定數量的參數。
+2. `f(slice...)` 函式呼叫：可以將 Slice 展開成可變參數。
+3. `[...]T{}` 陣列宣告：可以省略長度，編譯器自動推斷長度。
