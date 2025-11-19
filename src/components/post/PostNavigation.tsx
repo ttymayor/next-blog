@@ -3,6 +3,7 @@ import { PostListItem } from "@/lib/markdown";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Noto_Serif_TC } from "next/font/google";
+import { cn } from "@/lib/utils";
 
 const notoSerifTC = Noto_Serif_TC({
   weight: ["400", "700", "900"],
@@ -53,7 +54,7 @@ export default function PostNavigation({
           </Card>
         </Link>
       ) : (
-        <div />
+        <PostNavigationEmpty direction="prev" />
       )}
 
       {/* 後一篇文章（較舊的） */}
@@ -84,8 +85,45 @@ export default function PostNavigation({
           </Card>
         </Link>
       ) : (
-        <div />
+        <PostNavigationEmpty direction="next" />
       )}
     </div>
+  );
+}
+
+interface PostNavigationEmptyProps {
+  direction: "prev" | "next";
+}
+
+function PostNavigationEmpty({ direction }: PostNavigationEmptyProps) {
+  return (
+    <Card className="bg-card/50 h-full">
+      <CardContent className="flex h-full items-center gap-4">
+        {direction === "prev" && (
+          <ChevronLeft className="text-muted-foreground size-5 shrink-0 transition-transform group-hover:-translate-x-1" />
+        )}
+        <div
+          className={cn(
+            "flex-1 overflow-hidden",
+            direction === "prev" ? "" : "text-right",
+          )}
+        >
+          <div className="text-muted-foreground mb-2 text-xs">
+            {direction === "prev" ? "上一篇文章" : "下一篇文章"}
+          </div>
+          <h3 className={`${notoSerifTC.className} mb-2 text-lg font-semibold`}>
+            沒文章了
+          </h3>
+          <p
+            className={`${notoSerifTC.className} text-muted-foreground mb-0 text-sm`}
+          >
+            {direction === "prev" ? "還在努力寫文章中..." : "._. 沒文章了"}
+          </p>
+        </div>
+        {direction === "next" && (
+          <ChevronRight className="text-muted-foreground size-5 shrink-0 transition-transform group-hover:translate-x-1" />
+        )}
+      </CardContent>
+    </Card>
   );
 }

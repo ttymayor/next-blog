@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
 import { useVercount } from "vercount-react";
-import Image from "next/image";
 
 export default function Footer() {
   const { sitePv, pagePv, siteUv } = useVercount();
