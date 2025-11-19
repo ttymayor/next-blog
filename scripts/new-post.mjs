@@ -67,7 +67,7 @@ async function main() {
       message: "標籤（用逗號分隔，可選）：",
     },
     {
-      type: "list",
+      type: "select",
       name: "draft",
       message: "設為草稿？",
       choices: [
