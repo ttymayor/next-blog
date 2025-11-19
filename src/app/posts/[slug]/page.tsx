@@ -1,12 +1,13 @@
 import { Noto_Serif_TC } from "next/font/google";
 import type { Metadata } from "next";
-import { getMDXPost, getStaticParams } from "@/lib/markdown";
+import { getMDXPost, getStaticParams, getAllPosts } from "@/lib/markdown";
 import Overtime from "@/components/post/Overtime";
 import { Suspense } from "react";
 import TagLink from "@/components/TagLink";
 import CategoryLink from "@/components/CategoryLink";
 import { Separator } from "@/components/ui/separator";
 import TableOfContents from "@/components/post/TableOfContents";
+import PostNavigation from "@/components/post/PostNavigation";
 
 const notoSerifTC = Noto_Serif_TC({
   weight: ["400", "700", "900"],
@@ -59,6 +60,15 @@ export default async function Page({
   if (mdxPost) {
     const Post = mdxPost.component;
     const headings = mdxPost.headings || [];
+
+    // 獲取所有文章並找到當前文章的索引
+    const allPosts = await getAllPosts();
+    const currentIndex = allPosts.findIndex((post) => post.slug === slug);
+
+    // 獲取前一篇文章（索引 - 1，較新的）和後一篇文章（索引 + 1，較舊的）
+    const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+    const nextPost =
+      currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
     return (
       <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
@@ -120,6 +130,9 @@ export default async function Page({
             <div>
               <Post />
             </div>
+
+            {/* 前一篇/後一篇文章導航 */}
+            <PostNavigation prevPost={prevPost} nextPost={nextPost} />
           </article>
           <aside className="hidden lg:block">
             <TableOfContents headings={headings} />
