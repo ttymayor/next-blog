@@ -5,12 +5,18 @@ import { Button } from "@/components/ui/button";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import Image from "next/image";
 import Link from "next/link";
-
+import { icons, IconProps } from "@/lib/icon";
+import { Noto_Serif_TC } from "next/font/google";
+const notoSerifTC = Noto_Serif_TC({
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-noto-serif-tc",
+});
 interface Project {
   title: string;
   description: string;
   url?: string;
-  tags: { name: string; icon: string }[];
+  tags: { name: string; icon: (props: IconProps) => React.ReactNode }[];
   image?: string;
   github: string;
 }
@@ -23,15 +29,15 @@ const projects: Project[] = [
     tags: [
       {
         name: "Next.js",
-        icon: "nextjs/nextjs-original.svg",
+        icon: icons["Next.js"],
       },
       {
         name: "Tailwind CSS",
-        icon: "tailwindcss/tailwindcss-original.svg",
+        icon: icons["Tailwind CSS"],
       },
       {
         name: "MongoDB",
-        icon: "mongodb/mongodb-original.svg",
+        icon: icons.MongoDB,
       },
     ],
     image: "thu-course-frontend.png",
@@ -43,11 +49,11 @@ const projects: Project[] = [
     tags: [
       {
         name: "Python",
-        icon: "python/python-original.svg",
+        icon: icons.Python,
       },
       {
         name: "MongoDB",
-        icon: "mongodb/mongodb-original.svg",
+        icon: icons.MongoDB,
       },
     ],
     image: "thu-course-crawler.png",
@@ -61,15 +67,15 @@ const projects: Project[] = [
     tags: [
       {
         name: "Astro",
-        icon: "astro/astro-original.svg",
+        icon: icons.Astro,
       },
       {
         name: "React",
-        icon: "react/react-original.svg",
+        icon: icons.React,
       },
       {
         name: "Tailwind CSS",
-        icon: "tailwindcss/tailwindcss-original.svg",
+        icon: icons["Tailwind CSS"],
       },
     ],
     image: "thu-hacker-club.png",
@@ -80,7 +86,9 @@ const projects: Project[] = [
 export default function Projects() {
   return (
     <section id="projects" className="mb-8">
-      <h2 className="mb-8 text-2xl font-bold">專案</h2>
+      <h2 className={`${notoSerifTC.className} mb-8 text-2xl font-bold`}>
+        專案
+      </h2>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {projects.map((project) => (
@@ -110,7 +118,9 @@ export default function Projects() {
 
             <div className="flex flex-col gap-2">
               {/* title */}
-              <h3 className="group-hover:text-primary m-0 flex items-center text-xl font-bold transition-all duration-300">
+              <h3
+                className={`${notoSerifTC.className} group-hover:text-primary m-0 flex items-center text-xl font-bold transition-all duration-300`}
+              >
                 {project.title}
               </h3>
 
@@ -120,17 +130,11 @@ export default function Projects() {
               </p>
 
               {/* tags */}
-              <div className="flex gap-2">
+              <div className="mb-2 flex gap-2">
                 {project.tags?.map((tag) => (
                   <Badge key={tag.name} variant="secondary">
                     {tag.icon ? (
-                      <Image
-                        alt={tag.name}
-                        src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${tag.icon}`}
-                        className="size-4"
-                        width={16}
-                        height={16}
-                      />
+                      <tag.icon className="size-4" />
                     ) : (
                       <BadgeIcon className="size-4" />
                     )}{" "}

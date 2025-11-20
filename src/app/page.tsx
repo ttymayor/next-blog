@@ -10,7 +10,9 @@ export default async function Home() {
       <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
         <main>
           <TechStacks />
-          <Slides />
+          <div>
+            <Slides />
+          </div>
           <Experience />
           <Projects />
           <LatestPost />

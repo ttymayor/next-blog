@@ -9,6 +9,13 @@ import {
   ClockIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { Noto_Serif_TC } from "next/font/google";
+
+const notoSerifTC = Noto_Serif_TC({
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-noto-serif-tc",
+});
 
 type Slide = {
   title: string;
@@ -56,7 +63,9 @@ const slides = [
 export default function Slides() {
   return (
     <section id="slides" className="mb-8 w-full">
-      <h2 className="mb-8 text-2xl font-bold">簡報</h2>
+      <h2 className={`${notoSerifTC.className} mb-8 text-2xl font-bold`}>
+        簡報
+      </h2>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {slides.map((slide) => (
@@ -82,8 +91,12 @@ interface SlideHeaderProps {
 
 function SlideHeader({ slide }: SlideHeaderProps) {
   return (
-    <div className="flex items-center justify-between gap-2">
-      <h3 className="text-primary mb-0 text-lg font-bold">{slide.title}</h3>
+    <div className="mb-4 flex items-center justify-between gap-2">
+      <h3
+        className={`${notoSerifTC.className} text-primary mb-0 text-xl font-bold`}
+      >
+        {slide.title}
+      </h3>
       {slide.madeBy && (
         <pre className="text-muted-foreground text-sm font-bold">
           {slide.madeBy}
@@ -132,7 +145,7 @@ interface SlideContentProps {
 
 function SlideContent({ slide }: SlideContentProps) {
   return (
-    <div className="text-muted-foreground flex flex-col gap-2 text-sm">
+    <div className="text-muted-foreground mb-4 flex flex-col gap-2 text-sm">
       {slide.tags && (
         <div className="flex items-center gap-2">
           <TagIcon className="size-4" />

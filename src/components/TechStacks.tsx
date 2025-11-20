@@ -6,107 +6,108 @@ import {
 } from "@/components/ui/marquee";
 import "@/styles/marquee.css";
 import "devicon/devicon.min.css";
+import icons from "@/lib/icon";
 
 export const techStacks = [
   {
     name: "Astro",
-    icon: "devicon-astro-plain colored",
+    icon: icons.Astro,
   },
   {
     name: "React",
-    icon: "devicon-react-original colored",
+    icon: icons.React,
   },
   {
     name: "Next.js",
-    icon: "devicon-nextjs-plain",
+    icon: icons["Next.js"],
   },
   {
     name: "PHP",
-    icon: "devicon-php-plain colored",
+    icon: icons.PHP,
   },
   {
     name: "Laravel",
-    icon: "devicon-laravel-original colored",
+    icon: icons.Laravel,
   },
   {
     name: "Python",
-    icon: "devicon-python-plain colored",
+    icon: icons.Python,
   },
   {
     name: "Flask",
-    icon: "devicon-flask-original",
+    icon: icons.Flask,
   },
   {
     name: "C++",
-    icon: "devicon-cplusplus-plain colored",
+    icon: icons["C++"],
   },
   {
     name: "TypeScript",
-    icon: "devicon-typescript-plain colored",
+    icon: icons.TypeScript,
   },
   {
     name: "Vue.js",
-    icon: "devicon-vuejs-plain colored",
+    icon: icons["Vue.js"],
   },
   {
     name: "MongoDB",
-    icon: "devicon-mongodb-plain colored",
+    icon: icons.MongoDB,
   },
   {
     name: "MariaDB",
-    icon: "devicon-mariadb-original colored",
+    icon: icons.MariaDB,
   },
   {
     name: "MySQL",
-    icon: "devicon-mysql-plain colored",
+    icon: icons.MySQL,
   },
   {
     name: "Docker",
-    icon: "devicon-docker-plain colored",
+    icon: icons.Docker,
   },
   {
     name: "Golang",
-    icon: "devicon-go-plain colored",
+    icon: icons.Golang,
   },
   {
     name: "Cloudflare",
-    icon: "devicon-cloudflare-plain colored",
+    icon: icons.Cloudflare,
   },
   {
     name: "Ubuntu",
-    icon: "devicon-ubuntu-plain colored",
+    icon: icons.Ubuntu,
   },
   {
     name: "Git",
-    icon: "devicon-git-plain colored",
+    icon: icons.Git,
   },
   {
     name: "pnpm",
-    icon: "devicon-pnpm-plain colored",
+    icon: icons.pnpm,
   },
   {
     name: "VS Code",
-    icon: "devicon-vscode-plain colored",
+    icon: icons["VS Code"],
   },
   {
     name: "Bash",
-    icon: "devicon-bash-plain",
+    icon: icons.Bash,
   },
   {
     name: "GitHub",
-    icon: "devicon-github-plain",
+    icon: icons.GitHub,
   },
   {
     name: "Tailwind CSS",
-    icon: "devicon-tailwindcss-plain colored",
+    icon: icons["Tailwind CSS"],
   },
   {
     name: "Markdown",
-    icon: "devicon-markdown-plain",
+    icon: icons.Markdown,
   },
   {
     name: "Hugo",
-    icon: "devicon-hugo-plain colored",
+    icon: icons.Hugo,
   },
 ];
 
@@ -121,45 +122,40 @@ export default function TechStacks() {
       id="tech-stacks"
       className="group mb-8 w-full transition-all duration-300"
     >
-      <h2 className="mb-8 text-2xl font-bold">工具 & 技能</h2>
-      <div className="flex size-full flex-col items-center justify-center gap-4">
-        {/* 向左滾動的 Marquee */}
-        <Marquee className="py-4">
-          <MarqueeFade side="left" />
-          <MarqueeFade side="right" />
-          <MarqueeContent direction="left" pauseOnHover>
-            {firstHalf.map((techStack, index) => (
-              <MarqueeItem className="mx-4" key={`left-${index}`}>
-                <div className="flex items-center justify-center gap-3">
-                  <i className={`${techStack.icon} text-4xl`} />
-                  <span className="text-primary text-xl font-bold">
-                    {techStack.name}
-                  </span>
-                </div>
-              </MarqueeItem>
-            ))}
-          </MarqueeContent>
-        </Marquee>
-      </div>
-      <div className="flex size-full flex-col items-center justify-center gap-4">
-        {/* 向右滾動的 Marquee */}
-        <Marquee className="py-4">
-          <MarqueeFade side="left" />
-          <MarqueeFade side="right" />
-          <MarqueeContent direction="right" pauseOnHover>
-            {secondHalf.map((techStack, index) => (
-              <MarqueeItem className="mx-4" key={`right-${index}`}>
-                <div className="flex items-center justify-center gap-3">
-                  <i className={`${techStack.icon} text-4xl`} />
-                  <span className="text-primary text-xl font-bold">
-                    {techStack.name}
-                  </span>
-                </div>
-              </MarqueeItem>
-            ))}
-          </MarqueeContent>
-        </Marquee>
-      </div>
+      {/* 向左滾動的 Marquee */}
+      <Marquee className="py-4">
+        <MarqueeFade side="left" />
+        <MarqueeFade side="right" />
+        <MarqueeContent direction="left" pauseOnHover>
+          {firstHalf.map((techStack, index) => (
+            <MarqueeItem key={`left-${index}`}>
+              <div className="flex items-center justify-center gap-3 opacity-80 transition-all duration-300 hover:scale-110 hover:opacity-100">
+                <techStack.icon className="size-10 flex-shrink-0" />
+                <span className="text-primary text-xl font-bold">
+                  {techStack.name}
+                </span>
+              </div>
+            </MarqueeItem>
+          ))}
+        </MarqueeContent>
+      </Marquee>
+      {/* 向右滾動的 Marquee */}
+      <Marquee className="gap-10 py-4">
+        <MarqueeFade side="left" />
+        <MarqueeFade side="right" />
+        <MarqueeContent direction="right" pauseOnHover>
+          {secondHalf.map((techStack, index) => (
+            <MarqueeItem key={`right-${index}`}>
+              <div className="flex items-center justify-center gap-3 opacity-80 transition-all duration-300 hover:scale-110 hover:opacity-100">
+                <techStack.icon className="size-10 flex-shrink-0" />
+                <span className="text-primary text-xl font-bold">
+                  {techStack.name}
+                </span>
+              </div>
+            </MarqueeItem>
+          ))}
+        </MarqueeContent>
+      </Marquee>
     </section>
   );
 }

@@ -22,10 +22,12 @@ export async function LatestPost() {
   return (
     <section id="latest-post" className="mb-8">
       <div className="mb-8 flex items-center justify-between">
-        <h2 className="mb-0 text-2xl font-bold">最新文章</h2>
+        <h2 className={`${notoSerifTC.className} mb-0 text-2xl font-bold`}>
+          最新文章
+        </h2>
         <Link
           href="/posts"
-          className="text-primary hover:underline"
+          className={`${notoSerifTC.className} text-primary hover:underline`}
           prefetch={false}
         >
           查看全部 →

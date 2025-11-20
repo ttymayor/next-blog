@@ -1,6 +1,13 @@
 import { BadgeIcon, Building2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
+import { icons, IconProps } from "@/lib/icon";
+import { Noto_Serif_TC } from "next/font/google";
+
+const notoSerifTC = Noto_Serif_TC({
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-noto-serif-tc",
+});
 
 interface ExperienceItem {
   title: string;
@@ -9,7 +16,7 @@ interface ExperienceItem {
   startDate: string;
   endDate: string;
   description: string;
-  tags: { name: string; icon: string }[];
+  tags: { name: string; icon: (props: IconProps) => React.ReactNode }[];
 }
 
 const experience: ExperienceItem[] = [
@@ -24,15 +31,15 @@ const experience: ExperienceItem[] = [
     tags: [
       {
         name: "Laravel",
-        icon: "laravel/laravel-original.svg",
+        icon: icons.Laravel,
       },
       {
         name: "Vue.js",
-        icon: "vuejs/vuejs-original.svg",
+        icon: icons["Vue.js"],
       },
       {
         name: "MySQL",
-        icon: "mysql/mysql-original.svg",
+        icon: icons.MySQL,
       },
     ],
   },
@@ -41,7 +48,9 @@ const experience: ExperienceItem[] = [
 export default function Experience() {
   return (
     <section id="experience" className="mb-8">
-      <h2 className="mb-8 text-2xl font-bold">經歷</h2>
+      <h2 className={`${notoSerifTC.className} mb-8 text-2xl font-bold`}>
+        經歷
+      </h2>
 
       <div className="ml-6 flex flex-col">
         {experience?.map((item, index) => (
@@ -91,10 +100,11 @@ function ExperienceContent({ item }: ExperienceContentProps) {
       </p>
 
       {/* title and position */}
-      <div className="text-primary flex items-center justify-between">
-        <h3 className="my-0 text-xl font-bold">
-          {item.title} <span className="text-base">{item.position}</span>
+      <div className="text-primary flex items-end justify-start gap-2 font-bold">
+        <h3 className={`${notoSerifTC.className} my-0 text-xl`}>
+          {item.title}
         </h3>
+        <span className="text-muted-foreground text-base">{item.position}</span>
       </div>
 
       {/* company */}
@@ -108,13 +118,7 @@ function ExperienceContent({ item }: ExperienceContentProps) {
           {item.tags?.map((tag) => (
             <Badge key={tag.name} variant="secondary" className="text-sm">
               {tag.icon ? (
-                <Image
-                  alt={tag.name}
-                  src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${tag.icon}`}
-                  className="size-4"
-                  width={16}
-                  height={16}
-                />
+                <tag.icon className="size-4" />
               ) : (
                 <BadgeIcon className="size-4" />
               )}{" "}
