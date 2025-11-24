@@ -70,6 +70,10 @@ export const techStacks = [
     icon: icons.Golang,
   },
   {
+    name: "Google Cloud",
+    icon: icons["Google Cloud"],
+  },
+  {
     name: "Cloudflare",
     icon: icons.Cloudflare,
   },
