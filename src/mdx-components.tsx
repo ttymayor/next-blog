@@ -4,6 +4,7 @@ import BetterSpoiler from "@/components/post/Spoiler";
 import CodeTab from "@/components/post/CodeTab";
 import { Noto_Serif_TC } from "next/font/google";
 import { Highlighter } from "@/components/ui/highlighter";
+import { Kbd } from "@/components/ui/kbd";
 import type { ReactNode } from "react";
 
 const notoSerifTC = Noto_Serif_TC({
@@ -202,12 +203,20 @@ const components: MDXComponents = {
   img: (props) => {
     const imageProps = props as ImageProps;
     return (
-      <Image
-        {...imageProps}
-        sizes="100vw"
-        style={{ width: "100%", height: "auto" }}
-        alt={imageProps.alt ?? ""}
-      />
+      <>
+        <span className="flex flex-col items-center">
+          <Image
+            {...imageProps}
+            width={10000}
+            height={10000}
+            className="mx-auto max-h-[540px] w-auto max-w-full rounded-lg shadow-lg"
+            alt={imageProps.alt ?? ""}
+          />
+          <span className="text-muted-foreground dark:text-muted-foreground mt-2 text-center text-sm">
+            {imageProps.alt ?? ""}
+          </span>
+        </span>
+      </>
     );
   },
   table: ({ children }) => (
@@ -261,6 +270,7 @@ const components: MDXComponents = {
       {children}
     </Highlighter>
   ),
+  Kbd: ({ children }) => <Kbd>{children}</Kbd>,
 };
 
 export function useMDXComponents(): MDXComponents {

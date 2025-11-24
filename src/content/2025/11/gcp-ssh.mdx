@@ -1,0 +1,92 @@
+export const metadata = {
+  title: '如何在 GCP 上使用 SSH 連線',
+  pubDate: '2025-11-24T23:21:17+08:00',
+  description: '如何在 GCP 上使用 SSH 連線、SSH Key 生成、推推好看的 Terminal 客戶端 -- Termius',
+  category: '技術',
+  tags: ['GCP', 'SSH', 'Linux', 'Cloud', 'Terminal', 'Termius'],
+}
+
+## 前言
+
+個人不太想開 GCP 網頁來進 VM，所以寫個從自己電腦連上 VM 的歷程，因為我每次都忘記怎麼使用 `ssh key-gen` 來申請金鑰。
+
+## SSH 簡介
+
+SSH 是一種加密的通訊協定，用於在遠端主機之間建立安全的連線。它允許用戶在不暴露明文密碼的情況下，安全地進行遠程操作和管理。
+
+而 SSH 通常有一對公鑰和私鑰，來確認這就是本人。
+
+- 公鑰：公鑰是公開的，可以分享給其他人，用於驗證身份。所以會放在你想登入的主機上
+- 私鑰：私鑰是私有的，只能由本人持有，用於加密通訊。所以會放在自己的電腦上
+
+## 使用 ssh key-gen
+
+不想自訂金鑰配置可以直接使用 `ssh-keygen`
+
+```bash
+ssh-keygen
+```
+
+接著會詢問三個問題
+
+### 1. 詢問你的金鑰要叫什麼並放在哪？
+
+```
+Enter file in which to save the key (C:\Users\<username>/.ssh/id_ed25519): 
+```
+
+如果不會配置的話，通常可以直接 <Kbd>Enter</Kbd> 跳過。
+
+### 2. 詢問你的金鑰密碼
+
+```
+Enter passphrase (empty for no passphrase): 
+```
+
+通常我不設密碼，因為電腦幾乎只有自己使用的話，可以直接 <Kbd>Enter</Kbd> 跳過。
+
+### 3. 確認你的金鑰密碼（驗證）
+
+```
+Enter same passphrase again: 
+```
+
+需要二次確認你的密碼，若無，可以直接 <Kbd>Enter</Kbd> 跳過。
+
+### 結果
+
+你的 `~/.ssh` 下會生成兩把鑰匙：`id_ed25519` 和 `id_ed25519.pub`。
+
+請保管好你的 `~/.ssh/id_ed25519`
+
+## GCP 配置本機的 SSH Key
+
+若你已經有一個「VM 執行個體」，則請到左側邊欄「Compute Engine」的「設定」群組中找到「中繼資料」。
+
+![GCP SSH 配置](/images/gcp-ssh.png)
+
+點選「新增項目」，將剛剛 `~/.ssh/id_ed25519.pub` 公鑰的內容貼上，之後儲存。
+
+這樣就完成了，你可以使用 `ssh` 命令來直接連線到你的 VM 了。
+
+## 推推好看的 Terminal 客戶端 -- Termius
+
+[Termius](https://termius.com/) 是一個非常方便的 SSH 客戶端，它支援多種 SSH 協定，並且支援多種操作系統。還。很。好。看！
+
+若想使用 Termius 連線 GCP VM，步驟如下
+
+### 新增 Keychain
+
+1. 側邊欄點選 `Keychain`
+2. 點選 `KEY` 新增
+3. 填上私鑰的內容在 `Private key` 欄位
+4. Label 填上你想要的名稱即可
+
+### 新增 Host
+
+1. 點選 `NEW HOST`
+2. 填上 GCP VM 的外部 IP
+3. Label 填上你想要的名稱
+4. 滑到 SSH on 22 port 區域
+5. Credentials Username 填上這台主機的使用者名稱
+6. Credentials Key 選擇剛剛新增的 Keychain 即可登入
