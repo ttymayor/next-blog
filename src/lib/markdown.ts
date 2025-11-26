@@ -27,7 +27,10 @@ export type PostListItem = {
 };
 
 // 遞歸掃描目錄，支援 content/[year]/[month]/[*.mdx] 結構
-function scanDirectory(dir: string, baseDir: string = dir): string[] {
+async function scanDirectory(
+  dir: string,
+  baseDir: string = dir,
+): Promise<string[]> {
   const results: string[] = [];
 
   try {
@@ -38,7 +41,7 @@ function scanDirectory(dir: string, baseDir: string = dir): string[] {
 
       if (item.isDirectory()) {
         // 遞歸掃描子目錄
-        results.push(...scanDirectory(fullPath, baseDir));
+        results.push(...(await scanDirectory(fullPath, baseDir)));
       } else if (item.isFile() && item.name.endsWith(".mdx")) {
         // 獲取相對於 content 目錄的路徑
         const relativePath = path.relative(baseDir, fullPath);
@@ -53,9 +56,11 @@ function scanDirectory(dir: string, baseDir: string = dir): string[] {
 }
 
 // 獲取所有 .mdx 文件的相對路徑
-export function getAllPostPaths(): string[] {
+export async function getAllPostPaths(): Promise<string[]> {
+  "use cache";
+
   try {
-    return scanDirectory(contentDirectory);
+    return await scanDirectory(contentDirectory);
   } catch (error) {
     console.error("Error reading content directory:", error);
     return [];
@@ -63,8 +68,10 @@ export function getAllPostPaths(): string[] {
 }
 
 // 獲取所有文章的 slugs（從文件名提取）
-export function getAllPostSlugs(): string[] {
-  const paths = getAllPostPaths();
+export async function getAllPostSlugs(): Promise<string[]> {
+  "use cache";
+
+  const paths = await getAllPostPaths();
   return paths.map((filePath) => {
     // 從路徑中提取文件名作為 slug
     const fileName = path.basename(filePath, path.extname(filePath));
@@ -73,14 +80,16 @@ export function getAllPostSlugs(): string[] {
 }
 
 // 為 generateStaticParams 生成參數
-export function getStaticParams() {
-  const slugs = getAllPostSlugs();
+export async function getStaticParams(): Promise<{ slug: string }[]> {
+  const slugs = await getAllPostSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
 // 根據 slug 查找 .mdx 文件（支援遞歸搜索）
-function findPostFile(slug: string): string | null {
-  const allPaths = getAllPostPaths();
+async function findPostFile(slug: string): Promise<string | null> {
+  "use cache";
+
+  const allPaths = await getAllPostPaths();
 
   // 查找匹配的 .mdx 文件
   for (const relativePath of allPaths) {
@@ -138,7 +147,7 @@ function generateId(text: string): string {
 }
 
 // 從 MDX 原始內容提取標題
-export function extractHeadings(content: string): Heading[] {
+export async function extractHeadings(content: string): Promise<Heading[]> {
   const headings: Heading[] = [];
   const idCounts: Record<string, number> = {}; // 追蹤每個 ID 的使用次數
   // 匹配 h2-h6 標題（跳過 h1，因為那是文章標題）
@@ -166,7 +175,7 @@ export function extractHeadings(content: string): Heading[] {
 
 // 獲取 MDX 文件的數據
 export async function getMDXPost(slug: string) {
-  const filePath = findPostFile(slug);
+  const filePath = await findPostFile(slug);
 
   if (!filePath || !filePath.endsWith(".mdx")) {
     return null;
@@ -175,7 +184,7 @@ export async function getMDXPost(slug: string) {
   try {
     // 讀取原始文件內容以提取標題
     const rawContent = fs.readFileSync(filePath, "utf-8");
-    const headings = extractHeadings(rawContent);
+    const headings = await extractHeadings(rawContent);
 
     // 獲取相對於 content 目錄的路徑（用於動態導入）
     const relativePath = path.relative(contentDirectory, filePath);
@@ -197,7 +206,9 @@ export async function getMDXPost(slug: string) {
 
 // 獲取所有文章（只包括 .mdx），用於列表頁面，不包含 MDX 組件內容
 export async function getAllPosts(): Promise<PostListItem[]> {
-  const slugs = getAllPostSlugs();
+  "use cache";
+
+  const slugs = await getAllPostSlugs();
   const posts: PostListItem[] = [];
 
   for (const slug of slugs) {
@@ -237,6 +248,8 @@ export type Tag = {
 };
 
 export async function getAllTags(sorted: boolean = false): Promise<Tag[]> {
+  "use cache";
+
   const posts = await getAllPosts();
   const tags: Tag[] = [];
   for (const post of posts) {
@@ -255,6 +268,8 @@ export async function getAllTags(sorted: boolean = false): Promise<Tag[]> {
 }
 
 export async function getAllCategories() {
+  "use cache";
+
   const posts = await getAllPosts();
   const categories = posts
     .map((post) => post.metadata.categories)

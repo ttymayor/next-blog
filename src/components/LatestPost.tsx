@@ -1,3 +1,5 @@
+"use cache";
+
 import Link from "next/link";
 import CategoryLink from "@/components/CategoryLink";
 import TagLink from "@/components/TagLink";

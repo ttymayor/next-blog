@@ -1,3 +1,5 @@
+"use client";
+
 import { BadgeIcon, Building2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { icons, IconProps } from "@/lib/icon";

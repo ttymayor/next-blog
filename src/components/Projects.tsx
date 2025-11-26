@@ -1,3 +1,5 @@
+"use client";
+
 import { BadgeIcon, ExternalLinkIcon, ImageOff } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";

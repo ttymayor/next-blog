@@ -1,3 +1,5 @@
+"use cache";
+
 import TechStacks from "@/components/TechStacks";
 import Slides from "@/components/Slides";
 import Experience from "@/components/Experience";
@@ -10,9 +12,7 @@ export default async function Home() {
       <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
         <main>
           <TechStacks />
-          <div>
-            <Slides />
-          </div>
+          <Slides />
           <Experience />
           <Projects />
           <LatestPost />
