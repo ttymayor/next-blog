@@ -1,3 +1,5 @@
+"use cache";
+
 import { Separator } from "@/components/ui/separator";
 import MyTools from "@/components/MyTools";
 import Link from "next/link";
@@ -5,7 +7,7 @@ import Link from "next/link";
 import MySubs from "@/components/MySubs";
 import { Suspense } from "react";
 
-export default function AboutPage() {
+export default async function AboutPage() {
   return (
     <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
       <main>

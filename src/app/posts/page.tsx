@@ -1,3 +1,5 @@
+"use cache";
+
 import { getAllPosts } from "@/lib/markdown";
 import PostList from "@/components/post/PostList";
 

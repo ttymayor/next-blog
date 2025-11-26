@@ -1,3 +1,5 @@
+"use cache";
+
 import Link from "next/link";
 import { Noto_Serif_TC } from "next/font/google";
 
@@ -7,7 +9,7 @@ const notoSerifTC = Noto_Serif_TC({
   variable: "--font-noto-serif-tc",
 });
 
-export default function NotFound() {
+export default async function NotFound() {
   return (
     <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
       <div className="flex flex-col items-center justify-center">

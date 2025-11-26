@@ -1,3 +1,5 @@
+"use cache";
+
 import { getAllCategories } from "@/lib/markdown";
 import CategoryLink from "@/components/CategoryLink";
 import { Badge } from "@/components/ui/badge";

@@ -1,3 +1,5 @@
+"use cache";
+
 import { getAllTags } from "@/lib/markdown";
 import TagLink from "@/components/TagLink";
 import { Badge } from "@/components/ui/badge";

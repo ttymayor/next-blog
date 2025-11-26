@@ -1,3 +1,5 @@
+"use cache";
+
 import { Noto_Serif_TC } from "next/font/google";
 import type { Metadata } from "next";
 import { getMDXPost, getStaticParams, getAllPosts } from "@/lib/markdown";
@@ -152,6 +154,6 @@ export default async function Page({
 }
 
 // 自動從 src/content/ 目錄掃描所有 .mdx 文件
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return getStaticParams();
 }

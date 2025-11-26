@@ -1,3 +1,5 @@
+"use cache";
+
 import { getAllPosts, getAllTags } from "@/lib/markdown";
 import PostList from "@/components/post/PostList";
 import TagLink from "@/components/TagLink";
