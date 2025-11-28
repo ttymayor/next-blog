@@ -41,7 +41,7 @@ export default function MobileMenu() {
           <h2 className="mb-0 text-lg font-semibold">目錄</h2>
 
           <div className="flex items-center gap-2">
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <Button
               variant="ghost"
               size="icon"

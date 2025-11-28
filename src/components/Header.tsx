@@ -59,7 +59,7 @@ export default function Header() {
           </Button>
 
           {/* ThemeToggle */}
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
         </nav>
 
         <nav className="flex items-center md:hidden">
