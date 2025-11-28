@@ -83,7 +83,7 @@ const components: MDXComponents = {
   // 允許自定義內建組件，例如添加樣式
   h1: ({ children }) => (
     <h1
-      className={`${notoSerifTC.className} text-foreground group mt-8 mb-4 text-4xl font-bold`}
+      className={`${notoSerifTC.className} text-foreground group mt-12 mb-4 text-4xl font-bold`}
     >
       {children}
       <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
@@ -97,7 +97,7 @@ const components: MDXComponents = {
     return (
       <h2
         id={id}
-        className={`${notoSerifTC.className} text-foreground group mt-8 mb-4 scroll-mt-24 text-3xl font-semibold`}
+        className={`${notoSerifTC.className} text-foreground group mt-12 mb-4 scroll-mt-24 text-3xl font-semibold`}
       >
         {children}
         <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
@@ -112,7 +112,7 @@ const components: MDXComponents = {
     return (
       <h3
         id={id}
-        className={`${notoSerifTC.className} text-foreground group mt-6 mb-3 scroll-mt-24 text-2xl font-semibold`}
+        className={`${notoSerifTC.className} text-foreground group mt-8 mb-3 scroll-mt-24 text-2xl font-semibold`}
       >
         {children}
         <span className="text-muted-foreground text-base opacity-0 transition-opacity select-none group-hover:opacity-100">
@@ -127,7 +127,7 @@ const components: MDXComponents = {
     return (
       <h4
         id={id}
-        className={`${notoSerifTC.className} text-foreground mt-6 mb-3 scroll-mt-24 text-xl font-semibold`}
+        className={`${notoSerifTC.className} text-foreground mt-8 mb-3 scroll-mt-24 text-xl font-semibold`}
       >
         {children}
       </h4>
@@ -138,7 +138,7 @@ const components: MDXComponents = {
     return (
       <h5
         id={id}
-        className={`${notoSerifTC.className} text-foreground mt-6 mb-3 scroll-mt-24 text-lg font-semibold`}
+        className={`${notoSerifTC.className} text-foreground mt-8 mb-3 scroll-mt-24 text-lg font-semibold`}
       >
         {children}
       </h5>

@@ -126,7 +126,7 @@ export default async function Page({
               </Suspense>
             </header>
 
-            <Separator className="my-8" />
+            <Separator className="my-12" />
 
             {/* MDX 內容 */}
             <div>
