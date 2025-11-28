@@ -23,14 +23,14 @@ export default async function TagPage({
   const decodedTag = decodeURIComponent(tag);
 
   return (
-    <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
+    <>
       <main>
         <h2 className="mb-8 flex items-center gap-2 text-2xl font-bold">
           標籤 <TagLink link={false} tag={decodedTag} />
         </h2>
         <TagPosts tag={tag} />
       </main>
-    </div>
+    </>
   );
 }
 

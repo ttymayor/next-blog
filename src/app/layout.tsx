@@ -43,7 +43,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <div className="flex-1">{children}</div>
+          <div className="mx-[3%] flex-1 px-4 py-12 md:mx-[10%] lg:mx-[15%]">
+            {children}
+          </div>
           <Footer />
         </ThemeProvider>
       </body>

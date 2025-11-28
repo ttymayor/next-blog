@@ -73,8 +73,8 @@ export default async function Page({
       currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
     return (
-      <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
-        <div className="lg:flex lg:gap-8">
+      <>
+        <main className="lg:flex lg:gap-8">
           <article className="w-full">
             {/* 文章標題和元數據 */}
             <header>
@@ -139,8 +139,8 @@ export default async function Page({
           <aside className="hidden lg:block">
             <TableOfContents headings={headings} />
           </aside>
-        </div>
-      </div>
+        </main>
+      </>
     );
   }
 

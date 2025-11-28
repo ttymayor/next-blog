@@ -9,15 +9,13 @@ import { LatestPost } from "@/components/LatestPost";
 export default async function Home() {
   return (
     <>
-      <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
-        <main>
-          <TechStacks />
-          <Slides />
-          <Experience />
-          <Projects />
-          <LatestPost />
-        </main>
-      </div>
+      <main>
+        <TechStacks />
+        <Slides />
+        <Experience />
+        <Projects />
+        <LatestPost />
+      </main>
     </>
   );
 }

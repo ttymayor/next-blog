@@ -20,12 +20,12 @@ export default async function CategoryPage({
   const decodedCategory = decodeURIComponent(category);
 
   return (
-    <div className="mx-[3%] px-4 py-8 md:mx-[10%] lg:mx-[15%]">
+    <>
       <main>
         <h2 className="mb-8 text-2xl font-bold">分類「{decodedCategory}」</h2>
         <CategoryPosts category={category} />
       </main>
-    </div>
+    </>
   );
 }
 

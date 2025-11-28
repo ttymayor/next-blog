@@ -9,7 +9,7 @@ import { Suspense } from "react";
 
 export default async function AboutPage() {
   return (
-    <div className="mx-[3%] px-4 py-12 md:mx-[10%] lg:mx-[15%]">
+    <>
       <main>
         <section id="about" className="mb-8">
           <h2 className="mb-4 text-2xl font-bold">關於我</h2>
@@ -86,6 +86,6 @@ export default async function AboutPage() {
           <MySubs />
         </Suspense>
       </main>
-    </div>
+    </>
   );
 }
