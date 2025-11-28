@@ -5,7 +5,7 @@ import TagLink from "@/components/TagLink";
 import { Badge } from "@/components/ui/badge";
 
 export default async function TagsPage() {
-  const tags = await getAllTags();
+  const tags = await getAllTags(true);
 
   return (
     <>
@@ -14,7 +14,7 @@ export default async function TagsPage() {
           標籤 <Badge>{tags.length}</Badge>
         </h2>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
             <TagLink key={tag.name} tag={tag.name} count={tag.count} />
           ))}

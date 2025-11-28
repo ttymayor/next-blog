@@ -15,7 +15,7 @@ export default function TagLink({ link = true, tag, count }: TagLinkProps) {
     <Link href={`/tags/${encodeURIComponent(tag)}`} key={tag} prefetch={false}>
       <Badge
         variant="outline"
-        className="text-foreground/90 hover:bg-foreground/10"
+        className="text-foreground/90 hover:bg-foreground/10 transition-all"
       >
         {tag}
         {count && <span className="text-foreground/90">({count})</span>}
