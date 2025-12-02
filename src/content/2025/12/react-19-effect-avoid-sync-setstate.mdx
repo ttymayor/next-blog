@@ -1,0 +1,54 @@
+export const metadata = {
+  title: 'React 19：避免在 Effect 內同步 state 初始化',
+  description: 'Error: Calling setState synchronously within an effect can trigger cascading renders. 你應該避免在 Effect 內同步 state 初始化',
+  pubDate: '2025-12-02T17:28:11+08:00',
+  categories: 'React',
+  tags: ['React', 'Effect', 'setState']
+}
+
+## 什麼是「在Effect 內同步 state 初始化」
+
+以往在寫狀態管理時，我們可能會在 Effect 內初始化我們的狀態，但這會導致重新渲染導致降低效能，因此 ESLint 在 `eslint-plugin-react-hooks` 規則中防範了這個問題。
+
+> Validates against calling setState synchronously in an effect, which can lead to re-renders that degrade performance.
+> -- 官方解釋 [set-state-in-effect](https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect)
+
+### 過往範例
+
+在過去我們是被允許這樣寫的
+
+```tsx
+function Component() {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true); // Synchronous, causes extra render
+    fetchData().then(() => setLoading(false));
+  }, []);
+}
+```
+
+但以往這樣寫，會有一個問題是：網頁初次選染狀態第一次出現在 `useState(false)` 接著，初次 render 後執行一遍 `setLoading(true)`，這會出現 re-render，導致效能降低（簡言之：沒必要執行兩遍浪費性能）。
+
+### 優化版本
+
+```tsx
+function Component() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData().then(() => setLoading(false));
+  }, []);
+}
+```
+
+## 所以 eslint-plugin-react-hooks 為 React 做了什麼？
+
+以這個範例來說，ESLint 將 React 的 `useEffect()` 定義更明確為：「處理外部事件」以及「事件監聽器」。監聽外部事件，並在事件回調中 setState。
+
+讓專案的寫法更簡潔、效能更好。
+
+## 參考討論
+
+- [Bug: react-hooks/set-state-in-effect overly strict?](https://github.com/facebook/react/issues/34743)
+- [Avoid calling setState() directly within an effect?](https://www.reddit.com/r/react/comments/1omddji/avoid_calling_setstate_directly_within_an_effect/)
