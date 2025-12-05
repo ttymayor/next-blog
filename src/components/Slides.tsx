@@ -33,8 +33,8 @@ type Slide = {
 const slides = [
   {
     title: "Linux - 你應該要認識的企鵝",
-    slideLink: "https://surl.ttymayor.com/linux-slide",
-    pdfLink: "https://surl.ttymayor.com/linux-slide-pdf",
+    slideLink: "https://url.ttymayor.com/tty-linux-slide",
+    pdfLink: "https://url.ttymayor.com/tty-linux-slide-pdf",
     tags: ["Linux", "General Skills"],
     madeBy: "Figma",
     location: "東海大學 - 駭客社",
@@ -43,8 +43,8 @@ const slides = [
   },
   {
     title: "入門 Docker 開發技能 +1",
-    slideLink: "https://surl.ttymayor.com/docker-slide",
-    pdfLink: "https://surl.ttymayor.com/docker-slide-pdf",
+    slideLink: "https://url.ttymayor.com/tty-docker-intro-slide",
+    pdfLink: "https://url.ttymayor.com/tty-docker-intro-slide-pdf",
     tags: ["Docker", "Development"],
     madeBy: "Figma",
     location: "東海大學 - 駭客社",
@@ -53,7 +53,7 @@ const slides = [
   },
   {
     title: "入門網頁漏洞",
-    slideLink: "https://tantuyu-slide.zeabur.app/",
+    slideLink: "https://url.ttymayor.com/tty-web-vuln-intro-slide",
     location: "東海大學 - 駭客社",
     tags: ["Web", "Security"],
     madeBy: "Slidev",
