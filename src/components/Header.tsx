@@ -1,6 +1,5 @@
 "use client";
 
-import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
@@ -29,7 +28,7 @@ export default function Header() {
             alt="logo"
             width={32}
             height={32}
-            className="border-primary rounded-full border"
+            className="border-primary rounded-full border hover:animate-spin"
           />
           <Link href="/" className="text-foreground tracking-wide no-underline">
             tantuyu

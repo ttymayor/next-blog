@@ -31,7 +31,7 @@ export const MarqueeContent = ({
   return (
     <div
       className={cn(
-        "flex min-w-full shrink-0 items-center justify-around gap-12",
+        "flex min-w-full shrink-0 items-center justify-around",
         direction === "left" ? "animate-marquee-left" : "animate-marquee-right",
         pauseOnHover && "hover:[animation-play-state:paused]",
         className,
@@ -45,7 +45,7 @@ export const MarqueeContent = ({
       {Array.from({ length: repeat }).map((_, index) => (
         <div
           key={index}
-          className="flex shrink-0 items-center justify-around gap-12"
+          className="flex shrink-0 items-center justify-around gap-12 px-6"
         >
           {children}
         </div>
