@@ -1,10 +1,10 @@
 "use cache";
 
 import { Separator } from "@/components/ui/separator";
+import MyDevices from "@/components/MyDevices";
 import MyTools from "@/components/MyTools";
-import Link from "next/link";
-
 import MySubs from "@/components/MySubs";
+import Link from "next/link";
 import { Suspense } from "react";
 
 export default async function AboutPage() {
@@ -79,6 +79,8 @@ export default async function AboutPage() {
             <li>SITCON 和 COSCUP 全字母大寫（或是 s1t(0n 和 (0s(vp www</li>
           </ul>
         </section>
+
+        <MyDevices />
 
         <MyTools />
 

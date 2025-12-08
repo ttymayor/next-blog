@@ -101,7 +101,7 @@ export default function MyTools() {
 
   return (
     <section id="my-tools" className="mb-8">
-      <h2 className="mb-4 text-2xl font-bold">我的工具</h2>
+      <h2 className="mb-4 text-2xl font-bold">我的開發工具</h2>
 
       <div>
         <Carousel
