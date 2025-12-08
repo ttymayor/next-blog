@@ -9,11 +9,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { icons, IconProps } from "@/lib/icon";
 import { Noto_Serif_TC } from "next/font/google";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+
 const notoSerifTC = Noto_Serif_TC({
   weight: ["400", "700", "900"],
   subsets: ["latin"],
   variable: "--font-noto-serif-tc",
 });
+
 interface Project {
   title: string;
   description: string;
@@ -27,7 +30,7 @@ const projects: Project[] = [
   {
     title: "tantuyu URL",
     description:
-      "用 Next.js 以及 better-sqlite3、Drizzle ORM 和 Better Auth 做的短網址服務，支援短網址統計、短網址管理等。實際部屬使用 GCP 的 VM 和 Caddy 網站伺服器",
+      "用 Next.js 以及 better-sqlite3、Drizzle ORM 和 Better Auth 做的短網址服務，支援短網址統計、短網址管理等。實際部屬使用 GCP 的 VM 和 Caddy 網站伺服器。與 Gemini Cli 協作",
     url: "https://url.ttymayor.com",
     tags: [
       {
@@ -53,6 +56,10 @@ const projects: Project[] = [
       {
         name: "Better Auth",
         icon: icons["Better Auth"],
+      },
+      {
+        name: "Docker",
+        icon: icons.Docker,
       },
     ],
     image: "tantuyu-url.png",
@@ -140,86 +147,95 @@ export default function Projects() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {projects.map((project) => (
-          <div
+          <Card
             key={project.title}
-            className="bg-card group flex flex-col gap-4 rounded-lg border p-6 transition-shadow hover:shadow-lg"
+            className="group flex justify-between gap-4 rounded-lg border transition-shadow hover:shadow-lg"
           >
-            {project.image ? (
-              <AspectRatio ratio={2 / 1} className="">
-                <Image
-                  src={`/images/${project.image}`}
-                  alt={project.title}
-                  width={1200}
-                  height={600}
-                  className="h-full w-full rounded-sm object-cover transition-all duration-300 group-hover:scale-101"
-                />
-              </AspectRatio>
-            ) : (
-              <AspectRatio
-                ratio={2 / 1}
-                className="bg-muted flex flex-col items-center justify-center gap-2 rounded-lg text-sm"
-              >
-                <ImageOff className="text-muted-foreground size-6" />
-                <span className="text-muted-foreground">Not Set Image</span>
-              </AspectRatio>
-            )}
+            <CardContent className="flex flex-col gap-4">
+              {project.image ? (
+                <AspectRatio ratio={2 / 1} className="">
+                  <Image
+                    src={`/images/${project.image}`}
+                    alt={project.title}
+                    width={1200}
+                    height={600}
+                    className="h-full w-full rounded-sm object-cover transition-all duration-300 group-hover:scale-101"
+                  />
+                </AspectRatio>
+              ) : (
+                <AspectRatio
+                  ratio={2 / 1}
+                  className="bg-muted flex flex-col items-center justify-center gap-2 rounded-lg text-sm"
+                >
+                  <ImageOff className="text-muted-foreground size-6" />
+                  <span className="text-muted-foreground">Not Set Image</span>
+                </AspectRatio>
+              )}
 
-            <div className="flex flex-col gap-2">
-              {/* title */}
-              <h3
-                className={`${notoSerifTC.className} group-hover:text-primary m-0 flex items-center text-xl font-bold transition-all duration-300`}
-              >
-                {project.title}
-              </h3>
+              <div className="flex flex-col gap-2 rounded-lg text-sm">
+                {/* title */}
+                <h3
+                  className={`${notoSerifTC.className} group-hover:text-primary m-0 flex items-center text-xl font-bold transition-all duration-300`}
+                >
+                  {project.title}
+                </h3>
 
-              {/* description */}
-              <p className="text-muted-foreground m-0 text-base">
-                {project.description}
-              </p>
+                {/* description */}
+                <p className="text-muted-foreground m-0 text-base">
+                  {project.description}
+                </p>
 
-              {/* tags */}
-              <div className="mb-2 flex gap-2">
-                {project.tags?.map((tag) => (
-                  <Badge key={tag.name} variant="secondary">
-                    {tag.icon ? (
-                      <tag.icon className="size-4" />
-                    ) : (
-                      <BadgeIcon className="size-4" />
-                    )}{" "}
-                    {tag.name}
-                  </Badge>
-                ))}
+                {/* tags */}
+                <div className="mb-2 flex flex-wrap gap-2">
+                  {project.tags?.map((tag) => (
+                    <Badge key={tag.name} variant="secondary">
+                      {tag.icon ? (
+                        <tag.icon className="size-4" />
+                      ) : (
+                        <BadgeIcon className="size-4" />
+                      )}{" "}
+                      {tag.name}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-
-              {/* Link */}
-              <div className="flex items-center gap-2">
-                {project.github && (
-                  <Link href={project.github} target="_blank" prefetch={false}>
-                    <Button
-                      variant="ghost"
-                      className="bg-background/50 text-foreground hover:text-primary cursor-pointer"
-                    >
-                      <SiGithub className="size-4" />
-                      GitHub
-                    </Button>
-                  </Link>
-                )}
-                {project.url && (
-                  <Link href={project.url} target="_blank" prefetch={false}>
-                    <Button
-                      variant="ghost"
-                      className="bg-background/50 text-foreground hover:text-primary cursor-pointer"
-                    >
-                      <ExternalLinkIcon className="size-4" />
-                      Site
-                    </Button>
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
+            </CardContent>
+            {/* Link */}
+            <CardFooter>
+              <ProjectsFooter project={project} />
+            </CardFooter>
+          </Card>
         ))}
       </div>
     </section>
+  );
+}
+
+function ProjectsFooter({ project }: { project: Project }) {
+  return (
+    <div className="flex items-center gap-2">
+      {project.github && (
+        <Link href={project.github} target="_blank" prefetch={false}>
+          <Button
+            variant="ghost"
+            className="bg-background/50 text-foreground hover:text-primary cursor-pointer"
+          >
+            <SiGithub className="size-4" />
+            GitHub
+          </Button>
+        </Link>
+      )}
+      {project.url && (
+        <Link href={project.url} target="_blank" prefetch={false}>
+          <Button
+            variant="ghost"
+            className="bg-background/50 text-foreground hover:text-primary cursor-pointer"
+          >
+            <ExternalLinkIcon className="size-4" />
+            Site
+          </Button>
+        </Link>
+      )}
+    </div>
   );
 }
