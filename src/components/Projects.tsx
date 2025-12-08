@@ -18,12 +18,46 @@ interface Project {
   title: string;
   description: string;
   url?: string;
-  tags: { name: string; icon: (props: IconProps) => React.ReactNode }[];
+  tags: { name: string; icon?: (props: IconProps) => React.ReactNode }[];
   image?: string;
   github: string;
 }
 
 const projects: Project[] = [
+  {
+    title: "tantuyu URL",
+    description:
+      "用 Next.js 以及 better-sqlite3、Drizzle ORM 和 Better Auth 做的短網址服務，支援短網址統計、短網址管理等。實際部屬使用 GCP 的 VM 和 Caddy 網站伺服器",
+    url: "https://url.ttymayor.com",
+    tags: [
+      {
+        name: "Next.js",
+        icon: icons["Next.js"],
+      },
+      {
+        name: "GCP",
+        icon: icons["Google Cloud"],
+      },
+      {
+        name: "Caddy",
+        icon: icons["Caddy"],
+      },
+      {
+        name: "Drizzle ORM",
+        icon: icons["Drizzle ORM"],
+      },
+      {
+        name: "better-sqlite3",
+        icon: icons["better-sqlite3"],
+      },
+      {
+        name: "Better Auth",
+        icon: icons["Better Auth"],
+      },
+    ],
+    image: "tantuyu-url.png",
+    github: "https://github.com/ttymayor/tantuyu-url",
+  },
   {
     title: "東海選課資訊",
     description: "利用爬蟲獲取選課資訊，優化 UI 介面，提供更方便的排課模擬功能",
@@ -32,6 +66,10 @@ const projects: Project[] = [
       {
         name: "Next.js",
         icon: icons["Next.js"],
+      },
+      {
+        name: "Vercel",
+        icon: icons["Vercel"],
       },
       {
         name: "Tailwind CSS",
@@ -54,8 +92,16 @@ const projects: Project[] = [
         icon: icons.Python,
       },
       {
+        name: "uv",
+        icon: icons.uv,
+      },
+      {
         name: "MongoDB",
         icon: icons.MongoDB,
+      },
+      {
+        name: "GitHub Actions",
+        icon: icons["GitHub Actions"],
       },
     ],
     image: "thu-course-crawler.png",
