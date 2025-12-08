@@ -12,20 +12,31 @@ import {
 } from "@/components/ui/carousel";
 import Link from "next/link";
 
-const tools = [
+interface Tool {
+  name: string;
+  description: string;
+  url?: string;
+}
+
+const tools: Tool[] = [
   {
     name: "Zeabur",
     description: "部署服務的好平台，僅需 5 美元即可部屬許多服務",
     url: "https://zeabur.com/referral?referralCode=tantuyu",
   },
   {
+    name: "GCP VM",
+    description: "Google Cloud Platform 的 VM 虛擬機器，用來自架服務",
+    url: "https://cloud.google.com",
+  },
+  {
     name: "Cursor",
-    description: "目前習慣的 AI IDE",
+    description: "已經退訂 Cursor，改用 Zed，因為我沒錢了 T_T",
     url: "https://cursor.com/",
   },
   {
     name: "Zed",
-    description: "還在嘗試的 AI IDE，不是，這東西吃超少資源ㄟ",
+    description: "已經成為我多數情況下會使用的編輯器，原因是不吃效能",
     url: "https://zed.dev/",
   },
   {
@@ -100,7 +111,7 @@ export default function MyTools() {
           className="w-full"
           setApi={setApi}
         >
-          <CarouselContent className="w-[100%]">
+          <CarouselContent className="w-full">
             {tools.map((tool, index) => (
               <CarouselItem
                 key={index}
