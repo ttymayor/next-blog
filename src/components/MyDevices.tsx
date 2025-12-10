@@ -85,12 +85,16 @@ export default function MyDevices() {
             className="group hover:bg-muted/50 relative min-h-40 overflow-hidden transition-colors"
           >
             {device.image && (
-              <div className="absolute -top-5 -right-10 z-0">
-                <img
-                  src={device.image}
-                  alt={device.name}
-                  className="aspect-square h-48 w-auto rotate-12 object-contain opacity-40 transition-all duration-300 group-hover:-translate-x-8 group-hover:translate-y-4 group-hover:scale-120 group-hover:opacity-75"
-                />
+              <div className="absolute -top-8 -right-10 z-0">
+                {/* 光暈背景 */}
+                <div className="from-primary/0 via-primary/70 to-primary/0 absolute inset-0 scale-150 rounded-full bg-linear-to-r opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="relative rotate-12 p-5">
+                  <img
+                    src={device.image}
+                    alt={device.name}
+                    className="aspect-square h-48 w-auto object-contain opacity-40 transition-all duration-300 group-hover:-translate-x-8 group-hover:translate-y-4 group-hover:scale-120 group-hover:opacity-75"
+                  />
+                </div>
               </div>
             )}
             <CardHeader className="relative z-10">
