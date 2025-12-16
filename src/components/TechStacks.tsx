@@ -115,6 +115,10 @@ export const techStacks = [
     name: "Hugo",
     icon: icons.Hugo,
   },
+  {
+    name: "Figma",
+    icon: icons.Figma,
+  },
 ];
 
 export default function TechStacks() {
@@ -136,7 +140,7 @@ export default function TechStacks() {
           {firstHalf.map((techStack, index) => (
             <MarqueeItem key={`left-${index}`}>
               <div className="flex items-center justify-center gap-3 opacity-80 transition-all duration-300 hover:scale-110 hover:opacity-100">
-                <techStack.icon className="size-10 flex-shrink-0" />
+                <techStack.icon className="size-10 shrink-0" />
                 <span className="text-primary text-xl font-bold">
                   {techStack.name}
                 </span>
@@ -153,7 +157,7 @@ export default function TechStacks() {
           {secondHalf.map((techStack, index) => (
             <MarqueeItem key={`right-${index}`}>
               <div className="flex items-center justify-center gap-3 opacity-80 transition-all duration-300 hover:scale-110 hover:opacity-100">
-                <techStack.icon className="size-10 flex-shrink-0" />
+                <techStack.icon className="size-10 shrink-0" />
                 <span className="text-primary text-xl font-bold">
                   {techStack.name}
                 </span>

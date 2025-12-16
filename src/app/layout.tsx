@@ -16,14 +16,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ttymayor.com"),
   title: {
-    default: "市長/tantuyu 的部落格",
-    template: "%s | 市長/tantuyu 的部落格",
+    default: "tantuyu 的技術站",
+    template: "%s | tantuyu 的技術站",
   },
   description: "分享技術知識、記錄學習過程、探索 Web 開發的無限可能",
-  keywords: ["Next.js", "React", "TypeScript", "MDX", "部落格", "Web 開發"],
-  authors: [{ name: "市長/tantuyu" }],
-  creator: "市長/tantuyu",
+  keywords: ["部落格", "Web 開發", "tantuyu", "ttymayor", "彈塗魚", "tty"],
+  authors: [{ name: "tantuyu" }],
+  creator: "tantuyu",
+  openGraph: {
+    title: "tantuyu 的技術站",
+    description: "分享技術知識、記錄學習過程、探索 Web 開發的無限可能",
+    url: "https://tantuyu.com",
+    siteName: "tantuyu 的技術站",
+    images: [
+      {
+        url: "https://tantuyu.com/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "tantuyu 的技術站",
+      },
+    ],
+    locale: "zh-TW",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "tantuyu 的技術站",
+    description: "分享技術知識、記錄學習過程、探索 Web 開發的無限可能",
+    images: ["https://tantuyu.com/twitter-image.png"],
+  },
 };
 
 export default function RootLayout({
@@ -32,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="zh-TW" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
