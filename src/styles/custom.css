@@ -33,3 +33,7 @@
 .dark .katex .mord {
   color: oklch(0.9997 0.0013 106.42);
 }
+
+.TrackListWidget_widgetContainer__VVETD {
+  border-radius: 0;
+}
