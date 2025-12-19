@@ -3,6 +3,14 @@ import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "media.geeksforgeeks.org",
+      },
+    ],
+  },
   pageExtensions: ["tsx", "jsx", "mdx", "ts", "js"],
   reactCompiler: true,
   cacheComponents: true,
