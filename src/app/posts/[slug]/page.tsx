@@ -75,7 +75,7 @@ export default async function Page({
     return (
       <>
         <main className="lg:flex lg:gap-8">
-          <article className="w-full">
+          <article className="w-full lg:w-4/5">
             {/* 文章標題和元數據 */}
             <header>
               {/* 文章標題 */}
@@ -136,7 +136,7 @@ export default async function Page({
             {/* 前一篇/後一篇文章導航 */}
             <PostNavigation prevPost={prevPost} nextPost={nextPost} />
           </article>
-          <aside className="hidden lg:block">
+          <aside className="hidden lg:block lg:w-1/5">
             <TableOfContents headings={headings} />
           </aside>
         </main>

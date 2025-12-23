@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
-import { useLinkStatus } from "next/link";
-import { Spinner } from "@/components/ui/spinner";
 import { Noto_Serif_TC } from "next/font/google";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const notoSerifTC = Noto_Serif_TC({
   weight: ["400", "700", "900"],
@@ -14,8 +14,17 @@ const notoSerifTC = Noto_Serif_TC({
   variable: "--font-noto-serif-tc",
 });
 
+const menuItems = [
+  { label: "關於", href: "/about", name: "about" },
+  { label: "文章", href: "/posts", name: "posts" },
+  { label: "分類", href: "/categories", name: "categories" },
+  { label: "標籤", href: "/tags", name: "tags" },
+];
+
 export default function Header() {
-  const { pending } = useLinkStatus();
+  const pathname = usePathname().split("/")[1].trim();
+
+  const isActive = (name: string) => pathname == name;
 
   return (
     <header className="mx-0 p-4 lg:mx-[10%]">
@@ -36,26 +45,21 @@ export default function Header() {
         </h1>
 
         <nav className="hidden space-x-4 md:flex">
-          <Button variant="ghost" asChild>
-            <Link href="/about" className="text-foreground no-underline">
-              {pending ? <Spinner /> : "關於"}
-            </Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link href="/posts" className="text-foreground no-underline">
-              {pending ? <Spinner /> : "文章"}
-            </Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link href="/categories" className="text-foreground no-underline">
-              {pending ? <Spinner /> : "分類"}
-            </Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link href="/tags" className="text-foreground no-underline">
-              {pending ? <Spinner /> : "標籤"}
-            </Link>
-          </Button>
+          {menuItems.map((item) => (
+            <Button key={item.name} variant="ghost" asChild>
+              <Link
+                href={item.href}
+                className={cn("text-foreground no-underline")}
+              >
+                <div className="relative">
+                  {item.label}
+                  {isActive(item.name) && (
+                    <div className="bg-primary absolute -right-1 -bottom-2 -left-1 h-0.5 rounded-full" />
+                  )}
+                </div>
+              </Link>
+            </Button>
+          ))}
 
           {/* ThemeToggle */}
           {/* <ThemeToggle /> */}

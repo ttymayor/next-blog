@@ -64,7 +64,7 @@ export default function PostList({ posts }: PostListProps) {
       {filteredPosts().map(({ slug, metadata }) => (
         <Card
           key={slug}
-          className="group p-6 transition-shadow hover:shadow-lg"
+          className="group rounded-3xl border-none p-6 shadow-none"
         >
           <CardContent className="px-0">
             <div className="mb-3 flex items-center gap-4 text-sm">

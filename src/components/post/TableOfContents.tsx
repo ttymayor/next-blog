@@ -82,45 +82,43 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   }
 
   return (
-    <div className="fixed top-[100px] max-h-[calc(100vh-8rem)] w-full overflow-y-auto">
-      <div className="">
-        <h3 className="text-foreground mb-4 text-sm font-semibold">目錄</h3>
-        <nav className="space-y-1">
-          {headings.map((heading, index) => {
-            const isActive = activeId === heading.id;
-            const indentClass =
-              heading.level === 2
-                ? "pl-0"
-                : heading.level === 3
-                  ? "pl-4"
-                  : heading.level === 4
-                    ? "pl-8"
-                    : heading.level === 5
-                      ? "pl-12"
-                      : "pl-16";
+    <div className="sticky top-10 w-full">
+      <h3 className="text-foreground mb-4 text-sm font-semibold">目錄</h3>
+      <nav className="space-y-1">
+        {headings.map((heading, index) => {
+          const isActive = activeId === heading.id;
+          const indentClass =
+            heading.level === 2
+              ? "pl-0"
+              : heading.level === 3
+                ? "pl-4"
+                : heading.level === 4
+                  ? "pl-8"
+                  : heading.level === 5
+                    ? "pl-12"
+                    : "pl-16";
 
-            return (
-              <a
-                key={`${heading.id}-${index}`}
-                href={`#${heading.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToHeading(heading.id);
-                }}
-                className={cn(
-                  "hover:text-foreground block text-sm transition-colors",
-                  indentClass,
-                  isActive
-                    ? "text-foreground font-medium"
-                    : "text-muted-foreground",
-                )}
-              >
-                {cleanHeadingText(heading.text)}
-              </a>
-            );
-          })}
-        </nav>
-      </div>
+          return (
+            <a
+              key={`${heading.id}-${index}`}
+              href={`#${heading.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToHeading(heading.id);
+              }}
+              className={cn(
+                "hover:text-foreground block text-sm transition-colors",
+                indentClass,
+                isActive
+                  ? "text-foreground font-medium"
+                  : "text-muted-foreground",
+              )}
+            >
+              {cleanHeadingText(heading.text)}
+            </a>
+          );
+        })}
+      </nav>
     </div>
   );
 }

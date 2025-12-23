@@ -71,10 +71,7 @@ export default function Slides() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {slides.map((slide) => (
-          <div
-            key={slide.title}
-            className="bg-card flex flex-col gap-2 rounded-lg border p-6 transition-shadow hover:shadow-lg"
-          >
+          <div key={slide.title} className="bg-card rounded-3xl p-6">
             <SlideHeader slide={slide} />
 
             <SlideContent slide={slide} />

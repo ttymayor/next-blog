@@ -40,7 +40,7 @@ export async function LatestPost() {
         {latestPosts.map(({ slug, metadata }) => (
           <div
             key={slug}
-            className="bg-card rounded-lg border p-6 transition-shadow hover:shadow-lg"
+            className="bg-card rounded-3xl border-none p-6 shadow-none"
           >
             <div className="text-muted-foreground mb-3 flex flex-wrap items-center gap-2 text-sm group-hover:no-underline">
               <time dateTime={metadata.pubDate}>

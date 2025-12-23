@@ -34,6 +34,12 @@ export default async function AboutPage() {
             ω •́ )✧
           </p>
 
+          <p>
+            我喜歡心理學和個人成長的書籍，然後最近很喜歡找生活上新的事物嘗試！
+          </p>
+
+          <p>會玩的遊戲：Valorant, League of Legends（限隨機單中 :D）</p>
+
           <Separator className="my-4" />
 
           <p>開發時我願意遵守：</p>

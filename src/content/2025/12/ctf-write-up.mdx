@@ -1,0 +1,59 @@
+export const metadata = {
+  title: 'CTF Write Up',
+  pubDate: '2025-12-22T22:03:09+08:00',
+  draft: false,
+}
+
+## 紀錄那些邪門歪道的奇怪設計所造成的資安漏洞，還有引述那些打 CTF 基本上都是看 Write Up 才會知道的東西ㄏㄏ
+
+## What is `.htaccess`
+
+`.htaccess` 是 Apache Web Server 的配置文件，用於控制 Apache Web Server 的行為。它允許您在不修改主配置文件的情況下，對特定目錄或文件進行配置。
+
+> 如果是完全不了解資訊方面，通常以 `.` 開頭的文件會被系統隱藏，要麼是配置檔，要麼是不重要的東西，或是敏感的文件，而且通常不會被程式碼執行。
+> 例如 `.git/` 這個資料夾是隱藏的，而且記錄了專案的 Git 資訊，包括 Commit ID、Branch、Author 等等。
+> 或是 `.vscode/` 這個資料夾是拿來讓 VS Code 編輯器使用的，用來儲存使用者或是工作區的偏好設定。
+> 或者 `.env` 這個檔案是拿來儲存環境變數的，用來設定專案的環境變數，例如 `PORT`、`DATABASE_URL` 等等，這超級敏感，基本上就是通常放 API Key、Secret Key 等等的地方。
+
+## 紀錄一下 Python 的函式
+
+- `open()` `open().read()`
+- `chr()`
+
+### byp4ss3d
+
+`.htaccess` 支援 `AddType` 指令，用於將特定的檔案類型映射到特定的 MIME 型別（即 `media-type`）。
+
+```
+AddType media-type extensive [extensive] ...
+```
+
+這行指令用來將 png、jpg、gif 檔案類型映射到 `application/x-httpd-php` MIME 型別
+
+也就是：也就是告訴 Apache Web Server 將 `.png`、`.jpg`、`.gif` 當成 `.php` 檔案來處理。
+
+```
+AddType application/x-httpd-php png jpg gif
+```
+
+該題成功將 `.htaccess` 上傳後可以用 web shell 來找 **flag** 即可。
+
+### 3v@l
+
+這題是有關於 Python 的 `eval()` 函數的漏洞。然後看一下 html 結果有給 Regex 那就可以到 https://regex101.com/ 嘗試一些 Python 的指令
+
+然後你仍然需要通靈一下才知道 `open().read()` 可以使用，然後關鍵字都會被擋，所以可以考慮轉碼用 ASCII 轉回 Char
+
+```py
+open("".join([chr(x) for x in [47, 102, 108, 97, 103, 46, 116, 120, 116]])).read()
+```
+
+### Irish-Name-Repo 2
+
+痾，我不小心越過 1 打 2 ㄏㄏ，好反正打回去就是一個簡單的 SQL injection `' OR 1=1--` 即可
+
+第 2 題是延續第 1 題，總而言之，就是拿 admin 去試 `admin' --` 就過了 = =
+
+### Some Assembly Required 1
+
+解這題需要稍微逆向，然後使用 wasm2c 指令將 WebAssembly 反編譯成 C 檔案，然後***看有沒有特殊編碼***，將看到的 Hex decode 就會是 flag 了。

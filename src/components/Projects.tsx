@@ -149,7 +149,7 @@ export default function Projects() {
         {projects.map((project) => (
           <Card
             key={project.title}
-            className="group flex justify-between gap-4 rounded-lg border transition-shadow hover:shadow-lg"
+            className="group justify-between rounded-3xl border-0 shadow-none"
           >
             <CardContent className="flex flex-col gap-4">
               {project.image ? (
@@ -175,7 +175,7 @@ export default function Projects() {
               <div className="flex flex-col gap-2 rounded-lg text-sm">
                 {/* title */}
                 <h3
-                  className={`${notoSerifTC.className} group-hover:text-primary m-0 flex items-center text-xl font-bold transition-all duration-300`}
+                  className={`${notoSerifTC.className} text-primary m-0 flex items-center text-xl font-bold transition-all duration-300`}
                 >
                   {project.title}
                 </h3>

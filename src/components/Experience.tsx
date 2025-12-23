@@ -90,7 +90,7 @@ interface ExperienceContentProps {
 
 function ExperienceContent({ item }: ExperienceContentProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 pb-5">
       {/* date */}
       <p className="text-muted-foreground m-0 mt-1 text-sm">
         {new Date(item.startDate).toLocaleDateString("zh-TW")}

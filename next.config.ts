@@ -6,8 +6,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
         hostname: "media.geeksforgeeks.org",
+      },
+      {
+        hostname: "tty-pic.zeabur.app",
       },
     ],
   },
