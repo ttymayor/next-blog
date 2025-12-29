@@ -16,7 +16,8 @@ const notoSerifTC = Noto_Serif_TC({
   variable: "--font-noto-serif-tc",
 });
 
-interface Event {
+type SingleEvent = {
+  kind: "single";
   title: string;
   description: string;
   role: {
@@ -25,10 +26,26 @@ interface Event {
   }[];
   img?: string;
   color?: string;
-}
+};
+
+type RangeEvent = {
+  kind: "range";
+  title: string;
+  description: string;
+  role: {
+    startDate: Date;
+    endDate?: Date;
+    name: string;
+  }[];
+  img?: string;
+  color?: string;
+};
+
+type Event = SingleEvent | RangeEvent;
 
 const events: Event[] = [
   {
+    kind: "single",
     title: "SITCON",
     description:
       "SITCON 是由學生組成、投身資訊教育與推廣開源精神的社群。也是一個由學生主辦的資訊研討會，給學生們一個發表交流技術的舞台。",
@@ -50,26 +67,43 @@ const events: Event[] = [
     img: "https://sitcon.org/branding/assets/logos/logo.svg",
   },
   {
+    kind: "range",
     title: "COSCUP",
     description:
       "COSCUP 是由一群自由與開放原始碼軟體愛好者發起，致力於推廣開放原始碼精神與技術。",
     role: [
       {
-        date: new Date("2025-08-09"),
+        startDate: new Date("2025-08-09"),
+        endDate: new Date("2025-08-10"),
         name: "Attendee",
       },
     ],
     img: "https://volunteer.coscup.org/img/coscup_logo_tw.png",
   },
   {
+    kind: "range",
     title: "THU Hacker Club",
     description: "東海駭客社",
     role: [
       {
-        date: new Date("2025-07-01"),
+        startDate: new Date("2025-07-01"),
         name: "Leader and Academic",
       },
     ],
+    img: "/images/events/hacker_club.png",
+  },
+  {
+    kind: "range",
+    title: "TSC 2026",
+    description:
+      "Taiwan Security Club。此次活動是第一次完全由學生聯合舉辦的 CTF，目標是成為全台灣資安社團交流活動，為臺灣剛入門的資安新手們建立一場符合新手導向的資安試煉大會，以燃起並延續新手對資安的熱忱為目的的活動。",
+    role: [
+      {
+        startDate: new Date("2025-11-08"),
+        name: "Sponsor Group",
+      },
+    ],
+    img: "https://ctfd.tscctf.com/themes/tsc/static/img/logo.png?d=2015666e",
   },
 ];
 
@@ -84,7 +118,7 @@ export default function Events() {
         {events.map((event, index) => (
           <Card
             key={index}
-            className="group relative mb-4 overflow-hidden rounded-3xl border-0 shadow-none"
+            className="group relative min-h-50 overflow-hidden rounded-3xl border-0 shadow-none"
           >
             <CardHeader>
               <CardTitle
@@ -97,20 +131,42 @@ export default function Events() {
               </CardDescription>
             </CardHeader>
             <CardContent className="relative z-10">
-              {event.role.map((role, index) => (
-                <p key={index} className="mb-0 text-sm">
-                  {role.date.toLocaleDateString()} - {role.name}
-                </p>
-              ))}
+              {event.kind === "single" &&
+                event.role.map((role, index) => (
+                  <p key={index} className="mb-0 text-sm">
+                    {role.date && role.date.toLocaleDateString()} - {role.name}
+                  </p>
+                ))}
+              {event.kind === "range" &&
+                event.role.map((role, index) => (
+                  <p key={index} className="mb-0 text-sm">
+                    {role.startDate && role.startDate.toLocaleDateString()} ~{" "}
+                    {role.endDate
+                      ? role.endDate.toLocaleDateString()
+                      : "Present"}{" "}
+                    - {role.name}
+                  </p>
+                ))}
             </CardContent>
 
-            <div className="absolute right-5 bottom-5 flex aspect-square w-30 items-center justify-center">
+            <div className="absolute right-5 bottom-5 flex w-28 items-center justify-center sm:aspect-square">
               {event.img && (
-                <img
-                  src={event.img}
-                  alt=""
-                  className="w-full opacity-25 transition-opacity duration-300 group-hover:opacity-50"
-                />
+                <div className="relative">
+                  <img
+                    src={event.img}
+                    alt=""
+                    className={cn(
+                      "absolute z-0 w-full opacity-25 transition-all duration-300 group-hover:blur-xl",
+                    )}
+                  />
+                  <img
+                    src={event.img}
+                    alt=""
+                    className={cn(
+                      "w-full opacity-15 transition-all duration-300 group-hover:opacity-50",
+                    )}
+                  />
+                </div>
               )}
             </div>
           </Card>
